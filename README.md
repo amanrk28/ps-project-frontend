@@ -3,7 +3,7 @@
 Provision store Project is made to help local shopkeepers expand their customer base to more than just a locality. 
 
 ## Basic Scenario
-Any local store owner can upload their products and its details on this platform and people can come here to purchase these products like an e-commerce app. After customer makes a puchase, we take of payments, pickup from store and delivery to doorstep with minimal service charges only on the profit gained by said store owner.
+Any local store owner can upload their products and its details on this platform and people can come here to purchase these products like an e-commerce app. After customer makes a puchase, we take care of payments, store pickup and doorstep delivery with minimal service charges based only on the profit gained by said store owner.
 
 ## Tech Stack & Repo Setup
 
