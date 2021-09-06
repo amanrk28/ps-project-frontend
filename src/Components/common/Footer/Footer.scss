@@ -1,0 +1,31 @@
+.footer__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fcb800;
+  padding: 8px 0;
+  .logo {
+    width: 50%;
+    img {
+      width: 250px;
+    }
+  }
+  .contributors {
+    width: 50%;
+    .contributors__title {
+      color: #fff;
+      font-size: 24px;
+      line-height: 29px;
+    }
+    > div {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      margin: 4px 0;
+      .contributors__names {
+        font-size: 14px;
+        line-height: 17px;
+        color: #333;
+      }
+    }
+  }
+}

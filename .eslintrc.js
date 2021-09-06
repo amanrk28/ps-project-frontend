@@ -84,7 +84,7 @@ module.exports = {
     */
     'no-shadow': ERROR,
     // all named args must be used, and there must be no unused variables
-    'no-unused-vars': [ERROR, { args: 'after-used' }],
+    // 'no-unused-vars': [ERROR, { args: 'after-used' }],
     // unnecessary to concatenate two strings together
     'no-useless-concat': ERROR,
     /*
@@ -106,7 +106,7 @@ module.exports = {
     */
     'space-before-blocks': ERROR,
     // always require a space b/w func name and (
-    'space-before-function-paren': ERROR,
+    'space-before-function-paren': WARN,
 
     // React and JSX
     // not use ={true} when passing truthy values as props

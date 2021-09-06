@@ -1,21 +1,23 @@
-import React from 'react'
-import Button from '../Button/Button'
-import './Product.scss'
+import React from 'react';
+import Button from '../common/Button/Button';
+import './Product.scss';
 
-function Product ({image, title, price}) {
-    return (
-        <div className="product">
-            <img src={image} />
-            <div className="product__info">
-                <p className="product__title">{title}</p>
-                <p className="product__price">
-                    <p>&#8377;</p>
-                    <strong>{price}</strong>
-                </p>
-            </div>
-            <Button />
-        </div>
-    )
+function Product({ image, title, price }) {
+  return (
+    <div className="product">
+      <img src={image} />
+      <div className="product__info">
+        <p className="product__title">{title}</p>
+        <p className="product__price">
+          <p>&#8377;</p>
+          <strong>{price}</strong>
+        </p>
+      </div>
+      <div className="center">
+        <Button text="Add to Cart" />
+      </div>
+    </div>
+  );
 }
 
-export default Product
+export default Product;

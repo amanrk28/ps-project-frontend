@@ -1,25 +1,18 @@
-import React from 'react'
-import './App.css';
-import Header from './Components/Header/Header';
-import Home from './Components/Home/Home';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Checkout from './Components/Checkout/Checkout';
+import './App.scss';
+import HomePage from './Pages/HomePage';
+import CheckoutPage from './Pages/CheckoutPage';
 
-
-function App () {
+const App = () => {
   return (
     <Router>
-      <div className="app">
-        <Header />
-        <Switch>
-          <Route path="/checkout" component={Checkout} />
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/" component={HomePage} exact />
+        <Route path="/checkout" component={CheckoutPage} />
+      </Switch>
     </Router>
-  )
-}
+  );
+};
 
-export default App
+export default App;
