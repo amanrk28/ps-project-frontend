@@ -1,7 +1,7 @@
 import React from 'react';
 import './Checkout.scss';
 
-function Checkout() {
+const Checkout = () => {
   return (
     <div className="checkout">
       <div className="checkout__left">
@@ -13,6 +13,6 @@ function Checkout() {
       <div className="checkout__right"></div>
     </div>
   );
-}
+};
 
 export default Checkout;

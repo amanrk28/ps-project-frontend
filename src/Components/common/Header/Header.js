@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
-function Header() {
+const Header = () => {
   return (
     <div className="header">
       <Link to="/">
@@ -45,6 +45,6 @@ function Header() {
       </div>
     </div>
   );
-}
+};
 
 export default Header;

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../common/Button/Button';
 import './Product.scss';
 
-function Product({ image, title, price }) {
+const Product = ({ image, title, price }) => {
   return (
     <div className="product">
       <img src={image} />
@@ -18,6 +18,6 @@ function Product({ image, title, price }) {
       </div>
     </div>
   );
-}
+};
 
 export default Product;
