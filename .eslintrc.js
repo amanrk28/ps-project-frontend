@@ -124,7 +124,7 @@ module.exports = {
     Components without children can be self-closed to avoid unnecessary extra closing tag.
     */
     'import/prefer-default-export': OFF,
-    'react/self-closing-comp': ERROR,
+    'react/self-closing-comp': OFF,
     'react/no-unused-state': ERROR,
     // allow default values for unrequired props
     'react/default-props-match-prop-types': OFF,
