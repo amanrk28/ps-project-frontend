@@ -2,17 +2,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  margin: 12px;
   padding: 16px;
-  width: 300px;
-  max-height: 320px;
-  min-height: 320px;
+  width: 270px;
+  height: 350px;
   border-radius: 6px;
   background-color: #fff;
   z-index: 1;
   box-shadow: 8px 8px 16px #ccc;
   .product__info {
-    font-family: 'Montserrat';
     color: #337ab7;
     font-weight: 500;
     font-size: 14px;
@@ -21,16 +18,21 @@
     &:hover {
       cursor: pointer;
     }
+    .product__title {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+    .product__price {
+      margin-top: 5px;
+      display: flex;
+      color: #000;
+    }
   }
   img {
     max-height: 200px;
     width: 100%;
     object-fit: contain;
     margin-bottom: 15px;
-  }
-  .product__price {
-    margin-top: 5px;
-    display: flex;
-    color: #000;
   }
 }

@@ -4,7 +4,6 @@ import Home from '../Components/Home/Home';
 
 const HomePage = () => (
   <>
-    <Header />
     <Home />
     <Footer />
   </>

@@ -1,11 +1,33 @@
 * {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Montserrat';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: antialiased;
+}
+
+:root {
+  --yellow-primary: #fcb800;
+  --yellow-secondary: #f0c14b;
 }
 
 .center {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {

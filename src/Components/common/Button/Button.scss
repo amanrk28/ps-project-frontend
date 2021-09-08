@@ -1,12 +1,11 @@
 .btn__wrapper {
   display: contents;
   button {
-    background: #f0c14b;
-    border: 1px solid #f0c14b;
+    background-color: var(--yellow-secondary);
+    border: 1px solid var(--yellow-secondary);
     border-radius: 4px;
     padding: 6px;
     color: #333;
-    font-family: 'Montserrat';
     font-weight: 500;
     font-size: 14px;
     min-width: 120px;
