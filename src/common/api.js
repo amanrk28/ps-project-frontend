@@ -1,7 +1,8 @@
 import { getAuthToken } from '../utils/localStorage';
-const { SERVER_URL, SERVER_PORT } = process.env;
 
-const server_url = `${SERVER_URL}:${SERVER_PORT}`;
+const { REACT_APP_SERVER_URL, REACT_APP_SERVER_PORT } = process.env;
+
+const server_url = `${REACT_APP_SERVER_URL}:${REACT_APP_SERVER_PORT}`;
 
 const callAPI = async (method, url, data = {}) => {
   const token = getAuthToken();
@@ -39,6 +40,8 @@ export const getProductCategoriesApi = () =>
 export const createCartItemApi = data => callAPI('post', `${store}/cart`, data);
 export const updateCartItemApi = (id, data) =>
   callAPI('put', `${store}/cart/${id}`, data);
+export const getCheckoutDataApi = data =>
+  callAPI('post', `${store}/checkout`, data);
 
 // -------------- Auth API -------------------
 const auth = '/auth';

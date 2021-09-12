@@ -11,9 +11,9 @@ import rootReducer from './store/reducers/rootReducer';
 
 let middleware = applyMiddleware(thunk);
 
-const with_redux_devtools = composeWithDevTools(middleware);
+const withReduxDevtools = composeWithDevTools(middleware);
 
-const store = createStore(rootReducer, with_redux_devtools);
+const store = createStore(rootReducer, withReduxDevtools);
 
 ReactDOM.render(
   <Provider store={store}>

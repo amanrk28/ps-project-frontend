@@ -41,3 +41,25 @@ a {
     background-color: #daa700;
   }
 }
+
+input {
+  width: 100%;
+  height: 44px;
+  border-radius: 4px;
+  box-shadow: none;
+  border: none;
+  padding: 0 20px;
+  color: #111;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  &:focus {
+    outline: none;
+  }
+  &::placeholder {
+    color: #b1b5c8;
+  }
+}

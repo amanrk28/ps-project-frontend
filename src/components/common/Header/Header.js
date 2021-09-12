@@ -4,16 +4,13 @@ import './Header.scss';
 import SearchIcon from '@material-ui/icons/Search';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import { LOGO_URL } from 'utils/utils';
 
 const Header = () => {
   return (
     <div className="header">
       <Link to="/">
-        <img
-          className="header__logo"
-          src="https://i.ibb.co/0Bm2xpD/logomain2.png"
-          alt="MYMSME"
-        />
+        <img className="header__logo" src={LOGO_URL} alt="MYMSME" />
       </Link>
       <div className="header__search">
         <input className="header__searchInput" type="text" />

@@ -25,6 +25,7 @@ module.exports = {
   extends: [
     'eslint-config-prettier',
     'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
   ],
   parserOptions: {
     project: './tsconfig.json',
@@ -35,6 +36,9 @@ module.exports = {
     // The prop validatin in react is disabled for now
     'react/prop-types': OFF,
     'react/require-default-props': OFF,
+    'react/jsx-uses-react': ERROR,
+    'react/jsx-uses-vars': ERROR,
+
     /*
 
     If a JS object has a setter for a property, make sure there exists a getter property to read it. Reverse may not be true.
@@ -69,7 +73,7 @@ module.exports = {
     // requires end of line always
     'eol-last': ERROR,
     // enforce strict equality except when comparing with null literal
-    eqeqeq: [ERROR, 'allow-null'],
+    eqeqeq: [ERROR, 'smart'],
     // prefer using double quotes in jsx whenever possible
     'jsx-quotes': [ERROR, 'prefer-double'],
     // allow spacing before and after keywords like func, if, loops
@@ -82,9 +86,9 @@ module.exports = {
     /*
     Shadowing is the process by which a local variable shares the same name as a variable in its containing scope. Eliminate shadowed variables declarations.
     */
-    'no-shadow': ERROR,
+    'no-shadow': OFF,
     // all named args must be used, and there must be no unused variables
-    // 'no-unused-vars': [ERROR, { args: 'after-used' }],
+    'no-unused-vars': [ERROR, { args: 'after-used' }],
     // unnecessary to concatenate two strings together
     'no-useless-concat': ERROR,
     /*
@@ -106,25 +110,27 @@ module.exports = {
     */
     'space-before-blocks': ERROR,
     // always require a space b/w func name and (
-    'space-before-function-paren': WARN,
+    'space-before-function-paren': OFF,
 
     // React and JSX
     // not use ={true} when passing truthy values as props
     'react/jsx-boolean-value': [ERROR, 'never'],
     // allow JSX to be used only in .js files
-    'react/jsx-filename-extension': [ERROR, { extensions: ['.js', '.tsx'] }],
+    'react/jsx-filename-extension': [
+      ERROR,
+      { extensions: ['.js', 'jsx', '.ts', '.tsx'] },
+    ],
     'react/boolean-prop-naming': [
       ERROR,
       {
         rule: '^(is|has)[A-Z]([A-Za-z0-9]?)+',
       },
     ],
-    'react/react-in-jsx-scope': OFF,
     /*
     Components without children can be self-closed to avoid unnecessary extra closing tag.
     */
     'import/prefer-default-export': OFF,
-    'react/self-closing-comp': OFF,
+    'react/self-closing-comp': ERROR,
     'react/no-unused-state': ERROR,
     // allow default values for unrequired props
     'react/default-props-match-prop-types': OFF,
@@ -150,8 +156,16 @@ module.exports = {
     '@typescript-eslint/no-empty-function': WARN,
     // https://stackoverflow.com/a/63961972/7760267
     'no-shadow': OFF,
-    '@typescript-eslint/no-shadow': [ERROR],
+    '@typescript-eslint/no-shadow': ['off'],
   },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        eqeqeq: OFF,
+      },
+    },
+  ],
   env: {
     browser: true,
   },

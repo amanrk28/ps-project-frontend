@@ -42,6 +42,13 @@ const cartReducer = (state = initialState, action) => {
         return newstate;
       }
     }
+    case aT.SET_CART_ITEMS_FOR_CHECKOUT:
+      return update(state, {
+        id: action.data.id,
+        cart_items: [...action.data.cart_items],
+        hash: action.data.hash,
+        total_amount: data.total_amount,
+      });
 
     default:
       return state;

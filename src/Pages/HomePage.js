@@ -1,9 +1,10 @@
-import Header from '../Components/common/Header/Header';
-import Footer from '../Components/common/Footer/Footer';
-import Home from '../Components/Home/Home';
+import Header from '../components/common/Header/Header';
+import Footer from '../components/common/Footer/Footer';
+import Home from '../components/Home/Home';
 
 const HomePage = () => (
   <>
+    <Header />
     <Home />
     <Footer />
   </>

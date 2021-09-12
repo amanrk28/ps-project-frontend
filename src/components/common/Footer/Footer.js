@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { LOGO_URL } from 'utils/utils';
 import './Footer.scss';
 
 const Footer = () => (
   <div className="footer__wrapper">
     <div className="logo">
       <Link to="/">
-        <img src="https://i.ibb.co/0Bm2xpD/logomain2.png" alt="MYMSME" />
+        <img src={LOGO_URL} alt="MYMSME" />
       </Link>
     </div>
     <div className="contributors">

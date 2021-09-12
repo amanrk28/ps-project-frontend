@@ -1,9 +1,10 @@
-import Header from '../Components/common/Header/Header';
-import Footer from '../Components/common/Footer/Footer';
-import Checkout from '../Components/Checkout/Checkout';
+import Header from '../components/common/Header/Header';
+import Footer from '../components/common/Footer/Footer';
+import Checkout from '../components/Checkout/Checkout';
 
 const CheckoutPage = () => (
   <>
+    <Header />
     <Checkout />
     <Footer />
   </>
