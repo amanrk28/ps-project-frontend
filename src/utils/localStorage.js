@@ -1,11 +1,13 @@
-export const setAuthToken = token => {
-  return localStorage.setItem('xxx-token', token);
-};
+const { REACT_APP_LS_TOKEN_KEY: tokenKey } = process.env;
 
-export const getAuthToken = () => {
-  return localStorage.getItem('xxx-token');
-};
+export const setAuthToken = token => localStorage.setItem(tokenKey, token);
 
-export const clearAllStorages = () => {
-  return localStorage.clear();
-};
+export const getAuthToken = () => localStorage.getItem(tokenKey);
+
+export const lsSet = (key, value) => localStorage.setItem(key, value);
+
+export const lsGet = key => localStorage.getItem(key);
+
+export const lsRemove = key => localStorage.removeItem(key);
+
+export const clearAllStorages = () => localStorage.clear();

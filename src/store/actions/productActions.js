@@ -5,6 +5,7 @@ import {
   createProductApi,
   updateProductApi,
 } from '../../common/api';
+import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 
 const setProductsList = data => ({
   type: aT.SET_PRODUCTS,
@@ -35,6 +36,7 @@ export const getProducts = () => {
         dispatch(setProductsList(data));
       })
       .catch(err => {
+        NotifyMe('error', `${err}!`);
         console.log(err);
       });
   };
@@ -49,6 +51,7 @@ export const getProductCategories = () => {
         dispatch(setProductCategoriesList(data.categories));
       })
       .catch(err => {
+        NotifyMe('error', `${err}!`);
         console.log(err);
       });
   };
@@ -75,7 +78,7 @@ export const createProduct = req_data => {
       !req_data.image ||
       !req_data.description
     )
-      return console.log('Cannot create product with Incomplete details');
+      return NotifyMe('error', 'Cannot create product with Incomplete details');
     createProductApi(req_data)
       .then(res => {
         const { status, data, msg } = res;
@@ -84,6 +87,7 @@ export const createProduct = req_data => {
         dispatch(setNewProduct(productData));
       })
       .catch(err => {
+        NotifyMe('error', `${err}!`);
         console.log(err);
       });
   };
@@ -99,6 +103,7 @@ export const updateProduct = ({ product_id, requestData }) => {
         dispatch(setUpdatedProduct(productData));
       })
       .catch(err => {
+        NotifyMe('error', `${err}!`);
         console.log(err);
       });
   };

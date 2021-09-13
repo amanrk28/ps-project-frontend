@@ -4,6 +4,7 @@ import {
   getCheckoutDataApi,
   updateCartItemApi,
 } from '../../common/api';
+import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 
 const set_cart_item = data => ({
   type: aT.SET_NEW_CART_ITEM,
@@ -36,7 +37,10 @@ export const addCartItem = product_id => {
         };
         dispatch(set_cart_item(dispatch_data));
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        NotifyMe('error', `${err}!`);
+        console.log(err);
+      });
   };
 };
 
@@ -49,7 +53,10 @@ export const updateCartItem = ({ product_id, quantity }) => {
         const { product_id, quantity, amount } = data;
         dispatch(update_cart_item({ product_id, quantity, amount }));
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        NotifyMe('error', `${err}!`);
+        console.log(err);
+      });
   };
 };
 
@@ -57,13 +64,16 @@ export const getCheckoutData = () => {
   return (dispatch, getState) => {
     const { hash } = getState().cart;
     if (!hash || hash.length !== 8)
-      return console.log('Cart Hash not found! Try adding items to cart');
+      return NotifyMe('error', 'Cart Hash not found! Try adding items to cart');
     getCheckoutDataApi({ cart_hash: hash })
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
         dispatch(set_cart_items_for_checkout(data));
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        NotifyMe('error', `${err}!`);
+        console.log(err);
+      });
   };
 };

@@ -3,7 +3,7 @@ import './Button.scss';
 
 const Button = ({
   text = '',
-  onClick = () => {},
+  onClick,
   dataProps = {},
   type = 'primary',
   className = '',

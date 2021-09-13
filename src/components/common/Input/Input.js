@@ -16,6 +16,7 @@ class Input extends PureComponent {
       style = {},
       inputClass = '',
       type = 'text',
+      maxLength = '1000',
     } = this.props;
     return (
       <div className={`input-wrapper ${inputClass || ''}`} style={style}>
@@ -27,6 +28,7 @@ class Input extends PureComponent {
             placeholder={placeholder}
             onChange={onChange}
             value={value}
+            maxLength={maxLength}
           />
         </div>
       </div>

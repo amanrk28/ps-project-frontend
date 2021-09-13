@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Input from '../common/Input/Input';
 import Button from '../common/Button/Button';
 import { isEmail } from 'utils/utils';
+import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 
 const SIGNUP_FIELDS = [
   { name: 'First Name', dataname: 'firstName', type: 'text' },
@@ -30,9 +31,9 @@ class SignupForm extends Component {
   onClick = () => {
     const { email, password, checkPassword, firstName, lastName, phone } =
       this.state;
-    if (!isEmail(email)) return console.log('Invalid Email');
+    if (!isEmail(email)) return NotifyMe('error', 'Invalid Email!');
     if (password !== checkPassword)
-      return console.log('Passwords do not match. Try again');
+      return NotifyMe('error', 'Passwords do not match. Try again!');
     else {
       const dataPayload = {
         email,
@@ -49,16 +50,16 @@ class SignupForm extends Component {
     return (
       <div className="login-container center">
         {SIGNUP_FIELDS.map(item => (
-          <div className="input-container" key={item.dataname}>
-            <Input
-              dataname={item.dataname}
-              onChange={e => this.onChange(e, item.dataname)}
-              value={this.state[item.dataname]}
-              placeholder={item.name}
-              type={item.type}
-              style={{ width: '220px' }}
-            />
-          </div>
+          <Input
+            key={item.dataname}
+            dataname={item.dataname}
+            onChange={e => this.onChange(e, item.dataname)}
+            value={this.state[item.dataname]}
+            placeholder={item.name}
+            type={item.type}
+            maxLength={item.dataname === 'phone' ? '10' : ''}
+            inputClass="login-form-input"
+          />
         ))}
         <Button text="Signup" onClick={this.onClick} className="login-btn" />
       </div>

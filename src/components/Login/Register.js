@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import './Register.scss';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
 import SigninForm from './SigninForm';
 import SignupForm from './SignupForm';
 import { LOGO_URL } from 'utils/utils';
+import { getAuthToken } from 'utils/localStorage';
+import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import './Register.scss';
 
 const signin = {
   header: 'Sign in to continue!',
@@ -25,19 +27,24 @@ class Register extends Component {
     };
   }
 
+  componentDidMount = () => {
+    const token = getAuthToken();
+    if (token) NotifyMe('success', 'User already logged in');
+  };
+
   switchRegistration = () => {
     const { isSignin } = this.state;
     this.setState({ isSignin: !isSignin });
   };
 
   onSubmitSignin = dataPayload => {
-    console.log(dataPayload);
-    this.props.actions.loginUser(dataPayload);
+    const { actions } = this.props;
+    actions.loginUser(dataPayload);
   };
 
   onSubmitSignup = dataPayload => {
-    // const { actions } = this.props;
-    console.log(dataPayload);
+    const { actions } = this.props;
+    actions.signupUser(dataPayload);
   };
 
   render() {
@@ -48,23 +55,25 @@ class Register extends Component {
           <div className="logo-wrapper center">
             <img src={LOGO_URL} alt="MYMSME" />
           </div>
-          <div className="header-text">
-            <p>{isSignin ? signin.header : signup.header}</p>
-          </div>
-          <div className="form-wrapper">
-            {isSignin ? (
-              <SigninForm onSubmit={this.onSubmitSignin} />
-            ) : (
-              <SignupForm onSubmit={this.onSubmitSignup} />
-            )}
-          </div>
-          <div className="switch-registration">
-            <p>
-              {isSignin ? signin.footer : signup.footer}&nbsp;
-              <span onClick={this.switchRegistration}>
-                {isSignin ? 'Signup' : 'Signin'}
-              </span>
-            </p>
+          <div className="form-wrapper center">
+            <div className="header-text">
+              {isSignin ? signin.header : signup.header}
+            </div>
+            <div className="form-container">
+              {isSignin ? (
+                <SigninForm onSubmit={this.onSubmitSignin} />
+              ) : (
+                <SignupForm onSubmit={this.onSubmitSignup} />
+              )}
+            </div>
+            <div className="switch-registration">
+              <p>
+                {isSignin ? signin.footer : signup.footer}&nbsp;
+                <span onClick={this.switchRegistration}>
+                  {isSignin ? 'Signup' : 'Signin'}
+                </span>
+              </p>
+            </div>
           </div>
           <div className="registration-footer" />
         </div>
