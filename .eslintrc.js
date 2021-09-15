@@ -88,7 +88,7 @@ module.exports = {
     */
     'no-shadow': OFF,
     // all named args must be used, and there must be no unused variables
-    'no-unused-vars': [ERROR, { args: 'after-used' }],
+    'no-unused-vars': [WARN, { args: 'after-used' }],
     // unnecessary to concatenate two strings together
     'no-useless-concat': ERROR,
     /*

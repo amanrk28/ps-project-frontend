@@ -47,4 +47,6 @@ export const getCheckoutDataApi = data =>
 const auth = '/auth';
 
 export const signupApi = data => callAPI('post', `${auth}/signup`, data);
-export const loginApi = data => callAPI('post', `${auth}/verify_user`, data);
+export const loginApi = data => callAPI('post', `${auth}/login`, data);
+export const verifyTokenApi = data =>
+  callAPI('post', `${auth}/verifytoken`, data);

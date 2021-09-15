@@ -1,12 +1,17 @@
 import { combineReducers } from 'redux';
-import productReducer from './productReducer';
-import cartReducer from './cartReducer';
+import { connectRouter } from 'connected-react-router';
 import authReducer from './authReducer';
+import cartReducer from './cartReducer';
+import orderReducer from './orderReducer';
+import productReducer from './productReducer';
 
-const rootReducer = combineReducers({
-  product: productReducer,
-  cart: cartReducer,
-  auth: authReducer,
-});
+const rootReducer = history =>
+  combineReducers({
+    router: connectRouter(history),
+    auth: authReducer,
+    cart: cartReducer,
+    order: orderReducer,
+    product: productReducer,
+  });
 
 export default rootReducer;

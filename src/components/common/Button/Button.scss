@@ -7,7 +7,7 @@ button {
   width: 184px;
   cursor: pointer;
   &.primary {
-    background-color: var(--yellow-secondary);
-    border: 1px solid var(--yellow-secondary);
+    background-color: var(--yellow-primary);
+    border: 1px solid var(--yellow-primary);
   }
 }

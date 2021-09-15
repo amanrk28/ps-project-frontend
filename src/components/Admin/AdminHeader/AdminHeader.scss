@@ -1,0 +1,14 @@
+.adminHeader-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--yellow-primary);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  .logo-wrapper img {
+    width: 180px;
+    object-fit: contain;
+    margin: 10px 0;
+  }
+}

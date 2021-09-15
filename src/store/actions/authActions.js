@@ -1,5 +1,6 @@
+import { push } from 'connected-react-router';
 import * as aT from '../actionTypes/authActionTypes';
-import { signupApi, loginApi } from '../../common/api';
+import { signupApi, loginApi, verifyTokenApi } from '../../common/api';
 import { EMAIL_REGEX } from 'utils/utils';
 import { setAuthToken, clearAllStorages } from 'utils/localStorage';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
@@ -12,6 +13,15 @@ const set_user = data => ({
 const set_token = data => ({
   type: aT.SET_TOKEN,
   data,
+});
+
+const resetUser = () => ({
+  type: aT.RESET_USER,
+});
+
+export const setAuthCheckingTrue = () => ({ type: aT.SET_AUTH_CHECKING_TRUE });
+export const setAuthCheckingFalse = () => ({
+  type: aT.SET_AUTH_CHECKING_FALSE,
 });
 
 export const setAuthCredentials = data => dispatch => {
@@ -39,7 +49,9 @@ export const signupUser = req_data => dispatch => {
     .then(res => {
       const { status, data, msg } = res;
       if (!status) throw msg;
+      NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
+      dispatch(push('/'));
     })
     .catch(err => {
       NotifyMe('error', `${err}!`);
@@ -59,6 +71,7 @@ export const loginUser = req_data => dispatch => {
       if (!status) throw msg;
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
+      dispatch(push('/'));
     })
     .catch(err => {
       NotifyMe('error', `${err}!`);
@@ -66,6 +79,27 @@ export const loginUser = req_data => dispatch => {
     });
 };
 
-export const logout = () => {
-  return clearAllStorages();
+export const verifyToken = () => (dispatch, getState) => {
+  dispatch(setAuthCheckingTrue());
+  verifyTokenApi()
+    .then(res => {
+      const { status, data, msg } = res;
+      dispatch(setAuthCheckingFalse());
+      if (!status) throw msg;
+      if (data !== null) {
+        dispatch(setAuthCredentials(data));
+        if (getState().router.location.pathname.indexOf('login') > -1) {
+          NotifyMe('success', 'User already logged in');
+          dispatch(push('/'));
+        }
+      }
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const logout = () => dispatch => {
+  dispatch(resetUser());
+  clearAllStorages();
 };

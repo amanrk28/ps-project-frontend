@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
 import SigninForm from './SigninForm';
 import SignupForm from './SignupForm';
 import { LOGO_URL } from 'utils/utils';
-import { getAuthToken } from 'utils/localStorage';
-import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 import './Register.scss';
 
 const signin = {
@@ -26,11 +25,6 @@ class Register extends Component {
       isSignin: true,
     };
   }
-
-  componentDidMount = () => {
-    const token = getAuthToken();
-    if (token) NotifyMe('success', 'User already logged in');
-  };
 
   switchRegistration = () => {
     const { isSignin } = this.state;
@@ -82,8 +76,15 @@ class Register extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  auth: state.auth,
+});
+
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(Register);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(Register));

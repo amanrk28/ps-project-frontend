@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Input from '../common/Input/Input';
 import Button from '../common/Button/Button';
-import { isEmail } from 'utils/utils';
+import { detectKeyPress, isEmail } from 'utils/utils';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 
 const SIGNUP_FIELDS = [
@@ -46,6 +46,10 @@ class SignupForm extends Component {
     }
   };
 
+  handleKeyDown = e => {
+    if (detectKeyPress(e).enter) this.onClick();
+  };
+
   render() {
     return (
       <div className="login-container center">
@@ -59,6 +63,7 @@ class SignupForm extends Component {
             type={item.type}
             maxLength={item.dataname === 'phone' ? '10' : ''}
             inputClass="login-form-input"
+            onKeyDown={this.handleKeyDown}
           />
         ))}
         <Button text="Signup" onClick={this.onClick} className="login-btn" />

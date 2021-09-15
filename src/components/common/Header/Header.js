@@ -1,12 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Header.scss';
 import SearchIcon from '@material-ui/icons/Search';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
+import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { LOGO_URL } from 'utils/utils';
 
-const Header = () => {
+const Header = props => {
   return (
     <div className="header">
       <Link to="/">
@@ -21,27 +22,35 @@ const Header = () => {
         <div className="header__option">
           <Link to="/checkout">
             <div className="cart_logo__wrapper">
-              <ShoppingBasketIcon className="header__cartLogo" />
-              <div className="cart__count center">0</div>
+              <ShoppingCartOutlinedIcon className="header__cartLogo" />
+              <div className="cart__count center">{props.cartCount}</div>
             </div>
           </Link>
         </div>
+        {props.auth.user_id && (
+          <div className="header__option">
+            <Link to="/orders">
+              <span className="header__optionline">Orders</span>
+            </Link>
+          </div>
+        )}
 
-        <div className="header__option">
-          <span className="header__optionline">
-            Returns
-            <br />
-            Orders
-          </span>
-        </div>
-
-        <div className="header__option">
-          <PersonOutlineIcon className="header__personLogo" />
-          <span className="header__optionline">Sign In</span>
-        </div>
+        {!props.auth.user_id && (
+          <div className="header__option">
+            <Link to="/login">
+              <AccountCircleOutlinedIcon className="header__accountLogo" />
+              {/* <span className="header__optionline">Sign In</span> */}
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-export default Header;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  cartCount: state.cart.cart_count,
+});
+
+export default connect(mapStateToProps, null)(Header);

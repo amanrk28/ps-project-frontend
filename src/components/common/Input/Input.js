@@ -17,6 +17,7 @@ class Input extends PureComponent {
       inputClass = '',
       type = 'text',
       maxLength = '1000',
+      onKeyDown = () => {},
     } = this.props;
     return (
       <div className={`input-wrapper ${inputClass || ''}`} style={style}>
@@ -29,6 +30,7 @@ class Input extends PureComponent {
             onChange={onChange}
             value={value}
             maxLength={maxLength}
+            onKeyDown={onKeyDown}
           />
         </div>
       </div>

@@ -1,12 +1,13 @@
 import Header from '../components/common/Header/Header';
 import Footer from '../components/common/Footer/Footer';
-import Checkout from '../components/Customer/Checkout/Checkout';
+import Orders from '../components/Orders/Orders';
 
-const CheckoutPage = () => (
+const OrdersPage = () => (
   <>
     <Header />
-    <Checkout />
+    <Orders />
     <Footer />
   </>
 );
-export default CheckoutPage;
+
+export default OrdersPage;
