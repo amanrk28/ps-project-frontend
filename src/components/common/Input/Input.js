@@ -17,6 +17,7 @@ class Input extends PureComponent {
       inputClass = '',
       type = 'text',
       maxLength = '1000',
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       onKeyDown = () => {},
     } = this.props;
     return (

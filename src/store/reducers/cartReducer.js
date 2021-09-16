@@ -47,7 +47,7 @@ const cartReducer = (state = initialState, action) => {
         id: action.data.id,
         cart_items: [...action.data.cart_items],
         hash: action.data.hash,
-        total_amount: data.total_amount,
+        total_amount: action.data.total_amount,
       });
 
     default:

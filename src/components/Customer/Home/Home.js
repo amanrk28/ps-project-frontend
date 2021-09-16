@@ -15,6 +15,7 @@ class Home extends Component {
         <div className="home__row">
           {productList.map(product => (
             <Product
+              key={product.name}
               image={product.image}
               title={product.name}
               price={product.price}

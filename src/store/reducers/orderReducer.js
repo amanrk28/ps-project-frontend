@@ -8,6 +8,8 @@ const initialState = {
 
 const orderReducer = (state = initialState, action) => {
   switch (action.type) {
+    case aT.SET_ORDERS:
+      return update(state, { ...state });
     default:
       return state;
   }
