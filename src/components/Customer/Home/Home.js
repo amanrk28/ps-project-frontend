@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Product from '../Product/Product';
 import './Home.scss';
-import { connect } from 'react-redux';
 
 class Home extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
 import SigninForm from './SigninForm';
@@ -47,7 +47,9 @@ class Register extends Component {
       <div className="registration-page-wrapper center">
         <div className="registration-wrapper">
           <div className="logo-wrapper center">
-            <img src={LOGO_URL} alt="MYMSME" />
+            <Link to="/home">
+              <img src={LOGO_URL} alt="MYMSME" />
+            </Link>
           </div>
           <div className="form-wrapper center">
             <div className="header-text">

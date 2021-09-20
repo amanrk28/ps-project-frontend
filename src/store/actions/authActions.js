@@ -79,7 +79,7 @@ export const loginUser = req_data => dispatch => {
     });
 };
 
-export const verifyToken = () => (dispatch, getState) => {
+export const verifyToken = () => dispatch => {
   dispatch(setAuthCheckingTrue());
   verifyTokenApi()
     .then(res => {
@@ -88,10 +88,7 @@ export const verifyToken = () => (dispatch, getState) => {
       if (!status) throw msg;
       if (data !== null) {
         dispatch(setAuthCredentials(data));
-        if (getState().router.location.pathname.indexOf('login') > -1) {
-          NotifyMe('success', 'User already logged in');
-          dispatch(push('/'));
-        }
+        dispatch(push('/'));
       }
     })
     .catch(err => {

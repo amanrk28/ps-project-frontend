@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { withRouter } from 'react-router';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 
-class AdminRoutes extends Component {
-  render() {
-    const { match } = this.props;
-    return (
-      <Switch>
-        <Route path={`${match.path}/`} component={AdminDashboard} exact />
-        <Redirect to={`${match.path}/`} />
-      </Switch>
-    );
-  }
-}
+const AdminRoutes = ({ match }) => {
+  return (
+    <Switch>
+      <Route path={`${match.path}/`} component={AdminDashboard} exact />
+      <Redirect to={`${match.path}/`} />
+    </Switch>
+  );
+};
 
-export default AdminRoutes;
+export default withRouter(AdminRoutes);

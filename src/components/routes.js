@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from '../Pages/HomePage';
-import CheckoutPage from '../Pages/CheckoutPage';
+import { Switch, withRouter } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../Pages/LoginPage';
-import OrdersPage from '../Pages/OrdersPage';
-import * as actions from '../store/actions/authActions';
 import AdminRoutes from './Admin/AdminRoutes';
+import * as actions from '../store/actions/authActions';
+import CustomerRoutes from './Customer/CustomerRoutes';
 
 const defaultRedirectRoute = user => {
   let route = 'home';
-  if (user && (user.is_admin || user.is_store_owner)) route = 'admin';
+  if (user && user.is_store_owner) route = 'admin';
   return route;
 };
 
@@ -22,42 +21,29 @@ class Routes extends Component {
 
   render() {
     const { match, user } = this.props;
-    const { isCheckingAuth } = user;
+    const { isCheckingAuth, is_store_owner } = user;
 
     return (
       <Switch>
         <Route exact path={`${match.url}login`} component={LoginPage} />
         <Route
-          path={`${match.url}`}
+          path={match.url}
           render={() => {
             return isCheckingAuth ? (
               <div style={{ width: '100vw', height: '100vh' }} />
             ) : (
               <Switch>
                 <Redirect
-                  exact
-                  path={`${match.url}`}
+                  path={match.url}
                   to={`${match.url}${defaultRedirectRoute(user)}`}
-                />
-
-                <Route
                   exact
-                  path={`${match.url}checkout`}
-                  component={CheckoutPage}
                 />
-                <Route
-                  exact
-                  path={`${match.url}orders`}
-                  component={OrdersPage}
-                />
-                <Route
-                  exact
-                  path={`${match.url}admin`}
-                  component={AdminRoutes}
-                />
-                <Route exact path={`${match.url}home`} component={HomePage} />
+                {is_store_owner && (
+                  <Route path={`${match.url}admin`} component={AdminRoutes} />
+                )}
+                <Route path={match.url} component={CustomerRoutes} />
                 <Redirect
-                  path={`${match.url}`}
+                  path={match.url}
                   to={`${match.url}${defaultRedirectRoute(user)}`}
                 />
               </Switch>
@@ -77,4 +63,11 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Routes));
+
+// <>
+//   <Route exact path="/checkout" component={CheckoutPage} />
+//   <Route exact path="/orders" component={OrdersPage} />
+//   <Route exact path="/home/:id" component={HomePage} />
+//   <Route exact path="/home" component={HomePage} />
+// </>

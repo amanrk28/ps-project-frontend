@@ -1,17 +1,34 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
 .footer__wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--yellow-primary);
   padding: 8px 0;
+  @include phone {
+    flex-direction: column;
+    justify-content: center;
+  }
   .logo {
     width: 50%;
+    @include phone {
+      width: 100%;
+    }
     img {
       width: 250px;
     }
   }
   .contributors {
     width: 50%;
+    @include phone {
+      width: 100%;
+      padding: 0 14px;
+    }
     .contributors__title {
       color: #fff;
       font-size: 24px;
@@ -21,6 +38,9 @@
       display: grid;
       grid-template-columns: 50% 50%;
       margin: 4px 0;
+      @include phone {
+        grid-template-columns: auto;
+      }
       .contributors__names {
         font-size: 14px;
         line-height: 17px;

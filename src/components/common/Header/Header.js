@@ -2,15 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import './Header.scss';
-import SearchIcon from '@material-ui/icons/Search';
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
+import SearchIcon from '@mui/icons-material/Search';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { LOGO_URL } from 'utils/utils';
 
 const Header = props => {
   return (
     <div className="header">
-      <Link to="/">
+      <Link to="/home">
         <img className="header__logo" src={LOGO_URL} alt="MYMSME" />
       </Link>
       <div className="header__search">

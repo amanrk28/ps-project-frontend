@@ -2,6 +2,7 @@ import React from 'react';
 import './Button.scss';
 
 const Button = ({
+  children,
   text = '',
   onClick,
   dataProps = {},
@@ -12,6 +13,8 @@ const Button = ({
   if (type === 'primary') style += ' primary';
   if (type === 'disabled') style += ' disabled';
 
+  const content = children || text;
+
   return (
     <button
       type="button"
@@ -20,7 +23,7 @@ const Button = ({
       className={style}
       {...dataProps}
     >
-      {text}
+      {content}
     </button>
   );
 };

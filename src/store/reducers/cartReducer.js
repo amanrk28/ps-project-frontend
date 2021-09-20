@@ -6,6 +6,7 @@ const initialState = {
   id: null,
   hash: '',
   total_amount: 0,
+  cart_item_ids: [], // cart_item_ids must always have array of product_id present in cart
   cart_items: [], // cart_items must always be an array of objects having product_id and quantity.
   cart_count: 0,
 };
@@ -20,6 +21,7 @@ const cartReducer = (state = initialState, action) => {
           ...newstate.cart_items,
           { product_id, quantity },
         ];
+        newstate.cart_item_ids = newstate.cart_items.map(x => x.product_id);
         newstate.hash = hash;
         newstate.total_amount += amount;
         newstate.cart_count = cart_count;
@@ -39,6 +41,7 @@ const cartReducer = (state = initialState, action) => {
           }
         });
         newstate.cart_items = newCartItems;
+        newstate.cart_item_ids = newCartItems.map(x => x.product_id);
         return newstate;
       }
     }
@@ -46,6 +49,7 @@ const cartReducer = (state = initialState, action) => {
       return update(state, {
         id: action.data.id,
         cart_items: [...action.data.cart_items],
+        cart_item_ids: action.data.cart_items.map(x => x.product_id),
         hash: action.data.hash,
         total_amount: action.data.total_amount,
       });

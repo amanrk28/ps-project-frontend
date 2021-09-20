@@ -10,4 +10,9 @@ button {
     background-color: var(--yellow-primary);
     border: 1px solid var(--yellow-primary);
   }
+  &.disabled {
+    background-color: #ccc;
+    border: none;
+    cursor: default;
+  }
 }

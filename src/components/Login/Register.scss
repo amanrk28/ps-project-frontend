@@ -1,3 +1,8 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
 .registration-page-wrapper {
   width: 100vw;
   height: 100vh;
@@ -13,6 +18,11 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    @include phone {
+      height: 100%;
+      width: 100%;
+      border-radius: 0;
+    }
     .logo-wrapper {
       background-color: var(--yellow-primary);
       width: 100%;
@@ -24,6 +34,9 @@
       border-radius: 8px 8px 0 0;
       img {
         width: 150px;
+      }
+      @include phone {
+        border-radius: 0;
       }
     }
     .form-wrapper {
@@ -68,6 +81,9 @@
       left: 0;
       background-color: var(--yellow-primary);
       border-radius: 0 0 8px 8px;
+      @include phone {
+        border-radius: 0;
+      }
     }
   }
 }

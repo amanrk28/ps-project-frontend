@@ -1,14 +1,16 @@
 .home {
   display: flex;
   flex-direction: column;
-  padding: 32px 40px;
+  padding: 2rem;
   background-color: #eee;
 
   .home__row {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
     > div {
-      margin: 1rem 0;
+      margin: 1rem;
     }
   }
 }
