@@ -1,14 +1,45 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
 .adminHeader-wrapper {
+  height: 60px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   background-color: var(--yellow-primary);
   position: sticky;
   top: 0;
+  padding: 0 2rem;
   z-index: 100;
+  @include phone {
+    padding: 0 10px;
+  }
   .logo-wrapper img {
     width: 180px;
     object-fit: contain;
     margin: 10px 0;
+  }
+  .adminHeader-logout {
+    cursor: pointer;
+    position: relative;
+    .logoutText {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: -24px;
+      left: -10px;
+      box-shadow: 0 0 32px #888;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #555555bb;
+    }
+    &:hover .logoutText {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }

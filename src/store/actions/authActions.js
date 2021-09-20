@@ -99,4 +99,6 @@ export const verifyToken = () => dispatch => {
 export const logout = () => dispatch => {
   dispatch(resetUser());
   clearAllStorages();
+  NotifyMe('success', 'User logged out');
+  dispatch(push('/'));
 };

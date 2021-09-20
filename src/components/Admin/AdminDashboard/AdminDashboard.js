@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import AdminHeader from '../AdminHeader/AdminHeader';
 import {
   adminOrderActions,
@@ -39,10 +40,15 @@ class AdminDashboard extends Component {
   };
 
   render() {
+    const { user } = this.props;
     return (
       <div className="adminDb-wrapper">
         <AdminHeader />
         <div className="adminDb-body">
+          <div className="adminDb-user-welcome">
+            Welcome back,{' '}
+            <span>{user.full_name || user.first_name || user.last_name}</span>
+          </div>
           <div className="adminDb-tab">PRODUCTS</div>
           <div className="adminDb-tabitems">
             {adminProductActions.map(item => (
@@ -75,4 +81,8 @@ class AdminDashboard extends Component {
   }
 }
 
-export default AdminDashboard;
+const mapStateToProps = state => ({
+  user: state.auth,
+});
+
+export default connect(mapStateToProps, null)(AdminDashboard);
