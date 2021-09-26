@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { LOGO_URL } from 'utils/utils';
+import logoMain from 'common/images/logoMain.png';
 import { logout } from 'store/actions/authActions';
+import { COMPANY_NAME } from 'utils/utils';
 import './AdminHeader.scss';
 
 const AdminHeader = () => {
@@ -17,7 +18,7 @@ const AdminHeader = () => {
     <div className="adminHeader-wrapper">
       <Link to="/admin">
         <div className="logo-wrapper">
-          <img src={LOGO_URL} alt="MyMSME" />
+          <img src={logoMain} alt={COMPANY_NAME} />
         </div>
       </Link>
       <div className="adminHeader-logout" onClick={onClickLogout}>
