@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { LOGO_URL } from 'utils/utils';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import logoMain from 'common/images/logoMain.png';
 import { logout } from 'store/actions/authActions';
+import { COMPANY_NAME } from 'utils/utils';
 import './Header.scss';
 
 const Header = () => {
+  const [isAccountsTabOpen, setIsAccountsTabOpen] = useState(false);
   const dispatch = useDispatch();
   const { auth, cartCount } = useSelector(state => ({
     auth: state.auth,
@@ -20,10 +23,14 @@ const Header = () => {
     dispatch(logout());
   };
 
+  const toggleAccountTab = () => {
+    setIsAccountsTabOpen(!isAccountsTabOpen);
+  };
+
   return (
     <div className="header">
       <Link to="/home">
-        <img className="header__logo" src={LOGO_URL} alt="MyMSME" />
+        <img className="header__logo" src={logoMain} alt={COMPANY_NAME} />
       </Link>
       <div className="header__search">
         <input className="header__searchInput" type="text" />
@@ -31,6 +38,26 @@ const Header = () => {
       </div>
 
       <div className="header__nav">
+        {auth.user_id && (
+          <>
+            <div className="header__option accounts" onClick={toggleAccountTab}>
+              <p className="header__user">
+                Hello, <span>{auth.first_name}</span>
+              </p>
+              {isAccountsTabOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+            </div>
+            {isAccountsTabOpen && (
+              <div className="tabWrapper">
+                <div className="orders">
+                  <Link to="/orders">Orders</Link>
+                </div>
+                <div className="logout" onClick={onClickLogout}>
+                  Logout
+                </div>
+              </div>
+            )}
+          </>
+        )}
         <div className="header__option">
           <Link to="/checkout">
             <div className="cart_logo__wrapper">
@@ -39,26 +66,12 @@ const Header = () => {
             </div>
           </Link>
         </div>
-        {auth.user_id && (
-          <>
-            <div className="header__option">
-              <Link to="/orders">
-                <span className="header__optionline">Orders</span>
-              </Link>
-            </div>
-            <div className="header__option">
-              <div className="adminHeader-logout" onClick={onClickLogout}>
-                <LogoutIcon fontSize="large" />
-              </div>
-            </div>
-          </>
-        )}
 
         {!auth.user_id && (
-          <div className="header__option">
+          <div className="header__option header__signin">
             <Link to="/login">
               <AccountCircleOutlinedIcon className="header__accountLogo" />
-              {/* <span className="header__optionline">Sign In</span> */}
+              <p className="signinText">Sign In</p>
             </Link>
           </div>
         )}

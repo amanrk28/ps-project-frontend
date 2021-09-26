@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Switch, withRouter } from 'react-router';
 import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../Pages/LoginPage';
 import AdminRoutes from './Admin/AdminRoutes';
-import * as actions from '../store/actions/authActions';
 import CustomerRoutes from './Customer/CustomerRoutes';
 
 const defaultRedirectRoute = user => {
@@ -15,10 +13,6 @@ const defaultRedirectRoute = user => {
 };
 
 class Routes extends Component {
-  componentDidMount = () => {
-    this.props.actions.verifyToken();
-  };
-
   render() {
     const { match, user } = this.props;
     const { isCheckingAuth, is_store_owner } = user;
@@ -59,11 +53,7 @@ const mapStateToProps = state => ({
   user: state.auth,
 });
 
-const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(actions, dispatch),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Routes));
+export default connect(mapStateToProps, null)(withRouter(Routes));
 
 // <>
 //   <Route exact path="/checkout" component={CheckoutPage} />

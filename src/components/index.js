@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { Switch, Route } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.min.css';
 import * as productActions from '../store/actions/productActions';
+import * as actions from '../store/actions/authActions';
 import Routes from './routes';
 
 class Index extends Component {
@@ -13,9 +14,10 @@ class Index extends Component {
   };
 
   getCommonRequiredData = () => {
-    const { productActions } = this.props;
+    const { productActions, actions } = this.props;
     productActions.getProductCategories();
     productActions.getProducts();
+    actions.verifyToken();
   };
   render() {
     return (
@@ -31,6 +33,7 @@ class Index extends Component {
 
 const mapDispatchToProps = dispatch => ({
   productActions: bindActionCreators(productActions, dispatch),
+  actions: bindActionCreators(actions, dispatch),
 });
 
 export default connect(null, mapDispatchToProps)(Index);

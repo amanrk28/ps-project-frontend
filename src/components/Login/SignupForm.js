@@ -1,16 +1,26 @@
 import React, { Component } from 'react';
-import Input from '../common/Input/Input';
-import Button from '../common/Button/Button';
 import { detectKeyPress, isEmail } from 'utils/utils';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import Input from '../common/Input/Input';
+import Button from '../common/Button/Button';
 
 const SIGNUP_FIELDS = [
-  { name: 'First Name', dataname: 'firstName', type: 'text' },
-  { name: 'Last Name', dataname: 'lastName', type: 'text' },
-  { name: 'Phone Number', dataname: 'phone', type: 'text' },
-  { name: 'Email', dataname: 'email', type: 'email' },
-  { name: 'Password', dataname: 'password', type: 'password' },
-  { name: 'Confirm Password', dataname: 'checkPassword', type: 'password' },
+  { name: 'First Name', dataname: 'firstName', type: 'text', required: true },
+  { name: 'Last Name', dataname: 'lastName', type: 'text', required: false },
+  { name: 'Phone Number', dataname: 'phone', type: 'text', required: true },
+  { name: 'Email', dataname: 'email', type: 'email', required: true },
+  {
+    name: 'Password',
+    dataname: 'password',
+    type: 'password',
+    required: true,
+  },
+  {
+    name: 'Confirm Password',
+    dataname: 'checkPassword',
+    type: 'password',
+    required: true,
+  },
 ];
 
 class SignupForm extends Component {
@@ -35,6 +45,12 @@ class SignupForm extends Component {
     if (password !== checkPassword)
       return NotifyMe('error', 'Passwords do not match. Try again!');
     else {
+      const sanityCheck = SIGNUP_FIELDS.filter(x => {
+        if (x.required && !this.state[x.dataname])
+          NotifyMe('error', `${x.name} is mandatory!`);
+        return x;
+      });
+      if (sanityCheck.length > 0) return;
       const dataPayload = {
         email,
         password,

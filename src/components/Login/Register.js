@@ -5,8 +5,9 @@ import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
 import SigninForm from './SigninForm';
 import SignupForm from './SignupForm';
-import { LOGO_URL } from 'utils/utils';
+import logoMain from 'common/images/logoMain.png';
 import './Register.scss';
+import { COMPANY_NAME } from 'utils/utils';
 
 const signin = {
   header: 'Sign in to continue!',
@@ -48,7 +49,7 @@ class Register extends Component {
         <div className="registration-wrapper">
           <div className="logo-wrapper center">
             <Link to="/home">
-              <img src={LOGO_URL} alt="MYMSME" />
+              <img src={logoMain} alt={COMPANY_NAME} />
             </Link>
           </div>
           <div className="form-wrapper center">
