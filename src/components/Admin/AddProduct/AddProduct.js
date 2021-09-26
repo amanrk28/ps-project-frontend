@@ -34,11 +34,9 @@ class AddProduct extends Component {
     if (location.hash !== '#edit') return;
     const { id } = match.params;
     this.setState({ isNewProduct: false });
-    console.log('productList', productList);
     const product = productList.filter(
       x => parseInt(x.id, 10) === parseInt(id, 10)
     );
-    console.log(product);
     if (product.length) {
       const { name, description, price, stock, image, category } = product[0];
       this.setState({ name, description, price, stock, image, category, id });
@@ -54,7 +52,7 @@ class AddProduct extends Component {
   onClickBack = () => this.props.history.goBack();
 
   onChangeImage = e => {
-    console.log(e.target);
+    console.log(e.target.value);
   };
 
   onAddProduct = () => {

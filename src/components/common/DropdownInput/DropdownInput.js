@@ -21,7 +21,7 @@ class DropdownInput extends Component {
 
   onChange = (val, e) => {
     const { dataProps = {} } = this.props;
-    const elem = createElementWithEvent({
+    createElementWithEvent({
       value: val,
       dataname: this.props.dataname,
       event: 'change',
