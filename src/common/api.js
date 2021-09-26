@@ -1,8 +1,8 @@
 import { getAuthToken } from '../utils/localStorage';
 
-const { REACT_APP_SERVER_URL, REACT_APP_SERVER_PORT } = process.env;
+const { REACT_APP_SERVER_URL } = process.env;
 
-const server_url = `${REACT_APP_SERVER_URL}:${REACT_APP_SERVER_PORT}`;
+const server_url = `${REACT_APP_SERVER_URL}`;
 
 const callAPI = async (method, url, data = {}) => {
   const token = getAuthToken();
