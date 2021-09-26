@@ -71,7 +71,8 @@ export const loginUser = req_data => dispatch => {
       if (!status) throw msg;
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
-      dispatch(push('/'));
+      if (data.user.is_store_owner) dispatch(push('/admin'));
+      else dispatch(push('/'));
     })
     .catch(err => {
       NotifyMe('error', `${err}!`);
@@ -88,7 +89,8 @@ export const verifyToken = () => dispatch => {
       if (!status) throw msg;
       if (data !== null) {
         dispatch(setAuthCredentials(data));
-        dispatch(push('/'));
+        if (data.user.is_store_owner) dispatch(push('/admin'));
+        else dispatch(push('/'));
       }
     })
     .catch(err => {
