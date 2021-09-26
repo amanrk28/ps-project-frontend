@@ -19,6 +19,12 @@ const resetUser = () => ({
   type: aT.RESET_USER,
 });
 
+const userRedirectAfterAuth = user => {
+  let route = '/';
+  if (user.is_store_owner) route = '/admin';
+  return route;
+};
+
 export const setAuthCheckingTrue = () => ({ type: aT.SET_AUTH_CHECKING_TRUE });
 export const setAuthCheckingFalse = () => ({
   type: aT.SET_AUTH_CHECKING_FALSE,
@@ -51,7 +57,7 @@ export const signupUser = req_data => dispatch => {
       if (!status) throw msg;
       NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
-      dispatch(push('/'));
+      dispatch(push(userRedirectAfterAuth(data.user)));
     })
     .catch(err => {
       NotifyMe('error', `${err}!`);
@@ -71,8 +77,7 @@ export const loginUser = req_data => dispatch => {
       if (!status) throw msg;
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
-      if (data.user.is_store_owner) dispatch(push('/admin'));
-      else dispatch(push('/'));
+      dispatch(push(userRedirectAfterAuth(data.user)));
     })
     .catch(err => {
       NotifyMe('error', `${err}!`);
@@ -80,7 +85,7 @@ export const loginUser = req_data => dispatch => {
     });
 };
 
-export const verifyToken = () => dispatch => {
+export const verifyToken = () => (dispatch, getState) => {
   dispatch(setAuthCheckingTrue());
   verifyTokenApi()
     .then(res => {
@@ -89,8 +94,8 @@ export const verifyToken = () => dispatch => {
       if (!status) throw msg;
       if (data !== null) {
         dispatch(setAuthCredentials(data));
-        if (data.user.is_store_owner) dispatch(push('/admin'));
-        else dispatch(push('/'));
+        if (getState().router.location.pathname.indexOf('login') > -1)
+          dispatch(push(userRedirectAfterAuth(data.user)));
       }
     })
     .catch(err => {

@@ -7,7 +7,7 @@ import './Footer.scss';
 const Footer = () => (
   <div className="footer__wrapper">
     <div className="logo">
-      <Link to="/home">
+      <Link to="/">
         <img src={logoMain} alt={COMPANY_NAME} />
       </Link>
     </div>

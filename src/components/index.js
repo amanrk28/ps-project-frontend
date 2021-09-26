@@ -10,15 +10,12 @@ import Routes from './routes';
 
 class Index extends Component {
   componentDidMount = () => {
-    this.getCommonRequiredData();
-  };
-
-  getCommonRequiredData = () => {
     const { productActions, actions } = this.props;
     productActions.getProductCategories();
     productActions.getProducts();
     actions.verifyToken();
   };
+
   render() {
     return (
       <div style={{ position: 'relative' }}>

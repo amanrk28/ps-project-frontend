@@ -48,7 +48,7 @@ class Register extends Component {
       <div className="registration-page-wrapper center">
         <div className="registration-wrapper">
           <div className="logo-wrapper center">
-            <Link to="/home">
+            <Link to="/">
               <img src={logoMain} alt={COMPANY_NAME} />
             </Link>
           </div>

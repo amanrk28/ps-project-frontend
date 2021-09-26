@@ -19,8 +19,8 @@
     align-items: center;
     position: relative;
     @include phone {
-      height: 100%;
-      width: 100%;
+      height: 100vh;
+      width: 100vw;
       border-radius: 0;
     }
     .logo-wrapper {

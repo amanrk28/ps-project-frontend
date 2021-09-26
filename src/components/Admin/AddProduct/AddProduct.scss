@@ -1,0 +1,111 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+.addProduct-wrapper {
+  width: 640px;
+  margin: auto;
+  @include phone {
+    width: 100%;
+  }
+  .addProduct-header-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    .goBack {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      box-shadow: 4px 4px 16px #aaa;
+      transition: transform 0.2s ease-in;
+      position: absolute;
+      left: 0;
+      background-color: #fff;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    }
+    .addProduct-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .addProduct-fields-container {
+    flex-direction: column;
+    .inputField-container {
+      width: 100%;
+      margin-bottom: 1rem;
+      .addProduct-input {
+        width: 100%;
+      }
+    }
+    .dropdownInput {
+      width: 100%;
+      margin-bottom: 1rem;
+      .dropdownClass {
+        height: 40px !important;
+        border-radius: 4px;
+        border: solid 1px var(--yellow-primary);
+        background-color: #ffffff;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        font-weight: 500;
+        color: #2c3556;
+        cursor: pointer;
+        margin-top: 4px;
+      }
+      .dropdownBoxClass {
+        width: 200px;
+        position: absolute;
+        z-index: 10;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0px 2px 7px 2px gainsboro;
+        width: 100%;
+        padding: 0 0.1rem;
+        max-height: 12rem;
+        overflow-y: auto;
+      }
+      .dropDownItemClass {
+        height: 32px;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 2.57;
+        color: #8288a2;
+        &:hover {
+          cursor: pointer;
+          background-color: var(--grey-secondary);
+        }
+      }
+      .dropDownItemActiveClass {
+        color: var(--yellow-primary);
+        font-weight: 600;
+      }
+    }
+    .textareaInput {
+      width: 100%;
+      textarea {
+        margin: 4px 0;
+        border: 1px solid var(--yellow-primary);
+        padding: 8px;
+      }
+    }
+    .imageInput {
+      width: 100%;
+      > input {
+        margin: 4px 0;
+        padding: 0;
+      }
+    }
+  }
+}

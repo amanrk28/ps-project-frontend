@@ -5,7 +5,6 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 const productActionId = {
   viewProduct: 'view_product',
   addProduct: 'add_product',
-  updateProduct: 'update_product',
 };
 
 const adminProductActions = [
@@ -18,11 +17,6 @@ const adminProductActions = [
     id: productActionId.addProduct,
     name: 'Add Product',
     icon: AddIcon,
-  },
-  {
-    id: productActionId.updateProduct,
-    name: 'Update Product',
-    icon: ModeEditIcon,
   },
 ];
 

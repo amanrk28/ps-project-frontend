@@ -46,9 +46,11 @@ class SignupForm extends Component {
       return NotifyMe('error', 'Passwords do not match. Try again!');
     else {
       const sanityCheck = SIGNUP_FIELDS.filter(x => {
-        if (x.required && !this.state[x.dataname])
+        if (x.required && !this.state[x.dataname]) {
           NotifyMe('error', `${x.name} is mandatory!`);
-        return x;
+          return true;
+        }
+        return false;
       });
       if (sanityCheck.length > 0) return;
       const dataPayload = {

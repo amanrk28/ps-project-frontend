@@ -9,71 +9,68 @@
   }
 }
 
-.adminDb-wrapper {
-  .adminDb-body {
-    padding: 2rem;
+.adminDb-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  @include bigPhone {
+    padding: 20px 10px;
+  }
+  .adminDb-user-welcome {
+    font-size: 32px;
+    line-height: 49px;
+    color: #555;
+    span {
+      font-size: 34px;
+      font-weight: 600;
+    }
+    @include bigPhone {
+      font-size: 20px;
+      line-height: 30px;
+      span {
+        white-space: pre;
+        font-size: 30px;
+      }
+    }
+  }
+  .adminDb-tab {
+    background-color: var(--yellow-primary);
+    padding: 10px;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 1.5rem;
+  }
+  .adminDb-tabitems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    @include bigPhone {
+      justify-content: center;
+    }
+  }
+  .adminDb-actionCard {
+    height: 200px;
+    width: 200px;
+    margin: 1rem;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 0 16px #ccc;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    @include bigPhone {
-      padding: 20px 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: large;
+    cursor: pointer;
+    color: var(--yellow-primary);
+    p {
+      margin-top: 1rem;
+      text-align: center;
     }
-    .adminDb-user-welcome {
-      font-size: 32px;
-      line-height: 49px;
-      color: #555;
-      span {
-        font-size: 34px;
-        font-weight: 600;
-      }
-      @include bigPhone {
-        font-size: 20px;
-        line-height: 30px;
-        span {
-          white-space: pre;
-          font-size: 30px;
-        }
-      }
-    }
-    .adminDb-tab {
-      background-color: var(--yellow-primary);
-      padding: 10px;
-      border-radius: 4px;
-      color: #fff;
-      font-weight: 700;
-      margin-top: 1.5rem;
-    }
-    .adminDb-tabitems {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: center;
-      @include bigPhone {
-        justify-content: center;
-      }
-    }
-    .adminDb-actionCard {
-      height: 200px;
-      width: 200px;
-      margin: 1rem;
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 0 16px #ccc;
-      background-color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: large;
-      cursor: pointer;
-      color: var(--yellow-primary);
-      p {
-        margin-top: 1rem;
-        text-align: center;
-      }
-      @include phone {
-        width: 100%;
-      }
+    @include phone {
+      width: 100%;
     }
   }
 }

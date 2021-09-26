@@ -93,7 +93,7 @@ export const createProduct = req_data => {
   };
 };
 
-export const updateProduct = ({ product_id, requestData }) => {
+export const updateProduct = ({ product_id, requestData, cb }) => {
   return dispatch => {
     updateProductApi(product_id, requestData)
       .then(res => {
@@ -101,6 +101,7 @@ export const updateProduct = ({ product_id, requestData }) => {
         if (!status) throw msg;
         const productData = getFieldsForProduct(data);
         dispatch(setUpdatedProduct(productData));
+        if (cb) cb();
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);

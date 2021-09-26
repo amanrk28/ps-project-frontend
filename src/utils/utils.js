@@ -14,3 +14,29 @@ export const detectKeyPress = e => {
   else if (e.keyCode === '13' || e.keyCode === 13) returnObj.enter = true;
   return returnObj;
 };
+
+export const isObject = objectToCheck => {
+  return Object.prototype.toString.call(objectToCheck) === '[object Object]';
+};
+
+export const createElementWithEvent = ({
+  value,
+  dataname,
+  onChange,
+  event,
+  dataProps,
+}) => {
+  const elem = document.createElement('input');
+  if (dataProps && isObject(dataProps) && Object.keys(dataProps).length) {
+    for (let item in dataProps) {
+      if (dataProps.hasOwnProperty(item)) {
+        elem.setAttribute(item, dataProps[item]);
+      }
+    }
+  }
+  elem.setAttribute('data-name', dataname);
+  elem.setAttribute('value', value);
+  elem.addEventListener(event, onChange);
+  elem.dispatchEvent(new Event(event));
+  return elem;
+};

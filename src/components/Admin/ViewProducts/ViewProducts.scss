@@ -1,0 +1,75 @@
+.viewProducts-wrapper {
+  .viewProducts-header-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    .goBack {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      box-shadow: 4px 4px 16px #aaa;
+      transition: transform 0.2s ease-in;
+      position: absolute;
+      left: 0;
+      background-color: #fff;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    }
+    .viewProducts-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .table-wrapper {
+    li {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid #ccc;
+      &:first-child {
+        background-color: var(--yellow-secondary);
+      }
+      > div {
+        flex: 1;
+        padding: 0 8px;
+      }
+      .price,
+      .stock {
+        flex: 0.3;
+      }
+      .name,
+      .category {
+        flex: 0.6;
+      }
+      .edit {
+        flex: 0.1;
+        transition: transform 0.2s ease-in;
+        &:not(.tableHeader):hover {
+          transform: scale(1.1);
+          cursor: pointer;
+        }
+      }
+      .image {
+        flex: 0.3;
+        display: flex;
+        align-items: center;
+        width: 100px;
+        &:not(.tableHeader) {
+          height: 100px;
+        }
+        img {
+          box-shadow: 0 0 32px #aaa;
+          border-radius: 8px;
+          width: 100px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
