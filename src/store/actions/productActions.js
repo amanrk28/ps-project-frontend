@@ -85,6 +85,7 @@ export const createProduct = ({ requestData, cb }) => {
         if (!status) throw msg;
         const productData = getFieldsForProduct(data);
         dispatch(setNewProduct(productData));
+        NotifyMe('success', 'Product added sucessfully');
         if (cb) cb();
       })
       .catch(err => {

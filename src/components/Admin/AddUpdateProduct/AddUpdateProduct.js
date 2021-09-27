@@ -77,7 +77,7 @@ class AddUpdateProduct extends Component {
       description,
     };
     const onCb = () => {
-      history.goBack();
+      history.push('/admin/products');
     };
     actions.createProduct({ requestData, cb: onCb });
   };

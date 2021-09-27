@@ -3,7 +3,8 @@
   flex-direction: column;
   padding: 2rem;
   background-color: #eee;
-
+  min-height: 90vh;
+  position: relative;
   .home__row {
     display: flex;
     flex-wrap: wrap;
@@ -12,5 +13,18 @@
     > div {
       margin: 1rem;
     }
+  }
+  .home__empty_products {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 400;
+    color: var(--grey-primary);
+    flex-direction: column;
   }
 }
