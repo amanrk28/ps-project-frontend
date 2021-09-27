@@ -1,6 +1,18 @@
 .dropdownInput-wrapper {
   flex: 1;
   position: relative;
+  .dropdownClass {
+    height: 40px !important;
+    border-radius: 4px;
+    border: solid 1px var(--yellow-primary);
+    background-color: #ffffff;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2c3556;
+    cursor: pointer;
+    margin-top: 4px;
+  }
 
   span {
     border-radius: 8px;
@@ -55,6 +67,38 @@
     box-shadow: 0 12px 30px 0 rgba(9, 12, 11, 0.2);
     max-height: 40vh;
     overflow-y: scroll;
+    &.dropdownBoxClass {
+      width: 200px;
+      position: absolute;
+      z-index: 10;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0px 2px 7px 2px gainsboro;
+      width: 100%;
+      padding: 0 0.1rem;
+      max-height: 12rem;
+      overflow-y: auto;
+    }
+    .dropDownItemClass {
+      height: 32px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 2.57;
+      color: #8288a2;
+      &:hover {
+        cursor: pointer;
+        background-color: var(--grey-secondary);
+      }
+    }
+    .dropDownItemActiveClass {
+      color: var(--yellow-primary);
+      font-weight: 600;
+    }
   }
 
   .capitalize {

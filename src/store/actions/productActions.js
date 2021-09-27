@@ -69,22 +69,23 @@ const getFieldsForProduct = data => ({
   added_by: data.added_by,
 });
 
-export const createProduct = req_data => {
+export const createProduct = ({ requestData, cb }) => {
   return dispatch => {
     if (
-      !req_data.name ||
-      !req_data.price ||
-      !req_data.stock ||
-      !req_data.image ||
-      !req_data.description
+      !requestData.name ||
+      !requestData.price ||
+      !requestData.stock ||
+      !requestData.image ||
+      !requestData.description
     )
       return NotifyMe('error', 'Cannot create product with Incomplete details');
-    createProductApi(req_data)
+    createProductApi(requestData)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
         const productData = getFieldsForProduct(data);
         dispatch(setNewProduct(productData));
+        if (cb) cb();
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);

@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ImageIcon from '@mui/icons-material/Image';
 import DropdownInput from 'components/common/DropdownInput/DropdownInput';
 import Button from 'components/common/Button/Button';
 import Input from 'components/common/Input/Input';
 import * as actions from 'store/actions/productActions';
-import './AddProduct.scss';
+import './AddUpdateProduct.scss';
+import FileInput from 'components/common/FileInput/FileInput';
 
 const PRODUCT_FIELDS = [
   { name: 'Product Name', dataname: 'name', type: 'text' },
@@ -14,7 +16,7 @@ const PRODUCT_FIELDS = [
   { name: 'Stock', dataname: 'stock', type: 'number' },
 ];
 
-class AddProduct extends Component {
+class AddUpdateProduct extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +41,15 @@ class AddProduct extends Component {
     );
     if (product.length) {
       const { name, description, price, stock, image, category } = product[0];
-      this.setState({ name, description, price, stock, image, category, id });
+      this.setState({
+        name,
+        description,
+        price,
+        stock,
+        category,
+        image,
+        id,
+      });
     }
   };
 
@@ -51,18 +61,38 @@ class AddProduct extends Component {
 
   onClickBack = () => this.props.history.goBack();
 
-  onChangeImage = e => {
-    console.log(e.target.value);
+  onChangeImage = image => {
+    if (image) this.setState({ image });
   };
 
   onAddProduct = () => {
-    console.log('add');
+    const { actions, history } = this.props;
+    const { name, price, stock, image, category, description } = this.state;
+    const requestData = {
+      name,
+      price,
+      stock,
+      image,
+      category,
+      description,
+    };
+    const onCb = () => {
+      history.goBack();
+    };
+    actions.createProduct({ requestData, cb: onCb });
   };
 
   onUpdateProduct = () => {
     const { actions, history } = this.props;
     const { name, price, stock, image, category, description, id } = this.state;
-    const requestData = { name, price, stock, image, category, description };
+    const requestData = {
+      name,
+      price,
+      stock,
+      image,
+      category,
+      description,
+    };
     const onCb = () => {
       history.goBack();
     };
@@ -76,7 +106,7 @@ class AddProduct extends Component {
   };
 
   render() {
-    const { description, category, isNewProduct } = this.state;
+    const { description, category, isNewProduct, image } = this.state;
     const { productsCategories } = this.props;
 
     return (
@@ -90,8 +120,15 @@ class AddProduct extends Component {
           </div>
         </div>
         <div className="addProduct-fields-container center">
+          <div className="addProduct-image-container center">
+            {image ? <img src={image} /> : <ImageIcon />}
+          </div>
+          <div className="addProduct-input-container">
+            <p>Product Image</p>
+            <FileInput onChange={this.onChangeImage} />
+          </div>
           {PRODUCT_FIELDS.map(field => (
-            <div className="inputField-container" key={field.dataname}>
+            <div className="addProduct-input-container" key={field.dataname}>
               <p>{field.name}</p>
               <Input
                 dataname={field.dataname}
@@ -103,7 +140,7 @@ class AddProduct extends Component {
               />
             </div>
           ))}
-          <div className="dropdownInput">
+          <div className="addProduct-dropdown-container">
             <p>Product Category</p>
             <DropdownInput
               options={productsCategories}
@@ -111,14 +148,9 @@ class AddProduct extends Component {
               onChange={e => this.onChange(e, 'category')}
               value={category}
               dataname="category"
-              dropdownClass="dropdownClass"
-              dropdownPlaceholderClass="dropdownPlaceholderClass"
-              dropdownBoxClass="dropdownBoxClass"
-              dropDownItemClass="dropDownItemClass"
-              dropDownItemActiveClass="dropDownItemActiveClass"
             />
           </div>
-          <div className="textareaInput">
+          <div className="addProduct-textarea-container">
             <p>Product Description</p>
             <textarea
               onChange={e => this.onChange(e, 'description')}
@@ -128,13 +160,11 @@ class AddProduct extends Component {
               placeholder="Max. 250 characters"
             />
           </div>
-          <div className="imageInput">
-            <p>Product Image</p>
-            <input type="file" onChange={this.onChangeImage} />
-          </div>
-          <Button type="primary" onClick={this.onClickSubmit}>
-            {isNewProduct ? 'Add' : 'Update'}
-          </Button>
+          <Button
+            type="primary"
+            text={isNewProduct ? 'Add' : 'Update'}
+            onClick={this.onClickSubmit}
+          />
         </div>
       </div>
     );
@@ -150,4 +180,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(AddUpdateProduct);

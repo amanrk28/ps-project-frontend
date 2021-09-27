@@ -25,7 +25,7 @@ class ViewProducts extends Component {
   };
 
   render() {
-    const { productList } = this.props;
+    const { productList, productCategories } = this.props;
     return (
       <div className="viewProducts-wrapper">
         <div className="viewProducts-header-wrapper center">
@@ -57,12 +57,21 @@ class ViewProducts extends Component {
                       <ModeEditIcon />
                     </div>
                   )}
-                  {item.className !== 'image' && item.className !== 'edit' && (
+                  {item.className === 'category' && (
                     <p>
-                      {item.className === 'price' && <span>&#8377;</span>}
-                      {product[item.className]}
+                      {productCategories.filter(
+                        x => x.id === product.category
+                      )[0].name || product.category}
                     </p>
                   )}
+                  {item.className !== 'image' &&
+                    item.className !== 'category' &&
+                    item.className !== 'edit' && (
+                      <p>
+                        {item.className === 'price' && <span>&#8377;</span>}
+                        {product[item.className]}
+                      </p>
+                    )}
                 </div>
               ))}
             </li>
@@ -75,6 +84,7 @@ class ViewProducts extends Component {
 
 const mapStateToProps = state => ({
   productList: state.product.products,
+  productCategories: state.product.product_categories,
 });
 
 export default connect(mapStateToProps, null)(ViewProducts);

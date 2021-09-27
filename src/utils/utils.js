@@ -40,3 +40,22 @@ export const createElementWithEvent = ({
   elem.dispatchEvent(new Event(event));
   return elem;
 };
+
+const uploadFileApi = async formData => {
+  const { REACT_APP_CDN_UPLOAD_URL, REACT_APP_CDN_UPLOAD_PRESET } = process.env;
+  formData.append('upload_preset', REACT_APP_CDN_UPLOAD_PRESET);
+  const options = {
+    method: 'post',
+    body: formData,
+  };
+  return fetch(REACT_APP_CDN_UPLOAD_URL, options).then(res => res.json());
+};
+
+export async function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await uploadFileApi(formData);
+  const uploadObj = { name: file.name };
+  if (res && res.url) uploadObj.url = res.url;
+  return uploadObj;
+}

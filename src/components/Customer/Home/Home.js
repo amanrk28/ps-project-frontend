@@ -1,34 +1,28 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Product from '../Product/Product';
 import './Home.scss';
 
-class Home extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    const { productList } = this.props;
-    return (
-      <div className="home">
-        <div className="home__row">
-          {productList.map(product => (
+const Home = () => {
+  const productList = useSelector(store => store.product.products);
+  return (
+    <div className="home">
+      <div className="home__row">
+        {productList.length > 0 ? (
+          productList.map(product => (
             <Product
               key={product.name}
               image={product.image}
               title={product.name}
               price={product.price}
             />
-          ))}
-        </div>
+          ))
+        ) : (
+          <div>No Products Available now</div>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
-const mapStateToProps = state => ({
-  productList: state.product.products,
-});
-
-export default connect(mapStateToProps, null)(Home);
+export default Home;

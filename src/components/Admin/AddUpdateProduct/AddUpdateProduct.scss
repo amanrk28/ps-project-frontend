@@ -1,0 +1,74 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+.addProduct-wrapper {
+  width: 640px;
+  margin: auto;
+  padding: 2rem 0;
+  @include phone {
+    width: 100%;
+  }
+  .addProduct-header-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    .goBack {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      box-shadow: 4px 4px 16px #aaa;
+      transition: transform 0.2s ease-in;
+      position: absolute;
+      left: 0;
+      background-color: #fff;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    }
+    .addProduct-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .addProduct-fields-container {
+    flex-direction: column;
+    .addProduct-image-container {
+      width: 150px;
+      height: 150px;
+      border-radius: 4px;
+      background-color: var(--grey-secondary);
+      img {
+        border-radius: 4px;
+        width: 150px;
+        height: 150px;
+        object-fit: contain;
+      }
+    }
+    .addProduct-input-container {
+      width: 100%;
+      margin-bottom: 1rem;
+      .addProduct-input {
+        width: 100%;
+      }
+    }
+    .addProduct-dropdown-container {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .addProduct-textarea-container {
+      width: 100%;
+      margin-bottom: 1rem;
+      textarea {
+        margin: 4px 0;
+        border: 1px solid var(--yellow-primary);
+        padding: 8px;
+      }
+    }
+  }
+}

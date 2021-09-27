@@ -2,14 +2,8 @@ import React, { Component } from 'react';
 import { Button, Menu, MenuItem, Wrapper } from 'react-aria-menubutton';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import './DropdownInput.scss';
 import { createElementWithEvent } from 'utils/utils';
-
-const ToggleIcon = ({ open }) => (
-  <div className="labelDownarrow">
-    {open ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
-  </div>
-);
+import './DropdownInput.scss';
 
 class DropdownInput extends Component {
   constructor(props) {
@@ -40,11 +34,6 @@ class DropdownInput extends Component {
       labelPlaceholder,
       isError,
       dataProps,
-      dropdownClass,
-      dropdownPlaceholderClass,
-      dropdownBoxClass,
-      dropDownItemClass,
-      dropDownItemActiveClass,
       errorClass,
       openClass,
       className = '',
@@ -54,9 +43,9 @@ class DropdownInput extends Component {
     let itemLabel = value || '';
 
     if (options.length) {
-      const items = options.filter(item => item === value);
+      const items = options.filter(item => String(item.id) === String(value));
       if (items.length === 1) {
-        itemLabel = items[0] || itemLabel;
+        itemLabel = items[0].name || itemLabel;
       }
     }
 
@@ -69,7 +58,7 @@ class DropdownInput extends Component {
         }}
       >
         <Button
-          className={`${dropdownClass || ''} ${(isError && errorClass) || ''} ${
+          className={`dropdownClass ${(isError && errorClass) || ''} ${
             (isOpen && openClass) || ''
           }`}
           {...dataProps}
@@ -77,25 +66,28 @@ class DropdownInput extends Component {
           {itemLabel ? (
             <div className="labelValue">{itemLabel}</div>
           ) : (
-            <div className={`labelName ${dropdownPlaceholderClass}`}>
+            <div className="labelName dropdownPlaceholderClass">
               {labelPlaceholder}
             </div>
           )}
-          <ToggleIcon open={isOpen} />
+          <div className="labelDownarrow">
+            {isOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+          </div>
         </Button>
 
-        <Menu className={`dropdownInput-dropdownbox ${dropdownBoxClass}`}>
+        <Menu className="dropdownInput-dropdownbox dropdownBoxClass">
           {options.map(item => (
             <MenuItem
-              key={`_${item}`}
-              className={`${dropDownItemClass} ${
-                value === item && dropDownItemActiveClass
+              key={`_${item.id}`}
+              className={`dropDownItemClass ${
+                String(value) === String(item.id) && 'dropDownItemActiveClass'
               }`}
               data-name={dataname}
-              data-value={item}
-              value={item}
+              data-label={item.name}
+              data-value={item.id}
+              value={item.id}
             >
-              {item}
+              {item.name}
             </MenuItem>
           ))}
         </Menu>

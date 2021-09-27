@@ -12,7 +12,7 @@ class Input extends PureComponent {
       dataname,
       placeholder = '',
       onChange,
-      value,
+      value = '',
       style = {},
       inputClass = '',
       type = 'text',
@@ -29,7 +29,7 @@ class Input extends PureComponent {
             data-name={dataname}
             placeholder={placeholder}
             onChange={onChange}
-            value={value}
+            value={value || ''}
             maxLength={maxLength}
             onKeyDown={onKeyDown}
           />

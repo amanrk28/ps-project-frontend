@@ -16,14 +16,14 @@ const productReducer = (state = initialState, action) => {
     case aT.SET_PRODUCT_CATEGORIES:
       return update(state, { product_categories: action.data });
     case aT.SET_NEW_PRODUCT:
-      return update(state, { products: [...state.products, action.data] });
+      return update(state, { products: [action.data, ...state.products] });
     case aT.SET_UPDATED_PRODUCT: {
       {
         const newstate = { ...state };
-        const newProducts = newstate.products.filter(
-          item => item.id !== action.data.id
+        const newProductIndex = newstate.products.findIndex(
+          x => x.id === action.data.id
         );
-        newstate.products = [...newProducts, { ...action.data }];
+        newstate.products[newProductIndex] = { ...action.data };
         return newstate;
       }
     }
