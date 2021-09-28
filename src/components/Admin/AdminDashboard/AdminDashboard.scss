@@ -65,6 +65,10 @@
     font-size: large;
     cursor: pointer;
     color: var(--yellow-primary);
+    transition: transform 0.15s ease-in;
+    &:hover {
+      transform: scale(1.04);
+    }
     p {
       margin-top: 1rem;
       text-align: center;

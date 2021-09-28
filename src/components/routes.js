@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Switch, withRouter } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import LoginPage from '../Pages/LoginPage';
 import AdminRoutes from './Admin/AdminRoutes';
 import CustomerRoutes from './Customer/CustomerRoutes';
@@ -18,6 +18,7 @@ class Routes extends Component {
         ) : (
           <Route path={match.url} component={CustomerRoutes} />
         )}
+        <Redirect to={is_store_owner ? `${match.url}admin` : match.url} />
       </Switch>
     );
   }
