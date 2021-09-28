@@ -1,7 +1,7 @@
 import { convertDateStampToHumanDate } from 'utils/utils';
 import * as aT from '../actionTypes/orderActionTypes';
 
-const update = (prevState, newState) => ({ ...prevState, ...newState });
+// const update = (prevState, newState) => ({ ...prevState, ...newState });
 
 const initialState = {
   orderList: [],
