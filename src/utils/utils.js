@@ -59,3 +59,42 @@ export async function uploadFile(file) {
   if (res && res.url) uploadObj.url = res.url;
   return uploadObj;
 }
+
+export const convertDateStampToHumanDate = dateString => {
+  const dateObj = new Date(dateString);
+  if (dateObj) {
+    let date = dateObj.getDate();
+    date = date.toString().length === 1 ? '0' + date : date;
+    let month = dateObj.getMonth();
+    month = month.toString().length === 1 ? '0' + month : month;
+    const year = dateObj.getFullYear();
+    const str = `${date}/${month}/${year}`;
+    return str;
+  } else {
+    return dateString;
+  }
+};
+
+export const getSearchStringFromObject = searchObject => {
+  const query = Object.entries(searchObject).reduce(
+    (accumulator, currentValue) => {
+      let thisReturnValue = '';
+      if (accumulator.length > 0) {
+        thisReturnValue = '&';
+      }
+      const [key, value] = currentValue;
+      return accumulator + thisReturnValue + `${key}=${value}`;
+    },
+    ''
+  );
+  return '?' + query;
+};
+
+export const queryStringify = obj => {
+  let arr = [];
+  for (let x in obj) {
+    arr.push(`${x}=${obj[x]}`);
+  }
+  console.log;
+  return arr.join('&');
+};

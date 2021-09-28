@@ -1,0 +1,10 @@
+.filter-wrapper {
+  padding: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  > div > span {
+    width: 180px;
+  }
+}

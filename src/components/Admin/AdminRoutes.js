@@ -5,6 +5,7 @@ import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
 import ViewProducts from './ViewProducts/ViewProducts';
+import ViewOrders from './ViewOrders/ViewOrders';
 
 const AdminRoutes = ({ match }) => {
   return (
@@ -21,6 +22,11 @@ const AdminRoutes = ({ match }) => {
             component={AddUpdateProduct}
           />
           <Route path={`${match.path}/products`} component={ViewProducts} />
+          {/* <Route
+            path={`${match.path}/orders/:id/view`}
+            component={ViewOrders}
+          /> */}
+          <Route path={`${match.path}/orders`} component={ViewOrders} />
           <Route path={`${match.path}/`} component={AdminDashboard} exact />
         </Switch>
       </div>

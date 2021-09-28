@@ -24,9 +24,10 @@ class AdminDashboard extends Component {
   };
 
   onClickOrderAction = id => {
+    const { history, match } = this.props;
     switch (id) {
       case orderActionId.viewOrders:
-        console.log(id);
+        history.push(`${match.url}/orders`);
         break;
       case orderActionId.updateOrderStatus:
         console.log(id);

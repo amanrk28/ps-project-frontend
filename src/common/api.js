@@ -50,3 +50,9 @@ export const signupApi = data => callAPI('post', `${auth}/signup`, data);
 export const loginApi = data => callAPI('post', `${auth}/login`, data);
 export const verifyTokenApi = data =>
   callAPI('post', `${auth}/verifytoken`, data);
+
+// -------------- Order API -------------------
+const order = '/order';
+
+export const getOrderListApi = searchString =>
+  callAPI('get', `${order}/orders${searchString || ''}`);

@@ -5,18 +5,18 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import './ViewProducts.scss';
 
 const PRODUCT_TABLE_HEADERS = [
-  { title: 'Image', className: 'image' },
-  { title: 'Name', className: 'name' },
-  { title: 'Price / unit', className: 'price' },
-  { title: 'Stock', className: 'stock' },
-  { title: 'Category', className: 'category' },
-  { title: 'Description', className: 'description' },
-  { title: 'Edit', className: 'edit' },
+  { name: 'Image', dataname: 'image' },
+  { name: 'Name', dataname: 'name' },
+  { name: 'Price / unit', dataname: 'price' },
+  { name: 'Stock', dataname: 'stock' },
+  { name: 'Category', dataname: 'category' },
+  { name: 'Description', dataname: 'description' },
+  { name: 'Edit', dataname: 'edit' },
 ];
 
 class ViewProducts extends Component {
   onClickBack = () => {
-    this.props.history.goBack();
+    this.props.history.push('/admin');
   };
 
   onEditProduct = id => {
@@ -38,40 +38,38 @@ class ViewProducts extends Component {
           <li>
             {PRODUCT_TABLE_HEADERS.map(item => (
               <div
-                className={`tableHeader ${item.className}`}
-                key={item.className}
+                className={`tableHeader ${item.dataname}`}
+                key={item.dataname}
               >
-                {item.title}
+                {item.name}
               </div>
             ))}
           </li>
           {productList.map(product => (
             <li key={product.id}>
               {PRODUCT_TABLE_HEADERS.map(item => (
-                <div className={item.className} key={item.className}>
-                  {item.className === 'image' && (
+                <div className={item.dataname} key={item.dataname}>
+                  {item.dataname === 'image' && (
                     <img src={product.image} alt={product.name} />
                   )}
-                  {item.className === 'edit' && (
+                  {item.dataname === 'edit' && (
                     <div onClick={() => this.onEditProduct(product.id)}>
                       <ModeEditIcon />
                     </div>
                   )}
-                  {item.className === 'category' && (
+                  {item.dataname === 'category' && (
                     <p>
                       {productCategories.filter(
                         x => x.id === product.category
                       )[0].name || product.category}
                     </p>
                   )}
-                  {item.className !== 'image' &&
-                    item.className !== 'category' &&
-                    item.className !== 'edit' && (
-                      <p>
-                        {item.className === 'price' && <span>&#8377;</span>}
-                        {product[item.className]}
-                      </p>
-                    )}
+                  {!['image', 'category', 'edit'].includes(item.dataname) && (
+                    <p>
+                      {item.dataname === 'price' && <span>&#8377;</span>}
+                      {product[item.dataname]}
+                    </p>
+                  )}
                 </div>
               ))}
             </li>
