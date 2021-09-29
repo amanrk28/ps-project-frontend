@@ -29,7 +29,7 @@ class ViewOrders extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      statusFilter: '',
+      statusFilter: 'all',
     };
   }
   componentDidMount = () => {
@@ -51,7 +51,6 @@ class ViewOrders extends Component {
     let { value } = e.target;
     let query = { ...location.query, status: value };
     if (value === 'all') {
-      value = '';
       delete query.status;
     }
     history.push({ search: queryStringify(query) });

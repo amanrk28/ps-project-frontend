@@ -129,8 +129,8 @@ class AddUpdateProduct extends Component {
           </div>
           {PRODUCT_FIELDS.map(field => (
             <div className="addProduct-input-container" key={field.dataname}>
-              <p>{field.name}</p>
               <Input
+                label={field.name}
                 dataname={field.dataname}
                 placeholder={field.name}
                 onChange={e => this.onChange(e, field.dataname)}

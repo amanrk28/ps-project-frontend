@@ -28,7 +28,8 @@ const callAPI = async (method, url, data = {}) => {
 // --------------- Store API -----------------
 const store = '/store';
 
-export const getProductsApi = () => callAPI('get', `${store}/product`);
+export const getProductsApi = searchString =>
+  callAPI('get', `${store}/product${searchString || ''}`);
 export const createProductApi = data =>
   callAPI('post', `${store}/product`, data);
 export const updateProductApi = (id, data) =>

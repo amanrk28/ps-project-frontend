@@ -14,6 +14,7 @@ class Input extends PureComponent {
       onChange,
       value = '',
       style = {},
+      label = '',
       inputClass = '',
       type = 'text',
       maxLength = '1000',
@@ -21,20 +22,23 @@ class Input extends PureComponent {
       onKeyDown = () => {},
     } = this.props;
     return (
-      <div className={`input-wrapper ${inputClass || ''}`} style={style}>
-        <div className="input-field">
-          <input
-            ref={this.inputRef}
-            type={type}
-            data-name={dataname}
-            placeholder={placeholder}
-            onChange={onChange}
-            value={value || ''}
-            maxLength={maxLength}
-            onKeyDown={onKeyDown}
-          />
+      <>
+        {label && <p>{label}</p>}
+        <div className={`input-wrapper ${inputClass || ''}`} style={style}>
+          <div className="input-field">
+            <input
+              ref={this.inputRef}
+              type={type}
+              data-name={dataname}
+              placeholder={placeholder}
+              onChange={onChange}
+              value={value || ''}
+              maxLength={maxLength}
+              onKeyDown={onKeyDown}
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

@@ -6,6 +6,7 @@ import {
   updateProductApi,
 } from '../../common/api';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import { getSearchStringFromObject } from 'utils/utils';
 
 const setProductsList = data => ({
   type: aT.SET_PRODUCTS,
@@ -27,9 +28,17 @@ const setUpdatedProduct = data => ({
   data,
 });
 
-export const getProducts = () => {
+export const getProducts = props => {
+  let searchObj = { all: true };
+  if (props && props.searchValue) {
+    searchObj.search = props.searchValue;
+  }
+  if (props && props.categoryFilter !== 'all' && props.categoryFilter) {
+    searchObj.category = props.categoryFilter;
+  }
+  const searchString = getSearchStringFromObject(searchObj);
   return dispatch => {
-    getProductsApi()
+    getProductsApi(searchString)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;

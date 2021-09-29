@@ -28,6 +28,10 @@
   .viewOrders-filters-container {
     width: 100%;
     margin-bottom: 2rem;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
   .table-wrapper {
     li {

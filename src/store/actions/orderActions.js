@@ -13,7 +13,11 @@ export const getOrdersList = ({ orderStatus }) => {
   let searchObj = {
     all: true,
   };
-  if (orderStatus && ORDER_STATUSES.find(x => x.id === orderStatus)) {
+  if (
+    orderStatus &&
+    orderStatus !== 'all' &&
+    ORDER_STATUSES.find(x => x.id === orderStatus)
+  ) {
     searchObj.status = orderStatus;
   }
   const searchString = getSearchStringFromObject(searchObj);

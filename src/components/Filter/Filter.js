@@ -13,7 +13,7 @@ const Filter = ({
     <div className="filter-wrapper">
       <p>{filterName}</p>
       <DropdownInput
-        options={[...filterOptions, { id: 'all', name: 'All' }]}
+        options={[{ id: 'all', name: 'All' }, ...filterOptions]}
         value={value}
         onChange={onChange}
         labelPlaceholder="All"
