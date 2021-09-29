@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logoMain from 'common/images/logoMain.png';
+import LOGO_MAIN from 'utils/utils';
 import { COMPANY_NAME } from 'utils/utils';
 import './Footer.scss';
 
@@ -8,7 +8,7 @@ const Footer = () => (
   <div className="footer__wrapper">
     <div className="logo">
       <Link to="/">
-        <img src={logoMain} alt={COMPANY_NAME} />
+        <img src={LOGO_MAIN} alt={COMPANY_NAME} />
       </Link>
     </div>
     <div className="contributors">

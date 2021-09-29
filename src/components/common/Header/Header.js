@@ -6,7 +6,7 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import logoMain from 'common/images/logoMain.png';
+import LOGO_MAIN from 'utils/utils';
 import { logout } from 'store/actions/authActions';
 import { COMPANY_NAME } from 'utils/utils';
 import './Header.scss';
@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <div className="header">
       <Link to="/">
-        <img className="header__logo" src={logoMain} alt={COMPANY_NAME} />
+        <img className="header__logo" src={LOGO_MAIN} alt={COMPANY_NAME} />
       </Link>
       <div className="header__search">
         <input className="header__searchInput" type="text" />

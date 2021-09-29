@@ -1,5 +1,9 @@
 export const COMPANY_NAME = 'Retailr';
 
+const LOGO_MAIN =
+  'https://res.cloudinary.com/retailr/image/upload/v1632934376/products/logoMain_wdwznx.png';
+export default LOGO_MAIN;
+
 export const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

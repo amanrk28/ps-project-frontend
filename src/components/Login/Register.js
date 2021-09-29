@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
 import SigninForm from './SigninForm';
 import SignupForm from './SignupForm';
-import logoMain from 'common/images/logoMain.png';
+import LOGO_MAIN from '../../utils/utils';
 import './Register.scss';
 import { COMPANY_NAME } from 'utils/utils';
 
@@ -49,7 +49,7 @@ class Register extends Component {
         <div className="registration-wrapper">
           <div className="logo-wrapper center">
             <Link to="/">
-              <img src={logoMain} alt={COMPANY_NAME} />
+              <img src={LOGO_MAIN} alt={COMPANY_NAME} />
             </Link>
           </div>
           <div className="form-wrapper center">
