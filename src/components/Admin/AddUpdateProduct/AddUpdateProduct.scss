@@ -38,6 +38,10 @@
   }
   .addProduct-fields-container {
     flex-direction: column;
+    > div {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
     .addProduct-image-container {
       width: 150px;
       height: 150px;
@@ -51,19 +55,11 @@
       }
     }
     .addProduct-input-container {
-      width: 100%;
-      margin-bottom: 1rem;
       .addProduct-input {
         width: 100%;
       }
     }
-    .addProduct-dropdown-container {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
     .addProduct-textarea-container {
-      width: 100%;
-      margin-bottom: 1rem;
       textarea {
         margin: 4px 0;
         border: 1px solid var(--yellow-primary);

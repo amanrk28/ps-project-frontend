@@ -28,15 +28,9 @@ const setUpdatedProduct = data => ({
   data,
 });
 
-export const getProducts = props => {
+export const getProducts = queryObj => {
   let searchObj = { all: true };
-  if (props && props.searchValue) {
-    searchObj.search = props.searchValue;
-  }
-  if (props && props.categoryFilter !== 'all' && props.categoryFilter) {
-    searchObj.category = props.categoryFilter;
-  }
-  const searchString = getSearchStringFromObject(searchObj);
+  const searchString = getSearchStringFromObject({ ...searchObj, ...queryObj });
   return dispatch => {
     getProductsApi(searchString)
       .then(res => {

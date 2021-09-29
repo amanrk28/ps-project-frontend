@@ -23,22 +23,21 @@ class ViewProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchValue: '',
-      categoryFilter: 'all',
+      search: '',
+      category: 'all',
     };
   }
 
   componentDidMount = () => {
     const { actions, location } = this.props;
-    let query = { searchValue: '', categoryFilter: '' };
+    let query = {};
     if (location?.query?.search) {
-      query.searchValue = location.query.search;
-      this.setState({ searchValue: query.searchValue });
+      query.search = location.query.search;
     }
-    if (location?.query?.category) {
-      query.categoryFilter = location.query.category;
-      this.setState({ categoryFilter: query.categoryFilter });
+    if (location?.query?.category && location.query.category !== 'all') {
+      query.category = location.query.category;
     }
+    this.setState({ ...query });
     actions.getProducts(query);
   };
 
@@ -51,34 +50,30 @@ class ViewProducts extends Component {
     history.push({ pathname: `${match.url}/${id}/edit`, hash: 'edit' });
   };
 
-  onChangeSearchValue = e => {
+  onChangeFilter = e => {
     const { history, location, actions } = this.props;
     let { value } = e.target;
-    let query = { ...location.query, search: value };
-    const searchValue = value;
-    if (value === '') {
-      delete query.search;
+    const key = e.currentTarget.getAttribute('data-name');
+    const query = { ...location.query, [key]: value };
+    this.setState({ ...this.state, ...query });
+    for (const k in query) {
+      if (query.hasOwnProperty(k) && !query[k]) delete query[k];
+      if (k === 'category' && query[k] === 'all') delete query[k];
     }
     history.push({ search: queryStringify(query) });
-    actions.getProducts({ searchValue });
-    this.setState({ searchValue });
+    actions.getProducts(query);
   };
 
-  onChangeCategoryFilter = e => {
-    const { actions, history, location } = this.props;
-    let { value } = e.target;
-    let query = { ...location.query, category: value };
-    if (value === 'all') {
-      delete query.category;
-    }
-    history.push({ search: queryStringify(query) });
-    actions.getProducts({ categoryFilter: value });
-    this.setState({ categoryFilter: value });
+  getCategoryFromId = product => {
+    const { productCategories } = this.props;
+    const category = productCategories.find(x => x.id === product.category);
+    if (category) return category.name;
+    return product.category;
   };
 
   render() {
     const { productList, productCategories } = this.props;
-    const { searchValue, categoryFilter } = this.state;
+    const { search, category } = this.state;
     return (
       <div className="viewProducts-wrapper">
         <div className="viewProducts-header-wrapper center">
@@ -91,9 +86,9 @@ class ViewProducts extends Component {
           <div className="viewProducts-searchBar">
             <Input
               label="Search"
-              dataname="searchValue"
-              value={searchValue}
-              onChange={this.onChangeSearchValue}
+              dataname="search"
+              value={search}
+              onChange={this.onChangeFilter}
               placeholder="Search By Product Name"
             />
           </div>
@@ -101,9 +96,9 @@ class ViewProducts extends Component {
             <Filter
               filterName="Category"
               filterOptions={productCategories}
-              value={categoryFilter}
-              onChange={this.onChangeCategoryFilter}
-              dataname="categoryFilter"
+              value={category}
+              onChange={this.onChangeFilter}
+              dataname="category"
             />
           </div>
         </div>
@@ -132,11 +127,7 @@ class ViewProducts extends Component {
                       </div>
                     )}
                     {item.dataname === 'category' && (
-                      <p>
-                        {productCategories.filter(
-                          x => x.id === product.category
-                        )[0].name || product.category}
-                      </p>
+                      <p>{this.getCategoryFromId(product)}</p>
                     )}
                     {!['image', 'category', 'edit'].includes(item.dataname) && (
                       <p>

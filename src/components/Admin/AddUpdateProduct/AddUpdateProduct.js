@@ -36,11 +36,11 @@ class AddUpdateProduct extends Component {
     if (location.hash !== '#edit') return;
     const { id } = match.params;
     this.setState({ isNewProduct: false });
-    const product = productList.filter(
+    const product = productList.find(
       x => parseInt(x.id, 10) === parseInt(id, 10)
     );
-    if (product.length) {
-      const { name, description, price, stock, image, category } = product[0];
+    if (product) {
+      const { name, description, price, stock, image, category } = product;
       this.setState({
         name,
         description,
@@ -59,8 +59,12 @@ class AddUpdateProduct extends Component {
     this.setState({ [dataname]: value });
   };
 
-  onClickBack = () => this.props.history.goBack();
-
+  onClickBack = () => {
+    const { isNewProduct } = this.state;
+    const { history } = this.props;
+    if (isNewProduct) history.goBack();
+    else history.push('/admin/products');
+  };
   onChangeImage = image => {
     if (image) this.setState({ image });
   };
