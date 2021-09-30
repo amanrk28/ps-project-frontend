@@ -12,11 +12,15 @@ import { COMPANY_NAME } from 'utils/utils';
 import './Header.scss';
 import { RootState } from 'store/reducers/rootState';
 
-const Header = () => {
+interface HeaderProps {
+  enableSearch: boolean;
+}
+
+const Header = ({ enableSearch = false }: HeaderProps) => {
   const [isAccountsTabOpen, setIsAccountsTabOpen] = useState(false);
   const dispatch = useDispatch();
-  const { auth, cartCount } = useSelector((state: RootState) => ({
-    auth: state.auth,
+  const { user, cartCount } = useSelector((state: RootState) => ({
+    user: state.auth,
     cartCount: state.cart.cart_count,
   }));
 
@@ -33,17 +37,20 @@ const Header = () => {
       <Link to="/">
         <img className="header__logo" src={LOGO_MAIN} alt={COMPANY_NAME} />
       </Link>
-      <div className="header__search">
-        <input className="header__searchInput" type="text" />
-        <SearchIcon className="header__searchIcon" />
-      </div>
+      {enableSearch && (
+        <div className="header__search">
+          <input className="header__searchInput" type="text" />
+          <SearchIcon className="header__searchIcon" />
+        </div>
+      )}
 
       <div className="header__nav">
-        {auth.user_id && (
+        {user.user_id && (
           <>
             <div className="header__option accounts" onClick={toggleAccountTab}>
               <p className="header__user">
-                Hello, <span>{auth.first_name}</span>
+                Hello, <br />
+                <span>{user.first_name}</span>
               </p>
               {isAccountsTabOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
             </div>
@@ -71,7 +78,7 @@ const Header = () => {
           </Link>
         </div>
 
-        {!auth.user_id && (
+        {!user.user_id && (
           <div className="header__option header__signin">
             <Link to="/login">
               <AccountCircleOutlinedIcon className="header__accountLogo" />

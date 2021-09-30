@@ -1,0 +1,24 @@
+.userAccount-wrapper {
+  flex-direction: column;
+  padding: 2rem 0;
+  .userAccount-header {
+    font-size: 32px;
+    line-height: 47px;
+    font-weight: 600;
+    padding: 0 0 2rem;
+  }
+  .userAccount-gridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 1rem;
+    .userAccount-fieldContainer .input-wrapper {
+      width: 250px;
+    }
+  }
+  .userAccount-addressContainer {
+    grid-column: 1 / span 2;
+  }
+  .userAccount-btn {
+    padding: 2rem 0 0;
+  }
+}

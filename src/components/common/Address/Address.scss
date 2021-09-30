@@ -1,0 +1,12 @@
+.address-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 1rem;
+  .address-fieldContainer .input-wrapper {
+    width: 250px;
+  }
+}
+.address-header {
+  font-weight: 600;
+  margin-bottom: 4px;
+}

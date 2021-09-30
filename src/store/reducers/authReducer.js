@@ -35,7 +35,7 @@ const authReducer = (state = initialState, action) => {
         username: action.data.username,
         is_store_owner: action.data.is_store_owner || false,
         is_admin: action.data.is_admin || false,
-        address: action.data.address || {},
+        address: { ...action.data.address } || {},
       });
     case aT.SET_TOKEN:
       return update(state, { token: action.data });

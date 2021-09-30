@@ -1,6 +1,11 @@
 import { push } from 'connected-react-router';
 import * as aT from '../actionTypes/authActionTypes';
-import { signupApi, loginApi, verifyTokenApi } from '../../common/api';
+import {
+  signupApi,
+  loginApi,
+  verifyTokenApi,
+  updateUserApi,
+} from '../../common/api';
 import { EMAIL_REGEX } from 'utils/utils';
 import { setAuthToken, clearAllStorages } from 'utils/localStorage';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
@@ -109,3 +114,20 @@ export const logout = () => dispatch => {
   NotifyMe('success', 'User logged out');
   dispatch(push('/'));
 };
+
+export const updateUserDetails =
+  ({ id, userData, cb }) =>
+  dispatch => {
+    updateUserApi(id, userData)
+      .then(res => {
+        const { status, data, msg } = res;
+        if (!status) throw msg;
+        dispatch(setAuthCredentials({ user: data }));
+        NotifyMe('success', 'User Details updated successfully');
+        if (cb) cb();
+      })
+      .catch(err => {
+        NotifyMe('error', err);
+        console.log(err);
+      });
+  };

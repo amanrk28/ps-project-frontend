@@ -4,7 +4,7 @@ import Home from '../components/Customer/Home/Home';
 
 const HomePage = () => (
   <>
-    <Header />
+    <Header enableSearch />
     <Home />
     <Footer />
   </>

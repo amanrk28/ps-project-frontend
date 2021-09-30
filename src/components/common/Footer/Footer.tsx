@@ -5,7 +5,7 @@ import { COMPANY_NAME } from 'utils/utils';
 import './Footer.scss';
 
 const Footer = () => (
-  <div className="footer__wrapper">
+  <footer className="footer__wrapper">
     <div className="logo">
       <Link to="/">
         <img src={LOGO_MAIN} alt={COMPANY_NAME} />
@@ -20,7 +20,7 @@ const Footer = () => (
         <p className="contributors__names">Anirudh B S</p>
       </div>
     </div>
-  </div>
+  </footer>
 );
 
 export default Footer;

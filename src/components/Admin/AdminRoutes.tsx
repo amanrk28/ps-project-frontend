@@ -1,5 +1,4 @@
 import React from 'react';
-import { withRouter } from 'react-router';
 import { Switch, Route, RouteComponentProps } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
@@ -36,4 +35,4 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
   );
 };
 
-export default withRouter(AdminRoutes);
+export default AdminRoutes;

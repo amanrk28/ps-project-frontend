@@ -45,7 +45,7 @@
       margin-right: 10px;
       height: 2rem;
       width: 2rem;
-      background-color: #000;
+      background-color: #222;
       color: #fff;
       border-radius: 0 5px 5px 0;
       cursor: pointer;
@@ -69,8 +69,10 @@
         .header__user {
           font-size: 14px;
           font-weight: 400;
+          user-select: none;
+          color: #2c3556;
           span {
-            font-weight: 500;
+            font-weight: 600;
           }
         }
       }
@@ -115,7 +117,7 @@
       border-radius: 4px;
       top: 40px;
       left: 0;
-      width: 120px;
+      width: 150px;
       box-shadow: 0 4px 16px #aaa;
       @include phone {
         visibility: hidden;
@@ -128,7 +130,8 @@
         &.orders a,
         &.account a {
           align-items: flex-start;
-          color: #000;
+          color: #2c3556;
+          user-select: none;
         }
         &:hover {
           cursor: pointer;

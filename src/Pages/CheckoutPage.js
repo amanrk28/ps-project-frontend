@@ -4,7 +4,7 @@ import Checkout from '../components/Customer/Checkout/Checkout';
 
 const CheckoutPage = () => (
   <>
-    <Header />
+    <Header enableSearch />
     <Checkout />
     <Footer />
   </>

@@ -20,10 +20,11 @@ class Input extends PureComponent {
       maxLength = '1000',
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       onKeyDown = () => {},
+      disabled = false,
     } = this.props;
     return (
       <>
-        {label && <p>{label}</p>}
+        {label && <p className="input-label">{label}</p>}
         <div className={`input-wrapper ${inputClass || ''}`} style={style}>
           <div className="input-field">
             <input
@@ -35,6 +36,7 @@ class Input extends PureComponent {
               value={value || ''}
               maxLength={maxLength}
               onKeyDown={onKeyDown}
+              disabled={disabled}
             />
           </div>
         </div>

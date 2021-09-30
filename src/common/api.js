@@ -51,6 +51,8 @@ export const signupApi = data => callAPI('post', `${auth}/signup`, data);
 export const loginApi = data => callAPI('post', `${auth}/login`, data);
 export const verifyTokenApi = data =>
   callAPI('post', `${auth}/verifytoken`, data);
+export const updateUserApi = (id, data) =>
+  callAPI('put', `${auth}/users/${id}`, data);
 
 // -------------- Order API -------------------
 const order = '/order';
