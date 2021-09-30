@@ -1,13 +1,15 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from 'react-router';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch, RouteComponentProps } from 'react-router-dom';
+import { RootState } from 'store/reducers/rootState';
 import LoginPage from '../Pages/LoginPage';
 import AdminRoutes from './Admin/AdminRoutes';
 import CustomerRoutes from './Customer/CustomerRoutes';
 
-const Routes = ({ match }) => {
-  const { user } = useSelector(state => state.auth);
+interface RoutesProps extends RouteComponentProps {}
+
+const Routes = ({ match }: RoutesProps) => {
+  const { user } = useSelector((state: RootState) => ({ user: state.auth }));
   return (
     <Switch>
       <Route exact path={`${match.url}login`} component={LoginPage} />

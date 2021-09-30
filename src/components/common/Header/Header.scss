@@ -125,7 +125,8 @@
         font-weight: 400;
         padding: 4px;
         border-radius: 2px;
-        &.orders a {
+        &.orders a,
+        &.account a {
           align-items: flex-start;
           color: #000;
         }

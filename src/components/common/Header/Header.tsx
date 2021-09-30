@@ -49,6 +49,9 @@ const Header = () => {
             </div>
             {isAccountsTabOpen && (
               <div className="tabWrapper">
+                <div className="account">
+                  <Link to="/account">Account</Link>
+                </div>
                 <div className="orders">
                   <Link to="/orders">Orders</Link>
                 </div>

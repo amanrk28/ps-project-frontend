@@ -11,6 +11,7 @@ const CustomerRoutes = ({ match }: CustomerRoutesProps) => {
     <Switch>
       <Route path={`${match.path}checkout`} component={CheckoutPage} />
       <Route path={`${match.path}orders`} component={OrdersPage} />
+      <Route path={`${match.path}account`} component={OrdersPage} />
       <Route exact path={`${match.path}product/:id`} component={HomePage} />
       <Route exact path={`${match.path}`} component={HomePage} />
     </Switch>
