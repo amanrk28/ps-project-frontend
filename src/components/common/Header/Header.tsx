@@ -10,11 +10,12 @@ import LOGO_MAIN from 'utils/utils';
 import { logout } from 'store/actions/authActions';
 import { COMPANY_NAME } from 'utils/utils';
 import './Header.scss';
+import { RootState } from 'store/reducers/rootState';
 
 const Header = () => {
   const [isAccountsTabOpen, setIsAccountsTabOpen] = useState(false);
   const dispatch = useDispatch();
-  const { auth, cartCount } = useSelector(state => ({
+  const { auth, cartCount } = useSelector((state: RootState) => ({
     auth: state.auth,
     cartCount: state.cart.cart_count,
   }));

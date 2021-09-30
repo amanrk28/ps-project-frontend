@@ -3,13 +3,25 @@ import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { uploadFile } from 'utils/utils';
 import './FileInput.scss';
 
-const FileInput = ({ onChange }) => {
+interface FileInputProps {
+  onChange: (url: string | undefined) => void;
+}
+
+interface UploadObjectProps {
+  name: string;
+  url?: string | undefined;
+}
+
+const FileInput = ({ onChange }: FileInputProps) => {
   const [fileName, setFileName] = useState('');
 
-  const onUploadImage = async e => {
-    const uploadObj = await uploadFile(e.target.files[0]);
-    setFileName(uploadObj.name);
-    onChange(uploadObj.url);
+  const onUploadImage = async (event: React.FormEvent<HTMLInputElement>) => {
+    const { files } = event.currentTarget;
+    if (files && files.length > 0) {
+      const uploadObj: UploadObjectProps = await uploadFile(files[0]);
+      setFileName(uploadObj.name);
+      onChange(uploadObj.url);
+    }
   };
 
   return (

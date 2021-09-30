@@ -65,8 +65,8 @@ class AddUpdateProduct extends Component {
     if (isNewProduct) history.goBack();
     else history.push('/admin/products');
   };
-  onChangeImage = image => {
-    if (image) this.setState({ image });
+  onChangeImage = url => {
+    if (url) this.setState({ image: url });
   };
 
   onAddProduct = () => {

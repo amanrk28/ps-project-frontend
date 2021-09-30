@@ -1,13 +1,15 @@
 import React from 'react';
 import { withRouter } from 'react-router';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, RouteComponentProps } from 'react-router-dom';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
 import ViewProducts from './ViewProducts/ViewProducts';
 import ViewOrders from './ViewOrders/ViewOrders';
 
-const AdminRoutes = ({ match }) => {
+interface AdminRoutesProps extends RouteComponentProps {}
+
+const AdminRoutes = ({ match }: AdminRoutesProps) => {
   return (
     <div className="admin-wrapper">
       <AdminHeader />

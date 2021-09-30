@@ -1,6 +1,15 @@
 import React from 'react';
 import './Button.scss';
 
+interface ButtonProps {
+  children?: JSX.Element | null;
+  text?: string | null;
+  onClick: () => void;
+  dataProps?: object;
+  type?: string;
+  className?: string;
+}
+
 const Button = ({
   children,
   text = '',
@@ -8,7 +17,7 @@ const Button = ({
   dataProps = {},
   type = 'primary',
   className = '',
-}) => {
+}: ButtonProps) => {
   let style = `center ${className}`;
   if (type === 'primary') style += ' primary';
   if (type === 'disabled') style += ' disabled';

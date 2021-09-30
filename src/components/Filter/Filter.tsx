@@ -1,6 +1,15 @@
 import React from 'react';
 import DropdownInput from 'components/common/DropdownInput/DropdownInput';
+import { ObjectType } from 'store/reducers/rootState';
 import './Filter.scss';
+
+interface FilterProps {
+  filterName: string;
+  filterOptions: ObjectType[];
+  value: string;
+  onChange: () => void;
+  dataname: string;
+}
 
 const Filter = ({
   filterName = '',
@@ -8,7 +17,7 @@ const Filter = ({
   value = '',
   onChange,
   dataname = '',
-}) => {
+}: FilterProps) => {
   return (
     <div className="filter-wrapper">
       <p>{filterName}</p>

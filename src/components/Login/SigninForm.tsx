@@ -12,18 +12,30 @@ const LOGIN_FIELDS = [
   { name: 'Password', dataname: 'password' },
 ];
 
-const SigninForm = ({ onSubmit }) => {
+interface OnSubmitProps {
+  email: string;
+  password: string;
+}
+
+interface SigninFormProps {
+  onSubmit: (props: OnSubmitProps) => void;
+}
+
+const SigninForm = ({ onSubmit }: SigninFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const onChange = (e, dataname) => {
-    const { value } = e.target;
+  const onChange = (
+    event: React.FormEvent<HTMLInputElement>,
+    dataname: string
+  ) => {
+    const { value } = event.currentTarget;
     if (dataname === 'email') setEmail(value);
     else setPassword(value);
   };
 
-  const handleKeyDown = e => {
-    if (detectKeyPress(e).enter) onClick();
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (detectKeyPress(event).enter) onClick();
   };
 
   const onClick = () => {
@@ -38,7 +50,9 @@ const SigninForm = ({ onSubmit }) => {
           key={item.dataname}
           dataname={item.dataname}
           placeholder={item.name}
-          onChange={e => onChange(e, item.dataname)}
+          onChange={(e: React.FormEvent<HTMLInputElement>) =>
+            onChange(e, item.dataname)
+          }
           value={item.dataname === 'email' ? email : password}
           type={item.dataname}
           inputClass="login-form-input"
