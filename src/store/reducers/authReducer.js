@@ -19,7 +19,7 @@ const initialState = {
     city: '',
     pincode: '',
   },
-  isCheckingAuth: false,
+  isLoading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -43,11 +43,11 @@ const authReducer = (state = initialState, action) => {
     case aT.RESET_USER:
       return initialState;
 
-    case aT.SET_AUTH_CHECKING_TRUE:
-      return update(state, { isCheckingAuth: true });
+    case aT.SET_LOADER_TRUE:
+      return update(state, { isLoading: true });
 
-    case aT.SET_AUTH_CHECKING_FALSE:
-      return update(state, { isCheckingAuth: false });
+    case aT.SET_LOADER_FALSE:
+      return update(state, { isLoading: false });
 
     default:
       return state;

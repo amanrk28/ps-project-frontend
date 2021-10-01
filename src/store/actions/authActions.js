@@ -24,16 +24,19 @@ const resetUser = () => ({
   type: aT.RESET_USER,
 });
 
+const setLoadTrue = () => ({
+  type: aT.SET_LOADER_TRUE,
+});
+
+const setLoaderFalse = () => ({
+  type: aT.SET_LOADER_FALSE,
+});
+
 const userRedirectAfterAuth = user => {
   let route = '/';
   if (user.is_store_owner) route = '/admin';
   return route;
 };
-
-export const setAuthCheckingTrue = () => ({ type: aT.SET_AUTH_CHECKING_TRUE });
-export const setAuthCheckingFalse = () => ({
-  type: aT.SET_AUTH_CHECKING_FALSE,
-});
 
 export const setAuthCredentials = data => dispatch => {
   if (data.token) {
@@ -93,14 +96,14 @@ export const loginUser = (req_data, cb) => dispatch => {
 };
 
 export const verifyToken = () => (dispatch, getState) => {
-  dispatch(setAuthCheckingTrue());
+  dispatch(setLoadTrue());
   verifyTokenApi()
     .then(res => {
       const { status, data, msg } = res;
-      dispatch(setAuthCheckingFalse());
       if (!status) throw msg;
       if (data !== null) {
         dispatch(setAuthCredentials(data));
+        dispatch(setLoaderFalse());
         if (getState().router.location.pathname.indexOf('login') > -1)
           dispatch(push(userRedirectAfterAuth(data.user)));
       }

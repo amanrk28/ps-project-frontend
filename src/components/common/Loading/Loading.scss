@@ -1,10 +1,11 @@
-.loading-wrapper {
+.fullLoading-wrapper {
   width: 100vw;
   height: 100vh;
   background: rgba(204, 204, 204, 0.5);
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10000;
 }
 .lds-ring {
   display: inline-block;

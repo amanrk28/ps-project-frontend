@@ -9,7 +9,7 @@ const setOrderList = data => ({
   data,
 });
 
-export const getOrdersList = ({ orderStatus }) => {
+export const getOrdersList = ({ orderStatus, cb }) => {
   let searchObj = {
     all: true,
   };
@@ -26,6 +26,7 @@ export const getOrdersList = ({ orderStatus }) => {
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
+        if (cb) cb();
         dispatch(setOrderList(data));
       })
       .catch(err => {

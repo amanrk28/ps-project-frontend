@@ -28,14 +28,19 @@ const setUpdatedProduct = data => ({
   data,
 });
 
-export const getProducts = queryObj => {
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const getProducts = ({ query, cb } = { query: {}, cb: () => {} }) => {
   let searchObj = { all: true };
-  const searchString = getSearchStringFromObject({ ...searchObj, ...queryObj });
+  if (query) {
+    searchObj = { ...searchObj, ...query };
+  }
+  const searchString = getSearchStringFromObject({ ...searchObj });
   return dispatch => {
     getProductsApi(searchString)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
+        if (cb) cb();
         dispatch(setProductsList(data));
       })
       .catch(err => {

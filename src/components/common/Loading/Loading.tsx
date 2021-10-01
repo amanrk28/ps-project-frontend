@@ -1,14 +1,18 @@
 import React from 'react';
+import LoaderRing from './LoaderRing';
 import './Loading.scss';
 
-const Loading = () => (
-  <div className="loading-wrapper center">
-    <div className="lds-ring">
-      <div />
-      <div />
-      <div />
-      <div />
-    </div>
+interface LoadingProps {
+  fullLoader?: boolean;
+}
+
+const Loading = ({ fullLoader = false }: LoadingProps) => (
+  <div
+    className={`${
+      fullLoader ? 'fullLoading-wrapper' : 'partialLoading-wrapper'
+    } center`}
+  >
+    <LoaderRing />
   </div>
 );
 

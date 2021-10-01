@@ -8,6 +8,7 @@ import * as actions from 'store/actions/productActions';
 import { queryStringify } from 'utils/utils';
 import Filter from 'components/Filter/Filter';
 import './ViewProductsMobile.scss';
+import Loading from 'components/common/Loading/Loading';
 
 const PRODUCT_TABLE_HEADERS = [
   { name: 'Image', dataname: 'image' },
@@ -24,6 +25,7 @@ class ViewProductsMobile extends Component {
     this.state = {
       search: '',
       category: 'all',
+      isLoading: false,
     };
   }
 
@@ -37,7 +39,7 @@ class ViewProductsMobile extends Component {
       query.category = location.query.category;
     }
     this.setState({ ...query });
-    actions.getProducts(query);
+    actions.getProducts({ query });
   };
 
   onClickBack = () => {
@@ -60,7 +62,11 @@ class ViewProductsMobile extends Component {
       if (k === 'category' && query[k] === 'all') delete query[k];
     }
     history.push({ search: queryStringify(query) });
-    actions.getProducts(query);
+    this.setState({ isLoading: true });
+    const onCb = () => {
+      this.setState({ isLoading: false });
+    };
+    actions.getProducts({ query, cb: onCb });
   };
 
   getCategoryFromId = product => {
@@ -72,7 +78,7 @@ class ViewProductsMobile extends Component {
 
   render() {
     const { productList, productCategories } = this.props;
-    const { search, category } = this.state;
+    const { search, category, isLoading } = this.state;
     return (
       <div className="viewProductsMobile-wrapper">
         <div className="viewProductsMobile-header-wrapper center">
@@ -101,43 +107,47 @@ class ViewProductsMobile extends Component {
             />
           </div>
         </div>
-        <ul className="table-wrapper">
-          {productList.length > 0 ? (
-            productList.map(product => (
-              <li
-                key={product.id}
-                onClick={() => this.onEditProduct(product.id)}
-              >
-                {PRODUCT_TABLE_HEADERS.map(item => (
-                  <Fragment key={item.dataname}>
-                    <div className={item.dataname}>
-                      {item.dataname === 'image' && (
-                        <img src={product.image} alt={product.name} />
-                      )}
-                      {item.dataname === 'category' && (
-                        <p>
-                          <span>{item.name}: </span>
-                          {this.getCategoryFromId(product)}
-                        </p>
-                      )}
-                      {!['image', 'category'].includes(item.dataname) && (
-                        <p>
-                          {item.dataname === 'stock' && (
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <ul className="table-wrapper">
+            {productList.length > 0 ? (
+              productList.map(product => (
+                <li
+                  key={product.id}
+                  onClick={() => this.onEditProduct(product.id)}
+                >
+                  {PRODUCT_TABLE_HEADERS.map(item => (
+                    <Fragment key={item.dataname}>
+                      <div className={item.dataname}>
+                        {item.dataname === 'image' && (
+                          <img src={product.image} alt={product.name} />
+                        )}
+                        {item.dataname === 'category' && (
+                          <p>
                             <span>{item.name}: </span>
-                          )}
-                          {item.dataname === 'price' && <span>&#8377;</span>}
-                          {product[item.dataname]}
-                        </p>
-                      )}
-                    </div>
-                  </Fragment>
-                ))}
-              </li>
-            ))
-          ) : (
-            <div className="tableEmpty center">No Products Found</div>
-          )}
-        </ul>
+                            {this.getCategoryFromId(product)}
+                          </p>
+                        )}
+                        {!['image', 'category'].includes(item.dataname) && (
+                          <p>
+                            {item.dataname === 'stock' && (
+                              <span>{item.name}: </span>
+                            )}
+                            {item.dataname === 'price' && <span>&#8377;</span>}
+                            {product[item.dataname]}
+                          </p>
+                        )}
+                      </div>
+                    </Fragment>
+                  ))}
+                </li>
+              ))
+            ) : (
+              <div className="tableEmpty center">No Products Found</div>
+            )}
+          </ul>
+        )}
       </div>
     );
   }

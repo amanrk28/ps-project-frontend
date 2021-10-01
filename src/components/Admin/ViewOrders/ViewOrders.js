@@ -8,6 +8,7 @@ import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
 import { queryStringify } from 'utils/utils';
 import './ViewOrders.scss';
+import Loading from 'components/common/Loading/Loading';
 
 const USER_FIELDS = ['full_name', 'phone_number'];
 
@@ -31,6 +32,7 @@ class ViewOrders extends Component {
     super(props);
     this.state = {
       statusFilter: 'all',
+      isLoading: false,
     };
   }
   componentDidMount = () => {
@@ -55,7 +57,11 @@ class ViewOrders extends Component {
       delete query.status;
     }
     history.push({ search: queryStringify(query) });
-    actions.getOrdersList({ orderStatus: value });
+    this.setState({ isLoading: true });
+    const onCb = () => {
+      this.setState({ isLoading: false });
+    };
+    actions.getOrdersList({ orderStatus: value, cb: onCb });
     this.setState({ statusFilter: value });
   };
 
@@ -66,7 +72,7 @@ class ViewOrders extends Component {
 
   render() {
     const { orderList } = this.props;
-    const { statusFilter } = this.state;
+    const { statusFilter, isLoading } = this.state;
 
     return (
       <div className="viewOrders-wrapper">
@@ -96,29 +102,35 @@ class ViewOrders extends Component {
               </div>
             ))}
           </li>
-          {orderList.length > 0 ? (
-            orderList.map(order => (
-              <li
-                key={order.id}
-                onClick={() => this.onOpenOrderDetails(order.id)}
-              >
-                {ORDER_TABLE_HEADERS.map(item => (
-                  <div
-                    className={`${item.dataname} ${order.status}`}
-                    key={item.dataname}
-                  >
-                    {item.dataname === 'status' && getStatus(order.status)}
-                    {USER_FIELDS.includes(item.dataname) &&
-                      order.placed_by[item.dataname]}
-                    {item.dataname !== 'status' && order[item.dataname]}
-                  </div>
-                ))}
-              </li>
-            ))
+          {isLoading ? (
+            <Loading />
           ) : (
-            <div className="tableEmpty center">
-              No Orders available right now
-            </div>
+            <>
+              {orderList.length > 0 ? (
+                orderList.map(order => (
+                  <li
+                    key={order.id}
+                    onClick={() => this.onOpenOrderDetails(order.id)}
+                  >
+                    {ORDER_TABLE_HEADERS.map(item => (
+                      <div
+                        className={`${item.dataname} ${order.status}`}
+                        key={item.dataname}
+                      >
+                        {item.dataname === 'status' && getStatus(order.status)}
+                        {USER_FIELDS.includes(item.dataname) &&
+                          order.placed_by[item.dataname]}
+                        {item.dataname !== 'status' && order[item.dataname]}
+                      </div>
+                    ))}
+                  </li>
+                ))
+              ) : (
+                <div className="tableEmpty center">
+                  No Orders available right now
+                </div>
+              )}
+            </>
           )}
         </ul>
       </div>

@@ -19,7 +19,7 @@ export interface AuthReducer {
     city: string;
     pincode: string;
   };
-  isCheckingAuth: boolean;
+  isLoading: boolean;
 }
 
 interface CartItem {

@@ -9,6 +9,7 @@ import * as actions from 'store/actions/productActions';
 import { queryStringify } from 'utils/utils';
 import Filter from 'components/Filter/Filter';
 import './ViewProducts.scss';
+import Loading from 'components/common/Loading/Loading';
 
 const PRODUCT_TABLE_HEADERS = [
   { name: 'Image', dataname: 'image' },
@@ -26,6 +27,7 @@ class ViewProducts extends Component {
     this.state = {
       search: '',
       category: 'all',
+      isLoading: false,
     };
   }
 
@@ -39,7 +41,7 @@ class ViewProducts extends Component {
       query.category = location.query.category;
     }
     this.setState({ ...query });
-    actions.getProducts(query);
+    actions.getProducts({ query });
   };
 
   onClickBack = () => {
@@ -62,7 +64,11 @@ class ViewProducts extends Component {
       if (k === 'category' && query[k] === 'all') delete query[k];
     }
     history.push({ search: queryStringify(query) });
-    actions.getProducts(query);
+    this.setState({ isLoading: true });
+    const onCb = () => {
+      this.setState({ isLoading: false });
+    };
+    actions.getProducts({ query, cb: onCb });
   };
 
   getCategoryFromId = product => {
@@ -74,7 +80,7 @@ class ViewProducts extends Component {
 
   render() {
     const { productList, productCategories } = this.props;
-    const { search, category } = this.state;
+    const { search, category, isLoading } = this.state;
     return (
       <div className="viewProducts-wrapper">
         <div className="viewProducts-header-wrapper center">
@@ -114,34 +120,42 @@ class ViewProducts extends Component {
               </div>
             ))}
           </li>
-          {productList.length > 0 ? (
-            productList.map(product => (
-              <li key={product.id}>
-                {PRODUCT_TABLE_HEADERS.map(item => (
-                  <div className={item.dataname} key={item.dataname}>
-                    {item.dataname === 'image' && (
-                      <img src={product.image} alt={product.name} />
-                    )}
-                    {item.dataname === 'edit' && (
-                      <div onClick={() => this.onEditProduct(product.id)}>
-                        <ModeEditIcon />
-                      </div>
-                    )}
-                    {item.dataname === 'category' && (
-                      <p>{this.getCategoryFromId(product)}</p>
-                    )}
-                    {!['image', 'category', 'edit'].includes(item.dataname) && (
-                      <p>
-                        {item.dataname === 'price' && <span>&#8377;</span>}
-                        {product[item.dataname]}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </li>
-            ))
+          {isLoading ? (
+            <Loading />
           ) : (
-            <div className="tableEmpty center">No Products Found</div>
+            <>
+              {productList.length > 0 ? (
+                productList.map(product => (
+                  <li key={product.id}>
+                    {PRODUCT_TABLE_HEADERS.map(item => (
+                      <div className={item.dataname} key={item.dataname}>
+                        {item.dataname === 'image' && (
+                          <img src={product.image} alt={product.name} />
+                        )}
+                        {item.dataname === 'edit' && (
+                          <div onClick={() => this.onEditProduct(product.id)}>
+                            <ModeEditIcon />
+                          </div>
+                        )}
+                        {item.dataname === 'category' && (
+                          <p>{this.getCategoryFromId(product)}</p>
+                        )}
+                        {!['image', 'category', 'edit'].includes(
+                          item.dataname
+                        ) && (
+                          <p>
+                            {item.dataname === 'price' && <span>&#8377;</span>}
+                            {product[item.dataname]}
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </li>
+                ))
+              ) : (
+                <div className="tableEmpty center">No Products Found</div>
+              )}
+            </>
           )}
         </ul>
       </div>

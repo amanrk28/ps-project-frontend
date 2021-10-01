@@ -34,7 +34,7 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
           <Route
             path={`${match.path}/products`}
             render={() => (
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<Loading fullLoader />}>
                 {isMobile ? <ViewProductsMobile /> : <ViewProducts />}
               </Suspense>
             )}
@@ -46,7 +46,7 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
           <Route
             path={`${match.path}/orders`}
             render={() => (
-              <Suspense fallback={<Loading />}>
+              <Suspense fallback={<Loading fullLoader />}>
                 {isMobile ? <ViewOrdersMobile /> : <ViewOrders />}
               </Suspense>
             )}
