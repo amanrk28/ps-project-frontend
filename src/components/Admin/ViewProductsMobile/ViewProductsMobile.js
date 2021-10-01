@@ -74,15 +74,15 @@ class ViewProductsMobile extends Component {
     const { productList, productCategories } = this.props;
     const { search, category } = this.state;
     return (
-      <div className="viewProducts-wrapper">
-        <div className="viewProducts-header-wrapper center">
+      <div className="viewProductsMobile-wrapper">
+        <div className="viewProductsMobile-header-wrapper center">
           <div className="goBack center" onClick={this.onClickBack}>
             <ArrowBackIcon />
           </div>
-          <div className="viewProducts-header">Products</div>
+          <div className="viewProductsMobile-header">Products</div>
         </div>
-        <div className="viewProducts-topbar center">
-          <div className="viewProducts-searchBar">
+        <div className="viewProductsMobile-topbar center">
+          <div className="viewProductsMobile-searchBar">
             <Input
               label="Search"
               dataname="search"
@@ -91,7 +91,7 @@ class ViewProductsMobile extends Component {
               placeholder="Search By Product Name"
             />
           </div>
-          <div className="viewProducts-filters-container">
+          <div className="viewProductsMobile-filters-container">
             <Filter
               filterName="Category"
               filterOptions={productCategories}

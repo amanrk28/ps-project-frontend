@@ -7,15 +7,15 @@ import * as actions from 'store/actions/orderActions';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
 import { queryStringify } from 'utils/utils';
-import './ViewOrders.scss';
+import './ViewOrdersMobile.scss';
 
 const USER_FIELDS = ['full_name', 'phone_number'];
 
 const ORDER_TABLE_HEADERS = [
   { name: 'Order ID', dataname: 'id' },
+  { name: 'Order Date', dataname: 'order_date' },
   { name: 'Placed By', dataname: 'full_name' },
   { name: 'Contact No', dataname: 'phone_number' },
-  { name: 'Order Date', dataname: 'order_date' },
   { name: 'Expected Delivery Date', dataname: 'expected_delivery_date' },
   { name: 'Status', dataname: 'status' },
 ];
@@ -26,7 +26,7 @@ const getStatus = status => {
   else return 'Completed';
 };
 
-class ViewOrders extends Component {
+class ViewOrdersMobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,14 +69,14 @@ class ViewOrders extends Component {
     const { statusFilter } = this.state;
 
     return (
-      <div className="viewOrders-wrapper">
-        <div className="viewOrders-header-wrapper center">
+      <div className="viewOrdersMobile-wrapper">
+        <div className="viewOrdersMobile-header-wrapper center">
           <div className="goBack center" onClick={this.onClickBack}>
             <ArrowBackIcon />
           </div>
-          <div className="viewOrders-header">Orders</div>
+          <div className="viewOrdersMobile-header">Orders</div>
         </div>
-        <div className="viewOrders-filters-container">
+        <div className="viewOrdersMobile-filters-container">
           <Filter
             filterName="Order Status"
             filterOptions={ORDER_STATUSES}
@@ -86,16 +86,6 @@ class ViewOrders extends Component {
           />
         </div>
         <ul className="table-wrapper">
-          <li>
-            {ORDER_TABLE_HEADERS.map(item => (
-              <div
-                className={`tableHeader ${item.dataname}`}
-                key={item.dataname}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
           {orderList.length > 0 ? (
             orderList.map(order => (
               <li
@@ -107,10 +97,13 @@ class ViewOrders extends Component {
                     className={`${item.dataname} ${order.status}`}
                     key={item.dataname}
                   >
+                    {item.dataname !== 'status' && (
+                      <div className="fieldName">{item.name}</div>
+                    )}
                     {item.dataname === 'status' && getStatus(order.status)}
+                    {item.dataname !== 'status' && order[item.dataname]}
                     {USER_FIELDS.includes(item.dataname) &&
                       order.placed_by[item.dataname]}
-                    {item.dataname !== 'status' && order[item.dataname]}
                   </div>
                 ))}
               </li>
@@ -138,4 +131,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ViewOrders));
+)(withRouter(ViewOrdersMobile));

@@ -5,12 +5,15 @@ import Loading from 'components/common/Loading/Loading';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
-import ViewOrders from './ViewOrders/ViewOrders';
 
 const ViewProductsMobile = lazy(
   () => import('./ViewProductsMobile/ViewProductsMobile')
 );
 const ViewProducts = lazy(() => import('./ViewProducts/ViewProducts'));
+const ViewOrders = lazy(() => import('./ViewOrders/ViewOrders'));
+const ViewOrdersMobile = lazy(
+  () => import('./ViewOrdersMobile/ViewOrdersMobile')
+);
 
 interface AdminRoutesProps extends RouteComponentProps {}
 
@@ -40,7 +43,14 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
             path={`${match.path}/orders/:id/view`}
             component={ViewOrders}
           /> */}
-          <Route path={`${match.path}/orders`} component={ViewOrders} />
+          <Route
+            path={`${match.path}/orders`}
+            render={() => (
+              <Suspense fallback={<Loading />}>
+                {isMobile ? <ViewOrdersMobile /> : <ViewOrders />}
+              </Suspense>
+            )}
+          />
           <Route path={`${match.path}/`} component={AdminDashboard} exact />
         </Switch>
       </div>
