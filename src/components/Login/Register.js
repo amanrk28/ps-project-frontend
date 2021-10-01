@@ -24,6 +24,7 @@ class Register extends Component {
     super(props);
     this.state = {
       isSignin: true,
+      isLoading: false,
     };
   }
 
@@ -34,16 +35,18 @@ class Register extends Component {
 
   onSubmitSignin = dataPayload => {
     const { actions } = this.props;
-    actions.loginUser(dataPayload);
+    this.setState({ isLoading: true });
+    actions.loginUser(dataPayload, () => this.setState({ isLoading: false }));
   };
 
   onSubmitSignup = dataPayload => {
     const { actions } = this.props;
-    actions.signupUser(dataPayload);
+    this.setState({ isLoading: true });
+    actions.signupUser(dataPayload, () => this.setState({ isLoading: false }));
   };
 
   render() {
-    const { isSignin } = this.state;
+    const { isSignin, isLoading } = this.state;
     return (
       <div className="registration-page-wrapper center">
         <div className="registration-wrapper">
@@ -58,9 +61,15 @@ class Register extends Component {
             </div>
             <div className="form-container">
               {isSignin ? (
-                <SigninForm onSubmit={this.onSubmitSignin} />
+                <SigninForm
+                  isLoading={isLoading}
+                  onSubmit={this.onSubmitSignin}
+                />
               ) : (
-                <SignupForm onSubmit={this.onSubmitSignup} />
+                <SignupForm
+                  isLoading={isLoading}
+                  onSubmit={this.onSubmitSignup}
+                />
               )}
             </div>
             <div className="switch-registration">

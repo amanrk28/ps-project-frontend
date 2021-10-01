@@ -43,7 +43,7 @@ export const setAuthCredentials = data => dispatch => {
   if (data.user) dispatch(set_user(data.user));
 };
 
-export const signupUser = req_data => dispatch => {
+export const signupUser = (req_data, cb) => dispatch => {
   const { email, phone_number, password } = req_data;
   const emailRegex = new RegExp(EMAIL_REGEX);
 
@@ -60,6 +60,7 @@ export const signupUser = req_data => dispatch => {
     .then(res => {
       const { status, data, msg } = res;
       if (!status) throw msg;
+      if (cb) cb();
       NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
       dispatch(push(userRedirectAfterAuth(data.user)));
@@ -70,7 +71,7 @@ export const signupUser = req_data => dispatch => {
     });
 };
 
-export const loginUser = req_data => dispatch => {
+export const loginUser = (req_data, cb) => dispatch => {
   const { email, password } = req_data;
   const emailRegex = new RegExp(EMAIL_REGEX);
   if (!email || !password || (email && !emailRegex.test(email.trim())))
@@ -80,6 +81,7 @@ export const loginUser = req_data => dispatch => {
     .then(res => {
       const { status, data, msg } = res;
       if (!status) throw msg;
+      if (cb) cb();
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
       dispatch(push(userRedirectAfterAuth(data.user)));

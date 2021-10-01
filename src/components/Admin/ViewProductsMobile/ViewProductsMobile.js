@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Input from 'components/common/Input/Input';
 import * as actions from 'store/actions/productActions';
 import { queryStringify } from 'utils/utils';
 import Filter from 'components/Filter/Filter';
-import './ViewProducts.scss';
+import './ViewProductsMobile.scss';
 
 const PRODUCT_TABLE_HEADERS = [
   { name: 'Image', dataname: 'image' },
   { name: 'Name', dataname: 'name' },
+  { name: 'Description', dataname: 'description' },
   { name: 'Price / unit', dataname: 'price' },
   { name: 'Stock', dataname: 'stock' },
   { name: 'Category', dataname: 'category' },
-  { name: 'Description', dataname: 'description' },
-  { name: 'Edit', dataname: 'edit' },
 ];
 
-class ViewProducts extends Component {
+class ViewProductsMobile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -104,39 +102,35 @@ class ViewProducts extends Component {
           </div>
         </div>
         <ul className="table-wrapper">
-          <li>
-            {PRODUCT_TABLE_HEADERS.map(item => (
-              <div
-                className={`tableHeader ${item.dataname}`}
-                key={item.dataname}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
           {productList.length > 0 ? (
             productList.map(product => (
-              <li key={product.id}>
+              <li
+                key={product.id}
+                onClick={() => this.onEditProduct(product.id)}
+              >
                 {PRODUCT_TABLE_HEADERS.map(item => (
-                  <div className={item.dataname} key={item.dataname}>
-                    {item.dataname === 'image' && (
-                      <img src={product.image} alt={product.name} />
-                    )}
-                    {item.dataname === 'edit' && (
-                      <div onClick={() => this.onEditProduct(product.id)}>
-                        <ModeEditIcon />
-                      </div>
-                    )}
-                    {item.dataname === 'category' && (
-                      <p>{this.getCategoryFromId(product)}</p>
-                    )}
-                    {!['image', 'category', 'edit'].includes(item.dataname) && (
-                      <p>
-                        {item.dataname === 'price' && <span>&#8377;</span>}
-                        {product[item.dataname]}
-                      </p>
-                    )}
-                  </div>
+                  <Fragment key={item.dataname}>
+                    <div className={item.dataname}>
+                      {item.dataname === 'image' && (
+                        <img src={product.image} alt={product.name} />
+                      )}
+                      {item.dataname === 'category' && (
+                        <p>
+                          <span>{item.name}: </span>
+                          {this.getCategoryFromId(product)}
+                        </p>
+                      )}
+                      {!['image', 'category'].includes(item.dataname) && (
+                        <p>
+                          {item.dataname === 'stock' && (
+                            <span>{item.name}: </span>
+                          )}
+                          {item.dataname === 'price' && <span>&#8377;</span>}
+                          {product[item.dataname]}
+                        </p>
+                      )}
+                    </div>
+                  </Fragment>
                 ))}
               </li>
             ))
@@ -162,4 +156,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withRouter(ViewProducts));
+)(withRouter(ViewProductsMobile));

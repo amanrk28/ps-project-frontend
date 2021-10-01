@@ -19,9 +19,10 @@ interface OnSubmitProps {
 
 interface SigninFormProps {
   onSubmit: (props: OnSubmitProps) => void;
+  isLoading: boolean;
 }
 
-const SigninForm = ({ onSubmit }: SigninFormProps) => {
+const SigninForm = ({ onSubmit, isLoading }: SigninFormProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -59,7 +60,12 @@ const SigninForm = ({ onSubmit }: SigninFormProps) => {
           onKeyDown={handleKeyDown}
         />
       ))}
-      <Button text="Signin" onClick={onClick} className="login-btn" />
+      <Button
+        text="Signin"
+        onClick={onClick}
+        className="login-btn"
+        isLoading={isLoading}
+      />
     </div>
   );
 };

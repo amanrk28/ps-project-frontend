@@ -28,6 +28,7 @@ class AddUpdateProduct extends Component {
       price: '',
       category: '',
       isNewProduct: true,
+      isLoading: false,
     };
   }
 
@@ -80,7 +81,9 @@ class AddUpdateProduct extends Component {
       category,
       description,
     };
+    this.setState({ isLoading: true });
     const onCb = () => {
+      this.setState({ isLoading: false });
       history.push('/admin/products');
     };
     actions.createProduct({ requestData, cb: onCb });
@@ -97,7 +100,9 @@ class AddUpdateProduct extends Component {
       category,
       description,
     };
+    this.setState({ isLoading: true });
     const onCb = () => {
+      this.setState({ isLoading: false });
       history.goBack();
     };
     actions.updateProduct({ product_id: id, requestData, cb: onCb });
@@ -110,7 +115,8 @@ class AddUpdateProduct extends Component {
   };
 
   render() {
-    const { description, category, isNewProduct, image } = this.state;
+    const { description, category, isNewProduct, image, isLoading } =
+      this.state;
     const { productsCategories } = this.props;
 
     return (
@@ -168,6 +174,7 @@ class AddUpdateProduct extends Component {
             type="primary"
             text={isNewProduct ? 'Add' : 'Update'}
             onClick={this.onClickSubmit}
+            isLoading={isLoading}
           />
         </div>
       </div>

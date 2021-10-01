@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { Switch, Route, RouteComponentProps } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
+import Loading from 'components/common/Loading/Loading';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
-import ViewProducts from './ViewProducts/ViewProducts';
 import ViewOrders from './ViewOrders/ViewOrders';
+
+const ViewProductsMobile = lazy(
+  () => import('./ViewProductsMobile/ViewProductsMobile')
+);
+const ViewProducts = lazy(() => import('./ViewProducts/ViewProducts'));
 
 interface AdminRoutesProps extends RouteComponentProps {}
 
@@ -22,7 +28,14 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
             path={`${match.path}/products/add`}
             component={AddUpdateProduct}
           />
-          <Route path={`${match.path}/products`} component={ViewProducts} />
+          <Route
+            path={`${match.path}/products`}
+            render={() => (
+              <Suspense fallback={<Loading />}>
+                {isMobile ? <ViewProductsMobile /> : <ViewProducts />}
+              </Suspense>
+            )}
+          />
           {/* <Route
             path={`${match.path}/orders/:id/view`}
             component={ViewOrders}

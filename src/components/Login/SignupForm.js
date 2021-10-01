@@ -69,6 +69,7 @@ class SignupForm extends Component {
   };
 
   render() {
+    const { isLoading } = this.props;
     return (
       <div className="login-container center">
         {SIGNUP_FIELDS.map(item => (
@@ -84,7 +85,12 @@ class SignupForm extends Component {
             onKeyDown={this.handleKeyDown}
           />
         ))}
-        <Button text="Signup" onClick={this.onClick} className="login-btn" />
+        <Button
+          text="Signup"
+          onClick={this.onClick}
+          className="login-btn"
+          isLoading={isLoading}
+        />
       </div>
     );
   }

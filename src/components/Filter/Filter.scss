@@ -1,8 +1,16 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
 .filter-wrapper {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   > div > span {
     width: 180px;
+    @include phone {
+      width: 100%;
+    }
   }
 }
