@@ -2,11 +2,6 @@ import React, { PureComponent } from 'react';
 import './Input.scss';
 
 class Input extends PureComponent {
-  inputRef = React.createRef();
-  componentDidMount = () => {
-    this.inputRef.current.focus();
-  };
-
   render() {
     const {
       dataname,
@@ -28,7 +23,6 @@ class Input extends PureComponent {
         <div className={`input-wrapper ${inputClass || ''}`} style={style}>
           <div className="input-field">
             <input
-              ref={this.inputRef}
               type={type}
               data-name={dataname}
               placeholder={placeholder}

@@ -1,9 +1,9 @@
-import { toast } from 'react-toastify';
+import { toast, ToastOptions } from 'react-toastify';
 import './NotifyMe.scss';
 
-export const NotifyMe = (status, msg, position = 'top-right') => {
-  const styleObj = {
-    position,
+export const NotifyMe = (status: string, msg: string) => {
+  const styleObj: ToastOptions = {
+    position: 'top-right',
     autoClose: 5000,
     hideProgressBar: true,
     closeOnClick: true,
