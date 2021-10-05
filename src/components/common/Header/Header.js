@@ -1,28 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import SearchIcon from '@mui/icons-material/Search';
+import { withRouter } from 'react-router';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import LOGO_MAIN from 'utils/utils';
+import Input from 'components/common/Input/Input';
+import LOGO_MAIN, { queryStringify, COMPANY_NAME } from 'utils/utils';
 import { logout } from 'store/actions/authActions';
-import { COMPANY_NAME } from 'utils/utils';
+import { getProducts } from 'store/actions/productActions';
 import './Header.scss';
-import { RootState } from 'store/reducers/rootState';
 
-interface HeaderProps {
-  enableSearch: boolean;
-}
-
-const Header = ({ enableSearch = false }: HeaderProps) => {
+const Header = ({ enableSearch = false, history }) => {
   const [isAccountsTabOpen, setIsAccountsTabOpen] = useState(false);
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
-  const { user, cartCount } = useSelector((state: RootState) => ({
+  const { router, user, cartCount } = useSelector(state => ({
+    router: state.router,
     user: state.auth,
     cartCount: state.cart.cart_count,
   }));
+
+  useEffect(() => {
+    if (router.location?.query?.search) {
+      const query = { search: router?.location.query.search };
+      setSearch(query.search);
+      dispatch(getProducts({ query }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onChangeFilter = e => {
+    const { value } = e.target;
+    const query = { search: value };
+    setSearch(query.search);
+    if (query.hasOwnProperty('search') && !query.search) delete query.search;
+    history.push({ search: queryStringify(query) });
+    dispatch(getProducts({ query }));
+  };
 
   const onClickLogout = () => {
     dispatch(logout());
@@ -39,8 +55,12 @@ const Header = ({ enableSearch = false }: HeaderProps) => {
       </Link>
       {enableSearch && (
         <div className="header__search">
-          <input className="header__searchInput" type="text" />
-          <SearchIcon className="header__searchIcon" />
+          <Input
+            dataname="search"
+            value={search}
+            onChange={onChangeFilter}
+            placeholder="Search by Product name"
+          />
         </div>
       )}
 
@@ -91,4 +111,4 @@ const Header = ({ enableSearch = false }: HeaderProps) => {
   );
 };
 
-export default Header;
+export default withRouter(Header);

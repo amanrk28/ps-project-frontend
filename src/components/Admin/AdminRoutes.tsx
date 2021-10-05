@@ -5,6 +5,7 @@ import Loading from 'components/common/Loading/Loading';
 import AdminDashboard from './AdminDashboard/AdminDashboard';
 import AdminHeader from './AdminHeader/AdminHeader';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
+import ViewOrderItem from './ViewOrderItem/ViewOrderItem';
 
 const ViewProductsMobile = lazy(
   () => import('./ViewProductsMobile/ViewProductsMobile')
@@ -39,10 +40,10 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
               </Suspense>
             )}
           />
-          {/* <Route
+          <Route
             path={`${match.path}/orders/:id/view`}
-            component={ViewOrders}
-          /> */}
+            component={ViewOrderItem}
+          />
           <Route
             path={`${match.path}/orders`}
             render={() => (

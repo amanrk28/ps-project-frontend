@@ -1,11 +1,16 @@
 import * as aT from '../actionTypes/orderActionTypes';
-import { getOrderListApi } from 'common/api';
+import { getOrderItemApi, getOrderListApi } from 'common/api';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 import { getSearchStringFromObject } from 'utils/utils';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
 
 const setOrderList = data => ({
   type: aT.SET_ORDERS,
+  data,
+});
+
+const setOrderItem = data => ({
+  type: aT.SET_ORDER_ITEM,
   data,
 });
 
@@ -28,6 +33,22 @@ export const getOrdersList = ({ orderStatus, cb }) => {
         if (!status) throw msg;
         if (cb) cb();
         dispatch(setOrderList(data));
+      })
+      .catch(err => {
+        NotifyMe('error', err);
+        console.log(err);
+      });
+  };
+};
+
+export const getOrderItem = ({ id, cb }) => {
+  return dispatch => {
+    getOrderItemApi(id)
+      .then(res => {
+        const { status, data, msg } = res;
+        if (!status) throw msg;
+        if (cb) cb();
+        dispatch(setOrderItem(data));
       })
       .catch(err => {
         NotifyMe('error', err);

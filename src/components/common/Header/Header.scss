@@ -24,31 +24,11 @@
     margin: 0 10px;
   }
   .header__search {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 24px;
-    width: 100%;
+    .input-wrapper {
+      width: 300px;
+    }
     @include phone {
       display: none;
-    }
-    .header__searchInput {
-      height: 2rem;
-      padding: 10px;
-      border: none;
-      border-radius: 5px 0 0 5px;
-      width: 50%;
-      font-size: 16px;
-    }
-    .header__searchIcon {
-      padding: 5px;
-      margin-right: 10px;
-      height: 2rem;
-      width: 2rem;
-      background-color: #222;
-      color: #fff;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
     }
   }
   .header__nav {

@@ -64,15 +64,26 @@ export async function uploadFile(file) {
   return uploadObj;
 }
 
+const DAYS = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+];
+
 export const convertDateStampToHumanDate = dateString => {
   const dateObj = new Date(dateString);
   if (dateObj) {
     let date = dateObj.getDate();
     date = date.toString().length === 1 ? '0' + date : date;
-    let month = dateObj.getMonth();
+    let month = dateObj.getMonth() + 1;
     month = month.toString().length === 1 ? '0' + month : month;
     const year = dateObj.getFullYear();
-    const str = `${date}/${month}/${year}`;
+    const day = dateObj.getDay();
+    const str = `${DAYS[day]} - ${date}/${month}/${year}`;
     return str;
   } else {
     return dateString;
@@ -101,4 +112,17 @@ export const queryStringify = obj => {
   }
   console.log;
   return arr.join('&');
+};
+
+const ADDRESS_FIELDS = ['house_no', 'street', 'city', 'pincode'];
+
+export const getAddressString = addressObj => {
+  let address = '';
+  ADDRESS_FIELDS.forEach(item => {
+    if (addressObj[item]) address += addressObj[item];
+    if (item === 'city') address += ' - ';
+    else if (item !== 'pincode') address += ', ';
+  });
+  console.log(address);
+  return address;
 };

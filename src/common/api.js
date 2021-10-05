@@ -59,3 +59,4 @@ const order = '/order';
 
 export const getOrderListApi = searchString =>
   callAPI('get', `${order}/orders${searchString || ''}`);
+export const getOrderItemApi = id => callAPI('get', `${order}/orders/${id}`);

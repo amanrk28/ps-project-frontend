@@ -101,14 +101,15 @@ export const verifyToken = () => (dispatch, getState) => {
     .then(res => {
       const { status, data, msg } = res;
       if (!status) throw msg;
+      dispatch(setLoaderFalse());
       if (data !== null) {
         dispatch(setAuthCredentials(data));
-        dispatch(setLoaderFalse());
         if (getState().router.location.pathname.indexOf('login') > -1)
           dispatch(push(userRedirectAfterAuth(data.user)));
       }
     })
     .catch(err => {
+      dispatch(setLoaderFalse());
       console.log(err);
     });
 };

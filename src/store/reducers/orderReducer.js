@@ -1,10 +1,11 @@
 import { convertDateStampToHumanDate } from 'utils/utils';
 import * as aT from '../actionTypes/orderActionTypes';
 
-// const update = (prevState, newState) => ({ ...prevState, ...newState });
+const update = (prevState, newState) => ({ ...prevState, ...newState });
 
 const initialState = {
   orderList: [],
+  orderItem: {},
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -23,6 +24,8 @@ const orderReducer = (state = initialState, action) => {
         return newstate;
       }
     }
+    case aT.SET_ORDER_ITEM:
+      return update(state, { orderItem: { ...action.data } });
     default:
       return state;
   }
