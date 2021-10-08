@@ -90,7 +90,7 @@ const Header = ({ enableSearch = false, history }) => {
           </>
         )}
         <div className="header__option">
-          <Link to="/checkout">
+          <Link to="/cart">
             <div className="cart_logo__wrapper">
               <ShoppingCartOutlinedIcon className="header__cartLogo" />
               <div className="cart__count center">{cartCount}</div>

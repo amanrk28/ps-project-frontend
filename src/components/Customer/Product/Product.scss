@@ -10,7 +10,6 @@
   z-index: 1;
   box-shadow: 8px 8px 16px #ccc;
   .product__info {
-    color: #337ab7;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -19,6 +18,7 @@
       cursor: pointer;
     }
     .product__title {
+      color: #337ab7;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -26,7 +26,6 @@
     .product__price {
       margin-top: 5px;
       display: flex;
-      color: #000;
     }
   }
   .product-image__container {

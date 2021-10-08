@@ -1,34 +1,30 @@
-.viewProducts-wrapper {
-  .viewProducts-header-wrapper {
+.cart-wrapper {
+  padding: 2rem;
+  .cart-header-wrapper {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 2rem;
     position: relative;
-
-    .viewProducts-header {
+    .cart-header {
       font-size: 28px;
       font-weight: 600;
       line-height: 39px;
     }
   }
-  .viewProducts-topbar {
-    justify-content: flex-start;
-    padding: 12px 0;
-    .viewProducts-searchBar {
-      margin-right: 1rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      > div {
-        width: 250px;
-      }
-    }
-    .viewProducts-filters-container
-      .filter-wrapper
-      .dropdownInput-wrapper
+  .cart-secondary-header {
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .totalAmount {
+      padding: 0 0 1rem 0;
+      font-size: 24px;
+      font-weight: 500;
       span {
-      width: 250px;
+        font-weight: 600;
+        font-size: 32px;
+      }
     }
   }
   .table-wrapper {
@@ -45,24 +41,15 @@
         flex: 1;
         padding: 0 8px;
       }
-      .price,
-      .stock {
-        flex: 0.3;
+      .name {
+        flex: 1.5;
       }
-      .name,
-      .category {
-        flex: 0.6;
-      }
-      .edit {
-        flex: 0.1;
-        transition: transform 0.2s ease-in;
-        &:not(.tableHeader):hover {
-          transform: scale(1.1);
-          cursor: pointer;
-        }
+      .delete {
+        flex: 0.2;
+        cursor: pointer;
       }
       .image {
-        flex: 0.3;
+        flex: 0.5;
         display: flex;
         align-items: center;
         width: 100px;

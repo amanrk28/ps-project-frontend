@@ -5,20 +5,7 @@
     width: 100%;
     margin-bottom: 2rem;
     position: relative;
-    .goBack {
-      height: 32px;
-      width: 32px;
-      border-radius: 50%;
-      box-shadow: 4px 4px 16px #aaa;
-      transition: transform 0.2s ease-in;
-      position: absolute;
-      left: 0;
-      background-color: #fff;
-      &:hover {
-        cursor: pointer;
-        transform: scale(1.05);
-      }
-    }
+
     .viewOrdersMobile-header {
       font-size: 28px;
       font-weight: 600;

@@ -14,6 +14,10 @@ const setOrderItem = data => ({
   data,
 });
 
+export const resetOrder = () => ({
+  type: aT.RESET_ORDER,
+});
+
 export const getOrdersList = ({ orderStatus, cb }) => {
   let searchObj = {
     all: true,

@@ -38,11 +38,10 @@ export const updateProductApi = (id, data) =>
 export const getProductCategoriesApi = () =>
   callAPI('get', `${store}/product_categories`);
 
+export const getCartItemsApi = () => callAPI('get', `${store}/cart`);
 export const createCartItemApi = data => callAPI('post', `${store}/cart`, data);
 export const updateCartItemApi = (id, data) =>
   callAPI('put', `${store}/cart/${id}`, data);
-export const getCheckoutDataApi = data =>
-  callAPI('post', `${store}/checkout`, data);
 
 // -------------- Auth API -------------------
 const auth = '/auth';

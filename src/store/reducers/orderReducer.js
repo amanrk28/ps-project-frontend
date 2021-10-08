@@ -26,6 +26,10 @@ const orderReducer = (state = initialState, action) => {
     }
     case aT.SET_ORDER_ITEM:
       return update(state, { orderItem: { ...action.data } });
+
+    case aT.RESET_ORDER:
+      return initialState;
+
     default:
       return state;
   }

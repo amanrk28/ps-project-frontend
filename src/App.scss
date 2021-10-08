@@ -113,3 +113,22 @@ textarea {
     }
   }
 }
+
+.goBack {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+  box-shadow: 4px 4px 16px #aaa;
+  transition: transform 0.2s ease-in;
+  position: absolute;
+  left: 0;
+  background-color: #fff;
+  @include phone {
+    height: 32px;
+    width: 32px;
+  }
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+}

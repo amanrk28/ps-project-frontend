@@ -1,10 +1,16 @@
 import * as aT from '../actionTypes/cartActionTypes';
 import {
   createCartItemApi,
-  getCheckoutDataApi,
+  getCartItemsApi,
   updateCartItemApi,
 } from '../../common/api';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import { setLoaderTrue, setLoaderFalse } from './authActions';
+
+const set_all_cart_items = data => ({
+  type: aT.SET_ALL_CART_ITEMS,
+  data,
+});
 
 const set_cart_item = data => ({
   type: aT.SET_NEW_CART_ITEM,
@@ -16,14 +22,40 @@ const update_cart_item = data => ({
   data,
 });
 
-const set_cart_items_for_checkout = data => ({
-  type: aT.SET_CART_ITEMS_FOR_CHECKOUT,
-  data,
+export const resetCart = () => ({
+  type: aT.RESET_CART,
 });
+
+export const getCartItems = () => dispatch => {
+  dispatch(setLoaderTrue());
+  getCartItemsApi()
+    .then(res => {
+      const { status, data, msg } = res;
+      if (!status) throw msg;
+      if (data && Array.isArray(data) && data.length > 0) {
+        const {
+          cart_count,
+          cart: { hash },
+        } = data[0];
+        const resData = {
+          cart_count,
+          hash,
+          cart_items: [...data],
+        };
+        dispatch(set_all_cart_items(resData));
+        dispatch(setLoaderFalse());
+      }
+    })
+    .catch(err => {
+      NotifyMe('error', err);
+      console.log(err);
+    });
+};
 
 export const addCartItem = product_id => {
   return dispatch => {
     const request_data = { product_id };
+    dispatch(setLoaderTrue());
     createCartItemApi(request_data)
       .then(res => {
         const { status, data, msg } = res;
@@ -35,6 +67,7 @@ export const addCartItem = product_id => {
           amount: data.amount,
           cart_count: data.cart_count,
         };
+        dispatch(setLoaderFalse());
         dispatch(set_cart_item(dispatch_data));
       })
       .catch(err => {
@@ -46,30 +79,21 @@ export const addCartItem = product_id => {
 
 export const updateCartItem = ({ product_id, quantity }) => {
   return dispatch => {
-    updateCartItemApi(product_id, quantity)
+    dispatch(setLoaderTrue());
+    updateCartItemApi(product_id, { quantity })
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
-        const { product_id, quantity, amount } = data;
-        dispatch(update_cart_item({ product_id, quantity, amount }));
-      })
-      .catch(err => {
-        NotifyMe('error', `${err}!`);
-        console.log(err);
-      });
-  };
-};
-
-export const getCheckoutData = () => {
-  return (dispatch, getState) => {
-    const { hash } = getState().cart;
-    if (!hash || hash.length !== 8)
-      return NotifyMe('error', 'Cart Hash not found! Try adding items to cart');
-    getCheckoutDataApi({ cart_hash: hash })
-      .then(res => {
-        const { status, data, msg } = res;
-        if (!status) throw msg;
-        dispatch(set_cart_items_for_checkout(data));
+        const { product, quantity, amount } = data;
+        dispatch(setLoaderFalse());
+        dispatch(
+          update_cart_item({
+            product_id: product.id,
+            quantity,
+            amount,
+            price: product.price,
+          })
+        );
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);

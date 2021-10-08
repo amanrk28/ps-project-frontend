@@ -9,6 +9,8 @@ import {
 import { EMAIL_REGEX } from 'utils/utils';
 import { setAuthToken, clearAllStorages } from 'utils/localStorage';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import { getCartItems, addCartItem, resetCart } from './cartActions';
+import { resetOrder } from './orderActions';
 
 const set_user = data => ({
   type: aT.SET_USER,
@@ -24,11 +26,11 @@ const resetUser = () => ({
   type: aT.RESET_USER,
 });
 
-const setLoadTrue = () => ({
+export const setLoaderTrue = () => ({
   type: aT.SET_LOADER_TRUE,
 });
 
-const setLoaderFalse = () => ({
+export const setLoaderFalse = () => ({
   type: aT.SET_LOADER_FALSE,
 });
 
@@ -46,7 +48,7 @@ export const setAuthCredentials = data => dispatch => {
   if (data.user) dispatch(set_user(data.user));
 };
 
-export const signupUser = (req_data, cb) => dispatch => {
+export const signupUser = (req_data, cb) => (dispatch, getState) => {
   const { email, phone_number, password } = req_data;
   const emailRegex = new RegExp(EMAIL_REGEX);
 
@@ -59,6 +61,7 @@ export const signupUser = (req_data, cb) => dispatch => {
   if (!password)
     return NotifyMe('error', 'Password not provided. Cannot create user');
 
+  const { location } = getState().router;
   signupApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
@@ -66,6 +69,10 @@ export const signupUser = (req_data, cb) => dispatch => {
       if (cb) cb();
       NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
+      if (location.hash && location.hash === '#addtocart') {
+        const id = location.state;
+        dispatch(addCartItem(id));
+      }
       dispatch(push(userRedirectAfterAuth(data.user)));
     })
     .catch(err => {
@@ -74,12 +81,12 @@ export const signupUser = (req_data, cb) => dispatch => {
     });
 };
 
-export const loginUser = (req_data, cb) => dispatch => {
+export const loginUser = (req_data, cb) => (dispatch, getState) => {
   const { email, password } = req_data;
   const emailRegex = new RegExp(EMAIL_REGEX);
   if (!email || !password || (email && !emailRegex.test(email.trim())))
     return NotifyMe('error', 'Invalid/ Incomplete Credentials provided');
-
+  const { location } = getState().router;
   loginApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
@@ -87,6 +94,12 @@ export const loginUser = (req_data, cb) => dispatch => {
       if (cb) cb();
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
+      if (location.hash && location.hash === '#addtocart') {
+        const id = location.state;
+        dispatch(addCartItem(id));
+      } else {
+        dispatch(getCartItems());
+      }
       dispatch(push(userRedirectAfterAuth(data.user)));
     })
     .catch(err => {
@@ -96,7 +109,7 @@ export const loginUser = (req_data, cb) => dispatch => {
 };
 
 export const verifyToken = () => (dispatch, getState) => {
-  dispatch(setLoadTrue());
+  dispatch(setLoaderTrue());
   verifyTokenApi()
     .then(res => {
       const { status, data, msg } = res;
@@ -116,8 +129,10 @@ export const verifyToken = () => (dispatch, getState) => {
 
 export const logout = () => dispatch => {
   dispatch(resetUser());
+  dispatch(resetCart());
+  dispatch(resetOrder());
   clearAllStorages();
-  NotifyMe('success', 'User logged out');
+  NotifyMe('success', 'Logged out');
   dispatch(push('/'));
 };
 

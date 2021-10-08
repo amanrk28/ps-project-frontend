@@ -1,6 +1,6 @@
 import * as aT from '../actionTypes/cartActionTypes';
 
-const update = (prevState, newState) => ({ ...prevState, ...newState });
+// const update = (prevState, newState) => ({ ...prevState, ...newState });
 
 const initialState = {
   id: null,
@@ -13,9 +13,26 @@ const initialState = {
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
+    case aT.SET_ALL_CART_ITEMS: {
+      {
+        const { hash, cart_items } = action.data;
+        const newstate = { ...state };
+        let totalAmount = 0;
+        const newCartItems = cart_items.map(item => {
+          totalAmount += item.amount;
+          return { product_id: item.product.id, quantity: item.quantity };
+        });
+        newstate.cart_items = newCartItems;
+        newstate.cart_item_ids = newCartItems.map(x => x.product_id);
+        newstate.cart_count = newCartItems.length;
+        newstate.total_amount = totalAmount;
+        newstate.hash = hash;
+        return newstate;
+      }
+    }
     case aT.SET_NEW_CART_ITEM: {
       {
-        const { product_id, quantity, hash, amount, cart_count } = action.data;
+        const { product_id, quantity, hash, amount } = action.data;
         const newstate = { ...state };
         newstate.cart_items = [
           ...newstate.cart_items,
@@ -24,35 +41,39 @@ const cartReducer = (state = initialState, action) => {
         newstate.cart_item_ids = newstate.cart_items.map(x => x.product_id);
         newstate.hash = hash;
         newstate.total_amount += amount;
-        newstate.cart_count = cart_count;
+        newstate.cart_count = newstate.cart_items.length;
         return newstate;
       }
     }
     case aT.UPDATE_CART_ITEM: {
       {
-        const { product_id, quantity, amount } = action.data;
+        const { product_id, quantity, amount, price } = action.data;
         const newstate = { ...state };
-        const newCartItems = newstate.cart_items.map(item => {
-          if (item.product_id !== product_id) return item;
-          else {
-            newstate.total_amount +=
-              (amount / quantity) * (quantity - item.quantity);
-            return { product_id, quantity };
-          }
-        });
+        let newCartItems = [];
+        if (quantity === 0) {
+          newCartItems = newstate.cart_items.filter(
+            x => x.product_id !== product_id
+          );
+          newstate.total_amount -= price;
+        } else {
+          newCartItems = newstate.cart_items.map(item => {
+            if (item.product_id !== product_id) return item;
+            else {
+              newstate.total_amount +=
+                (amount / quantity) * (quantity - item.quantity);
+              return { product_id, quantity };
+            }
+          });
+        }
         newstate.cart_items = newCartItems;
         newstate.cart_item_ids = newCartItems.map(x => x.product_id);
+        newstate.cart_count = newCartItems.length;
         return newstate;
       }
     }
-    case aT.SET_CART_ITEMS_FOR_CHECKOUT:
-      return update(state, {
-        id: action.data.id,
-        cart_items: [...action.data.cart_items],
-        cart_item_ids: action.data.cart_items.map(x => x.product_id),
-        hash: action.data.hash,
-        total_amount: action.data.total_amount,
-      });
+    case aT.RESET_CART: {
+      return initialState;
+    }
 
     default:
       return state;
