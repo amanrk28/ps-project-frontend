@@ -49,8 +49,12 @@
     .addProduct-textarea-container {
       textarea {
         margin: 4px 0;
-        border: 1px solid var(--yellow-primary);
+        border: 1px solid var(--yellow-secondary);
         padding: 8px;
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 16px -2px var(--yellow-secondary);
+        }
       }
     }
   }

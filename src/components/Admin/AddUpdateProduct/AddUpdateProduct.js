@@ -54,10 +54,11 @@ class AddUpdateProduct extends Component {
     }
   };
 
-  onChange = (e, dataname) => {
+  onChange = e => {
+    const key = e.currentTarget.getAttribute('data-name');
     let { value } = e.target;
-    if (['price', 'stock'].includes(dataname)) value = parseInt(value, 10);
-    this.setState({ [dataname]: value });
+    if (['price', 'stock'].includes(key)) value = parseInt(value, 10);
+    this.setState({ [key]: value });
   };
 
   onClickBack = () => {
@@ -143,7 +144,7 @@ class AddUpdateProduct extends Component {
                 label={field.name}
                 dataname={field.dataname}
                 placeholder={field.name}
-                onChange={e => this.onChange(e, field.dataname)}
+                onChange={this.onChange}
                 value={this.state[field.dataname]}
                 inputClass="addProduct-input"
                 type={field.type}
@@ -155,7 +156,7 @@ class AddUpdateProduct extends Component {
             <DropdownInput
               options={productsCategories}
               labelPlaceholder="Category"
-              onChange={e => this.onChange(e, 'category')}
+              onChange={this.onChange}
               value={category}
               dataname="category"
             />
@@ -163,11 +164,12 @@ class AddUpdateProduct extends Component {
           <div className="addProduct-textarea-container">
             <p>Product Description</p>
             <textarea
-              onChange={e => this.onChange(e, 'description')}
+              onChange={this.onChange}
               value={description}
               maxLength="250"
               rows="4"
               placeholder="Max. 250 characters"
+              data-name="description"
             />
           </div>
           <Button

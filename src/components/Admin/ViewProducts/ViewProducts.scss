@@ -53,7 +53,8 @@
       .category {
         flex: 0.6;
       }
-      .edit {
+      .edit,
+      .id {
         flex: 0.1;
         transition: transform 0.2s ease-in;
         &:not(.tableHeader):hover {

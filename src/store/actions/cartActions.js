@@ -32,6 +32,7 @@ export const getCartItems = () => dispatch => {
     .then(res => {
       const { status, data, msg } = res;
       if (!status) throw msg;
+      dispatch(setLoaderFalse());
       if (data && Array.isArray(data) && data.length > 0) {
         const {
           cart_count,
@@ -43,7 +44,6 @@ export const getCartItems = () => dispatch => {
           cart_items: [...data],
         };
         dispatch(set_all_cart_items(resData));
-        dispatch(setLoaderFalse());
       }
     })
     .catch(err => {
@@ -60,6 +60,7 @@ export const addCartItem = product_id => {
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
+        dispatch(setLoaderFalse());
         const dispatch_data = {
           product_id: data.product.id,
           quantity: data.quantity,
@@ -67,7 +68,6 @@ export const addCartItem = product_id => {
           amount: data.amount,
           cart_count: data.cart_count,
         };
-        dispatch(setLoaderFalse());
         dispatch(set_cart_item(dispatch_data));
       })
       .catch(err => {

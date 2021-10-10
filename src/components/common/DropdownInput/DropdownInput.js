@@ -35,7 +35,7 @@ class DropdownInput extends Component {
       isError,
       dataProps,
       errorClass,
-      openClass,
+      openClass = 'openClass',
       className = '',
     } = this.props;
 

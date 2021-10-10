@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Input from 'components/common/Input/Input';
@@ -87,21 +87,21 @@ const Header = ({ enableSearch = false, history }) => {
                 </div>
               </div>
             )}
+            <div className="header__option">
+              <Link to="/cart">
+                <div className="cart_logo__wrapper">
+                  <ShoppingCartIcon className="header__cartLogo" />
+                  <div className="cart__count center">{cartCount}</div>
+                </div>
+              </Link>
+            </div>
           </>
         )}
-        <div className="header__option">
-          <Link to="/cart">
-            <div className="cart_logo__wrapper">
-              <ShoppingCartOutlinedIcon className="header__cartLogo" />
-              <div className="cart__count center">{cartCount}</div>
-            </div>
-          </Link>
-        </div>
 
         {!user.user_id && (
           <div className="header__option header__signin">
             <Link to="/login">
-              <AccountCircleOutlinedIcon className="header__accountLogo" />
+              <AccountCircleIcon className="header__accountLogo" />
               <p className="signinText">Sign In</p>
             </Link>
           </div>

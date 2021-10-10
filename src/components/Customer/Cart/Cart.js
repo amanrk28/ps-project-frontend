@@ -9,6 +9,7 @@ import Button from 'components/common/Button/Button';
 import './Cart.scss';
 
 const CART_TABLE_HEADERS = [
+  { name: '#', dataname: 'id' },
   { name: 'Image', dataname: 'image' },
   { name: 'Name', dataname: 'name' },
   { name: 'Price/unit', dataname: 'price' },
@@ -80,10 +81,11 @@ class Cart extends Component {
               </div>
             ))}
           </li>
-          {renderCartItems.map(cartItem => (
+          {renderCartItems.map((cartItem, idx) => (
             <li key={cartItem.id}>
               {CART_TABLE_HEADERS.map(item => (
                 <div className={item.dataname} key={item.dataname}>
+                  {item.dataname === 'id' && idx + 1}
                   {item.dataname === 'image' && (
                     <img src={cartItem.image} alt={cartItem.name} />
                   )}

@@ -3,7 +3,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 
 body {
-  background-color: rgb(234, 237, 237);
+  // background-color: rgb(234, 237, 237);
+  background-color: #fff;
   margin: 0;
   color: #2c3556;
   font-family: 'Montserrat', sans-serif, 'Work sans';
@@ -27,8 +28,8 @@ body {
 }
 
 :root {
-  --yellow-primary: #fcb800;
-  --yellow-secondary: #f0c14b;
+  --yellow-primary: #f5cc00;
+  --yellow-secondary: #ffc933;
   --grey-primary: #666;
   --grey-secondary: rgb(247, 247, 247);
 }
@@ -49,6 +50,7 @@ li {
 
 a {
   cursor: pointer;
+  text-decoration: none;
 }
 
 ::-webkit-scrollbar {

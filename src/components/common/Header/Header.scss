@@ -17,6 +17,10 @@
   @include phone {
     padding: 0;
   }
+  svg {
+    color: #fff;
+    font-size: 32px;
+  }
   .header__logo {
     width: 180px;
     height: 45px;
@@ -50,7 +54,7 @@
           font-size: 14px;
           font-weight: 400;
           user-select: none;
-          color: #2c3556;
+          color: #fff;
           span {
             font-weight: 600;
           }
@@ -60,26 +64,19 @@
     .cart_logo__wrapper {
       position: relative;
       height: 30px;
-      .header__cartLogo {
-        color: #000;
-        font-size: 32px;
-      }
       .cart__count {
         position: absolute;
         top: -6px;
         right: -6px;
-        background-color: #fff;
         width: 18px;
         height: 18px;
         border-radius: 50%;
         font-size: 12px;
-        text-decoration: none;
-        color: #000;
+        font-weight: 600;
+        background-color: #fff;
+        box-shadow: 0 0 8px var(--yellow-secondary);
+        color: #2c3556;
       }
-    }
-    .header__accountLogo {
-      color: #000;
-      font-size: 32px;
     }
     a {
       display: flex;

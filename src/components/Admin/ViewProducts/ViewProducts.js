@@ -12,6 +12,7 @@ import './ViewProducts.scss';
 import Loading from 'components/common/Loading/Loading';
 
 const PRODUCT_TABLE_HEADERS = [
+  { name: '#', dataname: 'id' },
   { name: 'Image', dataname: 'image' },
   { name: 'Name', dataname: 'name' },
   { name: 'Price / unit', dataname: 'price' },
@@ -125,10 +126,11 @@ class ViewProducts extends Component {
           ) : (
             <>
               {productList.length > 0 ? (
-                productList.map(product => (
+                productList.map((product, idx) => (
                   <li key={product.id}>
                     {PRODUCT_TABLE_HEADERS.map(item => (
                       <div className={item.dataname} key={item.dataname}>
+                        {item.dataname === 'id' && idx + 1}
                         {item.dataname === 'image' && (
                           <img src={product.image} alt={product.name} />
                         )}
@@ -140,7 +142,7 @@ class ViewProducts extends Component {
                         {item.dataname === 'category' && (
                           <p>{this.getCategoryFromId(product)}</p>
                         )}
-                        {!['image', 'category', 'edit'].includes(
+                        {!['image', 'category', 'edit', 'id'].includes(
                           item.dataname
                         ) && (
                           <p>

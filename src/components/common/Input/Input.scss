@@ -22,6 +22,7 @@
       border: none;
       &:focus {
         border: none;
+        box-shadow: 0 0 16px -2px var(--yellow-secondary);
       }
     }
   }

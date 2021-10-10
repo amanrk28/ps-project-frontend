@@ -21,6 +21,9 @@
     cursor: pointer;
     margin: 4px 0;
   }
+  .openClass {
+    box-shadow: 0 0 16px -2px var(--yellow-primary);
+  }
 
   span {
     border-radius: 8px;

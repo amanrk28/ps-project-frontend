@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   adminOrderActions,
@@ -9,31 +10,27 @@ import {
 import './AdminDashboard.scss';
 
 class AdminDashboard extends Component {
-  onClickProductAction = id => {
-    const { history, match } = this.props;
+  productRouteObject = id => {
+    const { match } = this.props;
     switch (id) {
       case productActionId.addProduct:
-        history.push({ pathname: `${match.url}/products/add`, hash: 'new' });
-        break;
+        return { pathname: `${match.url}/products/add`, hash: 'new' };
       case productActionId.viewProduct:
-        history.push(`${match.url}/products`);
-        break;
+        return { pathname: `${match.url}/products` };
       default:
-        console.log(id);
+        return { pathname: `${match.url}` };
     }
   };
 
-  onClickOrderAction = id => {
-    const { history, match } = this.props;
+  orderRouteObject = id => {
+    const { match } = this.props;
     switch (id) {
       case orderActionId.viewOrders:
-        history.push(`${match.url}/orders`);
-        break;
+        return { pathname: `${match.url}/orders` };
       case orderActionId.updateOrderStatus:
-        console.log(id);
-        break;
+        return { pathname: `${match.url}/orders` };
       default:
-        console.log(id);
+        return { pathname: `${match.url}` };
     }
   };
 
@@ -48,27 +45,23 @@ class AdminDashboard extends Component {
         <div className="adminDb-tab">PRODUCTS</div>
         <div className="adminDb-tabitems">
           {adminProductActions.map(item => (
-            <div
-              key={item.id}
-              className="adminDb-actionCard center"
-              onClick={() => this.onClickProductAction(item.id)}
-            >
-              <item.icon fontSize="large" />
-              <p>{item.name}</p>
-            </div>
+            <Link key={item.id} to={() => this.productRouteObject(item.id)}>
+              <div className="adminDb-actionCard center">
+                <item.icon fontSize="large" />
+                <p>{item.name}</p>
+              </div>
+            </Link>
           ))}
         </div>
         <div className="adminDb-tab">ORDERS</div>
         <div className="adminDb-tabitems">
           {adminOrderActions.map(item => (
-            <div
-              key={item.id}
-              className="adminDb-actionCard center"
-              onClick={() => this.onClickOrderAction(item.id)}
-            >
-              <item.icon fontSize="large" />
-              <p>{item.name}</p>
-            </div>
+            <Link to={() => this.orderRouteObject(item.id)} key={item.id}>
+              <div className="adminDb-actionCard center">
+                <item.icon fontSize="large" />
+                <p>{item.name}</p>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

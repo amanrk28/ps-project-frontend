@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 const productActionId = {
   viewProduct: 'view_product',
   addProduct: 'add_product',
@@ -10,8 +10,8 @@ const productActionId = {
 const adminProductActions = [
   {
     id: productActionId.viewProduct,
-    name: 'View All Products',
-    icon: FormatListBulletedIcon,
+    name: 'All Products',
+    icon: ListAltIcon,
   },
   {
     id: productActionId.addProduct,
@@ -28,8 +28,8 @@ const orderActionId = {
 const adminOrderActions = [
   {
     id: orderActionId.viewOrders,
-    name: 'View All Orders',
-    icon: FormatListBulletedIcon,
+    name: 'All Orders',
+    icon: AssignmentIcon,
   },
   {
     id: orderActionId.updateOrderStatus,
