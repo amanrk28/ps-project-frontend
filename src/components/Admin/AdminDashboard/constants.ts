@@ -2,6 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListAltIcon from '@mui/icons-material/ListAlt';
+
 const productActionId = {
   viewProduct: 'view_product',
   addProduct: 'add_product',

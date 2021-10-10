@@ -59,7 +59,7 @@ const Header = ({ enableSearch = false, history }) => {
             dataname="search"
             value={search}
             onChange={onChangeFilter}
-            placeholder="Search by Product name"
+            placeholder="Shop by Product name"
           />
         </div>
       )}

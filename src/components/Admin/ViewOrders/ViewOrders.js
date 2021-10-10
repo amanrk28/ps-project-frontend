@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import * as actions from 'store/actions/orderActions';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
+import ListTable from 'components/common/ListTable/ListTable';
+import * as actions from 'store/actions/orderActions';
 import { queryStringify } from 'utils/utils';
 import './ViewOrders.scss';
-import Loading from 'components/common/Loading/Loading';
 
 const USER_FIELDS = ['full_name', 'phone_number'];
 
@@ -70,6 +70,20 @@ class ViewOrders extends Component {
     history.push(`${match.url}/${id}/view`);
   };
 
+  renderListItem = ({ item, dataItem }) => {
+    return (
+      <div
+        className={`${item.dataname} ${dataItem.status}`}
+        key={item.dataname}
+      >
+        {item.dataname === 'status' && getStatus(dataItem.status)}
+        {USER_FIELDS.includes(item.dataname) &&
+          dataItem.placed_by[item.dataname]}
+        {item.dataname !== 'status' && dataItem[item.dataname]}
+      </div>
+    );
+  };
+
   render() {
     const { orderList } = this.props;
     const { statusFilter, isLoading } = this.state;
@@ -91,48 +105,15 @@ class ViewOrders extends Component {
             dataname="status"
           />
         </div>
-        <ul className="table-wrapper">
-          <li>
-            {ORDER_TABLE_HEADERS.map(item => (
-              <div
-                className={`tableHeader ${item.dataname}`}
-                key={item.dataname}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              {orderList.length > 0 ? (
-                orderList.map(order => (
-                  <li
-                    key={order.id}
-                    onClick={() => this.onOpenOrderDetails(order.id)}
-                  >
-                    {ORDER_TABLE_HEADERS.map(item => (
-                      <div
-                        className={`${item.dataname} ${order.status}`}
-                        key={item.dataname}
-                      >
-                        {item.dataname === 'status' && getStatus(order.status)}
-                        {USER_FIELDS.includes(item.dataname) &&
-                          order.placed_by[item.dataname]}
-                        {item.dataname !== 'status' && order[item.dataname]}
-                      </div>
-                    ))}
-                  </li>
-                ))
-              ) : (
-                <div className="tableEmpty center">
-                  No Orders available right now
-                </div>
-              )}
-            </>
-          )}
-        </ul>
+        <ListTable
+          headers={ORDER_TABLE_HEADERS}
+          dataList={orderList}
+          isLoading={isLoading}
+          tableFor="Orders"
+          customTableWrapper="customTableWrapper"
+          renderListItem={this.renderListItem}
+          onClickListItem={this.onOpenOrderDetails}
+        />
       </div>
     );
   }

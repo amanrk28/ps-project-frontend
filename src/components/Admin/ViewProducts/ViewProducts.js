@@ -5,11 +5,11 @@ import { withRouter } from 'react-router';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Input from 'components/common/Input/Input';
+import Filter from 'components/Filter/Filter';
+import ListTable from 'components/common/ListTable/ListTable';
 import * as actions from 'store/actions/productActions';
 import { queryStringify } from 'utils/utils';
-import Filter from 'components/Filter/Filter';
 import './ViewProducts.scss';
-import Loading from 'components/common/Loading/Loading';
 
 const PRODUCT_TABLE_HEADERS = [
   { name: '#', dataname: 'id' },
@@ -79,6 +79,31 @@ class ViewProducts extends Component {
     return product.category;
   };
 
+  renderListItem = ({ idx, dataItem, item }) => {
+    return (
+      <div className={item.dataname} key={item.dataname}>
+        {item.dataname === 'id' && idx + 1}
+        {item.dataname === 'image' && (
+          <img src={dataItem.image} alt={dataItem.name} />
+        )}
+        {item.dataname === 'edit' && (
+          <div onClick={() => this.onEditProduct(dataItem.id)}>
+            <ModeEditIcon />
+          </div>
+        )}
+        {item.dataname === 'category' && (
+          <p>{this.getCategoryFromId(dataItem)}</p>
+        )}
+        {['name', 'price', 'stock', 'description'].includes(item.dataname) && (
+          <p>
+            {item.dataname === 'price' && <span>&#8377;</span>}
+            {dataItem[item.dataname]}
+          </p>
+        )}
+      </div>
+    );
+  };
+
   render() {
     const { productList, productCategories } = this.props;
     const { search, category, isLoading } = this.state;
@@ -88,7 +113,9 @@ class ViewProducts extends Component {
           <div className="goBack center" onClick={this.onClickBack}>
             <ArrowBackIcon />
           </div>
-          <div className="viewProducts-header">Products</div>
+          <div className="viewProducts-header">
+            Products ({productList.length})
+          </div>
         </div>
         <div className="viewProducts-topbar center">
           <div className="viewProducts-searchBar">
@@ -110,56 +137,14 @@ class ViewProducts extends Component {
             />
           </div>
         </div>
-        <ul className="table-wrapper">
-          <li>
-            {PRODUCT_TABLE_HEADERS.map(item => (
-              <div
-                className={`tableHeader ${item.dataname}`}
-                key={item.dataname}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
-              {productList.length > 0 ? (
-                productList.map((product, idx) => (
-                  <li key={product.id}>
-                    {PRODUCT_TABLE_HEADERS.map(item => (
-                      <div className={item.dataname} key={item.dataname}>
-                        {item.dataname === 'id' && idx + 1}
-                        {item.dataname === 'image' && (
-                          <img src={product.image} alt={product.name} />
-                        )}
-                        {item.dataname === 'edit' && (
-                          <div onClick={() => this.onEditProduct(product.id)}>
-                            <ModeEditIcon />
-                          </div>
-                        )}
-                        {item.dataname === 'category' && (
-                          <p>{this.getCategoryFromId(product)}</p>
-                        )}
-                        {!['image', 'category', 'edit', 'id'].includes(
-                          item.dataname
-                        ) && (
-                          <p>
-                            {item.dataname === 'price' && <span>&#8377;</span>}
-                            {product[item.dataname]}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </li>
-                ))
-              ) : (
-                <div className="tableEmpty center">No Products Found</div>
-              )}
-            </>
-          )}
-        </ul>
+        <ListTable
+          headers={PRODUCT_TABLE_HEADERS}
+          dataList={productList}
+          isLoading={isLoading}
+          renderListItem={this.renderListItem}
+          tableFor="Products"
+          customTableWrapper="customTableWrapper"
+        />
       </div>
     );
   }

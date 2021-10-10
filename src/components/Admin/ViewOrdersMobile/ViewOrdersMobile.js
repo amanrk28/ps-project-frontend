@@ -94,7 +94,7 @@ class ViewOrdersMobile extends Component {
         {isLoading ? (
           <Loading />
         ) : (
-          <ul className="table-wrapper">
+          <ul className="mobile-table-wrapper">
             {orderList.length > 0 ? (
               orderList.map(order => (
                 <li

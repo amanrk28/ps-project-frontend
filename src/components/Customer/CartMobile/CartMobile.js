@@ -61,7 +61,7 @@ class CartMobile extends Component {
           </h2>
           <Button text="Proceed to Buy" onClick={this.onClickProceed} />
         </div>
-        <ul className="table-wrapper">
+        <ul className="mobile-table-wrapper">
           {renderCartItems.map(cartItem => (
             <li key={cartItem.id}>
               <div className="image">

@@ -177,6 +177,7 @@ class AddUpdateProduct extends Component {
             text={isNewProduct ? 'Add' : 'Update'}
             onClick={this.onClickSubmit}
             isLoading={isLoading}
+            dataProps={{ style: { fontWeight: 600 } }}
           />
         </div>
       </div>

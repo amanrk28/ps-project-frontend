@@ -31,60 +31,39 @@
       width: 250px;
     }
   }
-  .table-wrapper {
-    li {
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #ccc;
-      &:first-child {
-        background-color: var(--yellow-secondary);
-      }
-      > div {
-        flex: 1;
-        padding: 0 8px;
-      }
-      .price,
-      .stock {
-        flex: 0.3;
-      }
-      .name,
-      .category {
-        flex: 0.6;
-      }
-      .edit,
-      .id {
-        flex: 0.1;
-        transition: transform 0.2s ease-in;
-        &:not(.tableHeader):hover {
-          transform: scale(1.1);
-          cursor: pointer;
-        }
-      }
-      .image {
-        flex: 0.3;
-        display: flex;
-        align-items: center;
-        width: 100px;
-        &:not(.tableHeader) {
-          height: 100px;
-        }
-        img {
-          box-shadow: 0 0 32px #aaa;
-          border-radius: 8px;
-          width: 100px;
-          object-fit: cover;
-        }
+  .customTableWrapper li {
+    padding: 10px;
+    .price,
+    .stock {
+      flex: 0.3;
+    }
+    .name,
+    .category {
+      flex: 0.6;
+    }
+    .edit,
+    .id {
+      flex: 0.1;
+      transition: transform 0.2s ease-in;
+      &:not(.tableHeader):hover {
+        transform: scale(1.1);
+        cursor: pointer;
       }
     }
-    .tableEmpty {
-      width: 100%;
-      height: 100%;
-      font-size: 30px;
-      line-height: 40px;
-      font-weight: 600;
-      margin: 5rem 0;
+    .image {
+      flex: 0.3;
+      display: flex;
+      align-items: center;
+      width: 100px;
+      &:not(.tableHeader) {
+        height: 100px;
+      }
+      img {
+        box-shadow: 0 0 32px #aaa;
+        border-radius: 8px;
+        width: 100px;
+        object-fit: cover;
+      }
     }
   }
 }

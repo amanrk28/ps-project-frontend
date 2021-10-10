@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ListTable from 'components/common/ListTable/ListTable';
 import * as actions from 'store/actions/orderActions';
-import { ORDER_ITEM_TABLE_HEADERS, CUSTOMER_FIELDS } from './constants';
 import { getAddressString } from 'utils/utils';
+import { ORDER_ITEM_TABLE_HEADERS, CUSTOMER_FIELDS } from './constants';
 import './ViewOrderItem.scss';
 
 class ViewOrderItem extends Component {
@@ -31,6 +32,31 @@ class ViewOrderItem extends Component {
         total += item.amount;
       });
     return total;
+  };
+
+  renderListItem = ({ item, dataItem }) => {
+    return (
+      <div key={item.dataname} className={`${item.dataname}`}>
+        {item.dataname === 'image' && (
+          <img
+            src={dataItem.product[item.dataname]}
+            alt={dataItem.product.name}
+          />
+        )}
+        {['name', 'price'].includes(item.dataname) && (
+          <p>
+            {item.dataname === 'price' && <>&#8377;</>}
+            {dataItem.product[item.dataname]}
+          </p>
+        )}
+        {['quantity', 'amount'].includes(item.dataname) && (
+          <p>
+            {item.dataname === 'amount' && <>&#8377;</>}
+            {dataItem[item.dataname]}
+          </p>
+        )}
+      </div>
+    );
   };
 
   render() {
@@ -69,45 +95,13 @@ class ViewOrderItem extends Component {
             <span>&nbsp;&#8377;{this.getTotalOrderValue()}</span>
           </h2>
         </div>
-        <ul className="table-wrapper">
-          <li>
-            {ORDER_ITEM_TABLE_HEADERS.map(item => (
-              <div
-                key={item.dataname}
-                className={`tableHeader ${item.dataname}`}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
-          {orderItem.products &&
-            orderItem.products.map(product => (
-              <li key={product.id}>
-                {ORDER_ITEM_TABLE_HEADERS.map(item => (
-                  <div key={item.dataname} className={`${item.dataname}`}>
-                    {item.dataname === 'image' && (
-                      <img
-                        src={product.product[item.dataname]}
-                        alt={product.product.name}
-                      />
-                    )}
-                    {['name', 'price'].includes(item.dataname) && (
-                      <p>
-                        {item.dataname === 'price' && <>&#8377;</>}
-                        {product.product[item.dataname]}
-                      </p>
-                    )}
-                    {['quantity', 'amount'].includes(item.dataname) && (
-                      <p>
-                        {item.dataname === 'amount' && <>&#8377;</>}
-                        {product[item.dataname]}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </li>
-            ))}
-        </ul>
+        <ListTable
+          headers={ORDER_ITEM_TABLE_HEADERS}
+          dataList={orderItem.products || []}
+          tableFor="Order"
+          customTableWrapper="customTableWrapper"
+          renderListItem={this.renderListItem}
+        />
       </div>
     );
   }

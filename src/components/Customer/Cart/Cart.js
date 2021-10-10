@@ -7,6 +7,7 @@ import * as productActions from 'store/actions/productActions';
 import PlusMinusBtn from 'components/common/PlusMinusBtn/PlusMinusBtn';
 import Button from 'components/common/Button/Button';
 import './Cart.scss';
+import ListTable from 'components/common/ListTable/ListTable';
 
 const CART_TABLE_HEADERS = [
   { name: '#', dataname: 'id' },
@@ -42,14 +43,45 @@ class Cart extends Component {
     this.props.history.push('/checkout');
   };
 
+  renderListItem = ({ idx, item, dataItem }) => {
+    return (
+      <div className={item.dataname} key={item.dataname}>
+        {item.dataname === 'id' && idx + 1}
+        {item.dataname === 'image' && (
+          <img src={dataItem.image} alt={dataItem.name} />
+        )}
+        {item.dataname === 'amount' && (
+          <div>
+            &#8377;
+            {dataItem.quantity * dataItem.price}
+          </div>
+        )}
+        {item.dataname === 'quantity' && (
+          <PlusMinusBtn
+            count={dataItem[item.dataname]}
+            updateCartCount={quantity =>
+              this.onUpdateCartCount(quantity, dataItem.id)
+            }
+          />
+        )}
+        {['name', 'price'].includes(item.dataname) && (
+          <div>
+            {item.dataname === 'price' && <>&#8377;</>}
+            {dataItem[item.dataname]}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   render() {
     const { cartItems, productList, totalAmount } = this.props;
-    const renderCartItems = [];
+    const cartItemsList = [];
     if (productList && cartItems) {
       productList.forEach(x => {
         for (const cartItem of cartItems) {
           if (x.id === cartItem.product_id) {
-            renderCartItems.push({ ...x, quantity: cartItem.quantity });
+            cartItemsList.push({ ...x, quantity: cartItem.quantity });
             break;
           }
         }
@@ -70,50 +102,13 @@ class Cart extends Component {
           </h2>
           <Button text="Proceed to Buy" onClick={this.onClickProceed} />
         </div>
-        <ul className="table-wrapper">
-          <li>
-            {CART_TABLE_HEADERS.map(item => (
-              <div
-                className={`tableHeader ${item.dataname}`}
-                key={item.dataname}
-              >
-                {item.name}
-              </div>
-            ))}
-          </li>
-          {renderCartItems.map((cartItem, idx) => (
-            <li key={cartItem.id}>
-              {CART_TABLE_HEADERS.map(item => (
-                <div className={item.dataname} key={item.dataname}>
-                  {item.dataname === 'id' && idx + 1}
-                  {item.dataname === 'image' && (
-                    <img src={cartItem.image} alt={cartItem.name} />
-                  )}
-                  {item.dataname === 'amount' && (
-                    <div>
-                      &#8377;
-                      {cartItem.quantity * cartItem.price}
-                    </div>
-                  )}
-                  {item.dataname === 'quantity' && (
-                    <PlusMinusBtn
-                      count={cartItem[item.dataname]}
-                      updateCartCount={quantity =>
-                        this.onUpdateCartCount(quantity, cartItem.id)
-                      }
-                    />
-                  )}
-                  {['name', 'price'].includes(item.dataname) && (
-                    <div>
-                      {item.dataname === 'price' && <>&#8377;</>}
-                      {cartItem[item.dataname]}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </li>
-          ))}
-        </ul>
+        <ListTable
+          headers={CART_TABLE_HEADERS}
+          dataList={cartItemsList}
+          tableFor="Cart"
+          customTableWrapper="customTableWrapper"
+          renderListItem={this.renderListItem}
+        />
       </div>
     );
   }

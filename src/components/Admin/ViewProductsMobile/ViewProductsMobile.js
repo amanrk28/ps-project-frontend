@@ -110,7 +110,7 @@ class ViewProductsMobile extends Component {
         {isLoading ? (
           <Loading />
         ) : (
-          <ul className="table-wrapper">
+          <ul className="mobile-table-wrapper">
             {productList.length > 0 ? (
               productList.map(product => (
                 <li
