@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Input from 'components/common/Input/Input';
 import Filter from 'components/Filter/Filter';
@@ -19,7 +18,7 @@ const PRODUCT_TABLE_HEADERS = [
   { name: 'Stock', dataname: 'stock' },
   { name: 'Category', dataname: 'category' },
   { name: 'Description', dataname: 'description' },
-  { name: 'Edit', dataname: 'edit' },
+  { name: '', dataname: 'edit' },
 ];
 
 class ViewProducts extends Component {
@@ -43,10 +42,6 @@ class ViewProducts extends Component {
     }
     this.setState({ ...query });
     actions.getProducts({ query });
-  };
-
-  onClickBack = () => {
-    this.props.history.push('/admin');
   };
 
   onEditProduct = id => {
@@ -110,9 +105,6 @@ class ViewProducts extends Component {
     return (
       <div className="viewProducts-wrapper">
         <div className="viewProducts-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
-          </div>
           <div className="viewProducts-header">
             Products ({productList.length})
           </div>

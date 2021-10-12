@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MenuIcon from '@mui/icons-material/Menu';
 import * as actions from 'store/actions/orderActions';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
@@ -71,14 +71,14 @@ class ViewOrdersMobile extends Component {
   };
 
   render() {
-    const { orderList } = this.props;
+    const { orderList, toggleSidebar } = this.props;
     const { statusFilter, isLoading } = this.state;
 
     return (
       <div className="viewOrdersMobile-wrapper">
         <div className="viewOrdersMobile-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
+          <div className="menuIcon center" onClick={toggleSidebar}>
+            <MenuIcon />
           </div>
           <div className="viewOrdersMobile-header">Orders</div>
         </div>

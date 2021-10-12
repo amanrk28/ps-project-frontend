@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
 import ListTable from 'components/common/ListTable/ListTable';
@@ -43,10 +42,6 @@ class ViewOrders extends Component {
       this.setState({ statusFilter: orderStatus });
     }
     actions.getOrdersList({ orderStatus });
-  };
-
-  onClickBack = () => {
-    this.props.history.push('/admin');
   };
 
   onChangeStatusFilter = e => {
@@ -91,9 +86,6 @@ class ViewOrders extends Component {
     return (
       <div className="viewOrders-wrapper">
         <div className="viewOrders-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
-          </div>
           <div className="viewOrders-header">Orders</div>
         </div>
         <div className="viewOrders-filters-container">

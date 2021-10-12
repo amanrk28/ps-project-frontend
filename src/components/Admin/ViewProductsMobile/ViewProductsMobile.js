@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MenuIcon from '@mui/icons-material/Menu';
 import Input from 'components/common/Input/Input';
 import * as actions from 'store/actions/productActions';
 import { queryStringify } from 'utils/utils';
@@ -42,10 +42,6 @@ class ViewProductsMobile extends Component {
     actions.getProducts({ query });
   };
 
-  onClickBack = () => {
-    this.props.history.push('/admin');
-  };
-
   onEditProduct = id => {
     const { match, history } = this.props;
     history.push({ pathname: `${match.url}/${id}/edit`, hash: 'edit' });
@@ -77,13 +73,13 @@ class ViewProductsMobile extends Component {
   };
 
   render() {
-    const { productList, productCategories } = this.props;
+    const { productList, productCategories, toggleSidebar } = this.props;
     const { search, category, isLoading } = this.state;
     return (
       <div className="viewProductsMobile-wrapper">
         <div className="viewProductsMobile-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
+          <div className="menuIcon center" onClick={toggleSidebar}>
+            <MenuIcon />
           </div>
           <div className="viewProductsMobile-header">Products</div>
         </div>
@@ -118,28 +114,26 @@ class ViewProductsMobile extends Component {
                   onClick={() => this.onEditProduct(product.id)}
                 >
                   {PRODUCT_TABLE_HEADERS.map(item => (
-                    <Fragment key={item.dataname}>
-                      <div className={item.dataname}>
-                        {item.dataname === 'image' && (
-                          <img src={product.image} alt={product.name} />
-                        )}
-                        {item.dataname === 'category' && (
-                          <p>
+                    <div key={item.dataname} className={item.dataname}>
+                      {item.dataname === 'image' && (
+                        <img src={product.image} alt={product.name} />
+                      )}
+                      {item.dataname === 'category' && (
+                        <p>
+                          <span>{item.name}: </span>
+                          {this.getCategoryFromId(product)}
+                        </p>
+                      )}
+                      {!['image', 'category'].includes(item.dataname) && (
+                        <p>
+                          {item.dataname === 'stock' && (
                             <span>{item.name}: </span>
-                            {this.getCategoryFromId(product)}
-                          </p>
-                        )}
-                        {!['image', 'category'].includes(item.dataname) && (
-                          <p>
-                            {item.dataname === 'stock' && (
-                              <span>{item.name}: </span>
-                            )}
-                            {item.dataname === 'price' && <span>&#8377;</span>}
-                            {product[item.dataname]}
-                          </p>
-                        )}
-                      </div>
-                    </Fragment>
+                          )}
+                          {item.dataname === 'price' && <span>&#8377;</span>}
+                          {product[item.dataname]}
+                        </p>
+                      )}
+                    </div>
                   ))}
                 </li>
               ))

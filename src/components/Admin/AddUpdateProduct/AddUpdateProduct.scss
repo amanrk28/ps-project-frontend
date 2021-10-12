@@ -4,7 +4,7 @@
   }
 }
 .addProduct-wrapper {
-  width: 640px;
+  width: 100%;
   margin: auto;
   padding: 2rem 0;
   @include phone {
@@ -24,10 +24,22 @@
     }
   }
   .addProduct-fields-container {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-gap: 1rem;
     > div {
       width: 100%;
       margin-bottom: 1rem;
+      &:first-child {
+        grid-column: 1 / span 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      @include phone {
+        grid-column: 1 / span 2;
+      }
     }
     .addProduct-image-container {
       width: 150px;
@@ -42,11 +54,17 @@
       }
     }
     .addProduct-input-container {
+      width: 100%;
       .addProduct-input {
         width: 100%;
       }
     }
+    .addProduct-dropdown-container > p {
+      font-size: 14px;
+      line-height: 17px;
+    }
     .addProduct-textarea-container {
+      grid-column: 1 / span 2;
       textarea {
         margin: 4px 0;
         border: 1px solid var(--yellow-secondary);

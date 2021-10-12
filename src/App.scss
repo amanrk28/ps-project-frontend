@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
 
 body {
-  // background-color: rgb(234, 237, 237);
   background-color: #fff;
   margin: 0;
   color: #2c3556;
@@ -27,9 +26,11 @@ body {
   }
 }
 
+// #a4ce38 = rgba(164,206,56, 1)
+// #80ae38 = rgba(128,174,56, 1)
 :root {
-  --yellow-primary: #f5cc00;
-  --yellow-secondary: #ffc933;
+  --yellow-primary: #a4ce38;
+  --yellow-secondary: #80ae38;
   --grey-primary: #666;
   --grey-secondary: rgb(247, 247, 247);
 }
@@ -58,10 +59,10 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #fcb800;
+  background-color: #a4ce38;
   border-radius: 10px;
   &:hover {
-    background-color: #daa700;
+    background-color: #80ae38;
   }
 }
 
@@ -110,6 +111,7 @@ textarea {
 .admin-wrapper {
   .admin-body {
     padding: 2rem;
+    display: flex;
     @include phone {
       padding: 16px;
     }
@@ -133,4 +135,12 @@ textarea {
     cursor: pointer;
     transform: scale(1.05);
   }
+}
+
+.menuIcon {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  position: absolute;
+  left: 0;
 }

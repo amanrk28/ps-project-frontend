@@ -5,11 +5,16 @@
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid #ccc;
+    transition: background-color 0.3s ease-in-out;
+    &:hover {
+      background-color: #ddddddaa;
+    }
     &:first-child {
       cursor: default;
       padding: 10px;
-      background-color: var(--yellow-secondary);
+      background-color: var(--yellow-primary);
       border-radius: 6px 6px 0 0;
+      color: #fff;
     }
     > div {
       flex: 1;

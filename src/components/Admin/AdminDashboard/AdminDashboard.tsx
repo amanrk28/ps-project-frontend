@@ -1,37 +1,65 @@
-import React from 'react';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
+import { useDispatch } from 'react-redux';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
-  adminOrderActions,
-  adminProductActions,
-  productActionId,
-  orderActionId,
-} from './constants';
+  Drawer,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  Divider,
+  IconButton,
+} from '@mui/material';
+import { logout } from 'store/actions/authActions';
+import { adminActions, actionIds, paths } from './constants';
 import './AdminDashboard.scss';
-import { RootState } from 'store/reducers/rootState';
 
-interface AdminDashboardProps extends RouteComponentProps {}
+const sidebarWidth = 70;
 
-const AdminDashboard = ({ match }: AdminDashboardProps) => {
-  const { user } = useSelector((state: RootState) => ({ user: state.auth }));
+const drawerStyle = {
+  width: sidebarWidth,
+  flexShrink: 0,
+  [`& .MuiDrawer-paper`]: {
+    width: sidebarWidth,
+    boxSizing: 'border-box',
+    display: 'flex',
+    justifyContent: 'space-between',
+    overflowX: 'hidden',
+    bgcolor: 'var(--yellow-primary)',
+    boxShadow: '0 0 16px #666',
+  },
+};
 
-  const productRouteObject = (id: string) => {
+interface AdminSidebarProps extends RouteComponentProps {
+  isSidebarOpen: boolean;
+  toggleSidebar: () => void;
+}
+
+const AdminSidebar = ({
+  match,
+  location,
+  isSidebarOpen,
+  toggleSidebar,
+}: AdminSidebarProps) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const idx = Object.values(paths).indexOf(location.pathname);
+    if (idx > -1) setSelectedIndex(idx);
+  }, [location.pathname]);
+
+  const routeObject = (id: string) => {
     switch (id) {
-      case productActionId.addProduct:
-        return { pathname: `${match.url}/products/add`, hash: 'new' };
-      case productActionId.viewProduct:
-        return { pathname: `${match.url}/products` };
-      default:
-        return { pathname: `${match.url}` };
-    }
-  };
-
-  const orderRouteObject = (id: string) => {
-    switch (id) {
-      case orderActionId.viewOrders:
-        return { pathname: `${match.url}/orders` };
-      case orderActionId.updateOrderStatus:
-        return { pathname: `${match.url}/orders` };
+      case actionIds.AddProduct:
+        return { pathname: paths.addProduct, hash: 'new' };
+      case actionIds.ViewProduct:
+        return { pathname: paths.viewProducts };
+      case actionIds.ViewOrders:
+        return { pathname: paths.viewOrders };
+      case actionIds.UpdateOrderStatus:
+        return { pathname: paths.viewOrders };
       default:
         return { pathname: `${match.url}` };
     }
@@ -39,34 +67,50 @@ const AdminDashboard = ({ match }: AdminDashboardProps) => {
 
   return (
     <div className="adminDb-body">
-      <div className="adminDb-user-welcome">
-        Welcome back,{' '}
-        <span>{user.full_name || user.first_name || user.last_name}</span>
-      </div>
-      <div className="adminDb-tab">PRODUCTS</div>
-      <div className="adminDb-tabitems">
-        {adminProductActions.map(item => (
-          <Link key={item.id} to={() => productRouteObject(item.id)}>
-            <div className="adminDb-actionCard center">
-              <item.icon fontSize="large" />
-              <p>{item.name}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
-      <div className="adminDb-tab">ORDERS</div>
-      <div className="adminDb-tabitems">
-        {adminOrderActions.map(item => (
-          <Link to={() => orderRouteObject(item.id)} key={item.id}>
-            <div className="adminDb-actionCard center">
-              <item.icon fontSize="large" />
-              <p>{item.name}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <Drawer
+        variant={isMobile ? 'temporary' : 'permanent'}
+        sx={drawerStyle}
+        open={isSidebarOpen}
+      >
+        <List>
+          {adminActions.map((item, idx) => (
+            <Link
+              key={item.id}
+              to={() => routeObject(item.id)}
+              onClick={() => {
+                setSelectedIndex(idx);
+                toggleSidebar();
+              }}
+            >
+              <ListItemButton
+                selected={selectedIndex === idx}
+                sx={{
+                  [`&.Mui-selected`]: {
+                    background: 'linear-gradient(-45deg, #a4ce38ee, #80ae38)',
+                  },
+                }}
+              >
+                <ListItemIcon style={{ padding: '1rem 8px', color: 'white' }}>
+                  <item.icon />
+                </ListItemIcon>
+              </ListItemButton>
+              {idx === 1 && <Divider sx={{ color: 'white' }} />}
+            </Link>
+          ))}
+        </List>
+        <IconButton
+          sx={{
+            width: 80,
+            p: 2,
+            color: 'white',
+          }}
+          onClick={() => dispatch(logout())}
+        >
+          <LogoutIcon fontSize="large" />
+        </IconButton>
+      </Drawer>
     </div>
   );
 };
 
-export default AdminDashboard;
+export default withRouter(AdminSidebar);

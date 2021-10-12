@@ -123,6 +123,5 @@ export const getAddressString = addressObj => {
     if (item === 'city') address += ' - ';
     else if (item !== 'pincode') address += ', ';
   });
-  console.log(address);
   return address;
 };

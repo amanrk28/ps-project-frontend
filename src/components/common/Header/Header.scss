@@ -14,6 +14,7 @@
   top: 0;
   padding: 0 2rem;
   z-index: 100;
+  box-shadow: 0 0 16px 4px var(--yellow-secondary);
   @include phone {
     padding: 0;
   }
@@ -51,12 +52,12 @@
       &.accounts {
         flex-direction: row;
         .header__user {
-          font-size: 14px;
-          font-weight: 400;
+          font-size: 12px;
+          font-weight: 600;
           user-select: none;
           color: #fff;
           span {
-            font-weight: 600;
+            font-size: 15px;
           }
         }
       }

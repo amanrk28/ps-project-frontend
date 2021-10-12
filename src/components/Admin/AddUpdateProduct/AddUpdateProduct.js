@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
+import { isMobile } from 'react-device-detect';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import MenuIcon from '@mui/icons-material/Menu';
 import ImageIcon from '@mui/icons-material/Image';
 import DropdownInput from 'components/common/DropdownInput/DropdownInput';
 import Button from 'components/common/Button/Button';
@@ -62,10 +65,8 @@ class AddUpdateProduct extends Component {
   };
 
   onClickBack = () => {
-    const { isNewProduct } = this.state;
     const { history } = this.props;
-    if (isNewProduct) history.goBack();
-    else history.push('/admin/products');
+    history.push('/admin/products');
   };
   onChangeImage = url => {
     if (url) this.setState({ image: url });
@@ -118,25 +119,34 @@ class AddUpdateProduct extends Component {
   render() {
     const { description, category, isNewProduct, image, isLoading } =
       this.state;
-    const { productsCategories } = this.props;
+    const { productsCategories, toggleSidebar } = this.props;
 
     return (
       <div className="addProduct-wrapper">
         <div className="addProduct-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
-          </div>
+          {!isNewProduct && (
+            <div className="goBack center" onClick={this.onClickBack}>
+              <ArrowBackIcon />
+            </div>
+          )}
+          {isNewProduct && isMobile && (
+            <div className="menuIcon center" onClick={toggleSidebar}>
+              <MenuIcon />
+            </div>
+          )}
           <div className="addProduct-header">
             {isNewProduct ? 'Add ' : 'Edit '}Product
           </div>
         </div>
-        <div className="addProduct-fields-container center">
-          <div className="addProduct-image-container center">
-            {image ? <img src={image} /> : <ImageIcon />}
-          </div>
-          <div className="addProduct-input-container">
-            <p>Product Image</p>
-            <FileInput onChange={this.onChangeImage} />
+        <div className="addProduct-fields-container">
+          <div>
+            <div className="addProduct-image-container center">
+              {image ? <img src={image} /> : <ImageIcon />}
+            </div>
+            <div className="addProduct-input-container">
+              <p>Product Image</p>
+              <FileInput onChange={this.onChangeImage} />
+            </div>
           </div>
           {PRODUCT_FIELDS.map(field => (
             <div className="addProduct-input-container" key={field.dataname}>
@@ -194,4 +204,7 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddUpdateProduct);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(AddUpdateProduct));

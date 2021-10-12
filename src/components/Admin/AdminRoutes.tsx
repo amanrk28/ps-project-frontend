@@ -1,9 +1,8 @@
-import React, { lazy, Suspense } from 'react';
-import { Switch, Route, RouteComponentProps } from 'react-router-dom';
+import React, { lazy, Suspense, useState } from 'react';
+import { Switch, Route, RouteComponentProps, Redirect } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import Loading from 'components/common/Loading/Loading';
-import AdminDashboard from './AdminDashboard/AdminDashboard';
-import AdminHeader from './AdminHeader/AdminHeader';
+import AdminSidebar from './AdminDashboard/AdminDashboard';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
 import ViewOrderItem from './ViewOrderItem/ViewOrderItem';
 
@@ -19,41 +18,60 @@ const ViewOrdersMobile = lazy(
 interface AdminRoutesProps extends RouteComponentProps {}
 
 const AdminRoutes = ({ match }: AdminRoutesProps) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="admin-wrapper">
-      <AdminHeader />
       <div className="admin-body">
-        <Switch>
-          <Route
-            path={`${match.path}/products/:id/edit`}
-            component={AddUpdateProduct}
-          />
-          <Route
-            path={`${match.path}/products/add`}
-            component={AddUpdateProduct}
-          />
-          <Route
-            path={`${match.path}/products`}
-            render={() => (
-              <Suspense fallback={<Loading fullLoader />}>
-                {isMobile ? <ViewProductsMobile /> : <ViewProducts />}
-              </Suspense>
-            )}
-          />
-          <Route
-            path={`${match.path}/orders/:id/view`}
-            component={ViewOrderItem}
-          />
-          <Route
-            path={`${match.path}/orders`}
-            render={() => (
-              <Suspense fallback={<Loading fullLoader />}>
-                {isMobile ? <ViewOrdersMobile /> : <ViewOrders />}
-              </Suspense>
-            )}
-          />
-          <Route path={`${match.path}/`} component={AdminDashboard} exact />
-        </Switch>
+        <AdminSidebar
+          isSidebarOpen={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
+        <div style={{ width: `calc(100vw - 70px)` }}>
+          <Switch>
+            <Route
+              path={`${match.path}/products/:id/edit`}
+              component={AddUpdateProduct}
+            />
+            <Route
+              path={`${match.path}/products/add`}
+              render={() => <AddUpdateProduct toggleSidebar={toggleSidebar} />}
+            />
+            <Route
+              path={`${match.path}/products`}
+              render={() => (
+                <Suspense fallback={<Loading fullLoader />}>
+                  {isMobile ? (
+                    <ViewProductsMobile toggleSidebar={toggleSidebar} />
+                  ) : (
+                    <ViewProducts />
+                  )}
+                </Suspense>
+              )}
+            />
+            <Route
+              path={`${match.path}/orders/:id/view`}
+              component={ViewOrderItem}
+            />
+            <Route
+              path={`${match.path}/orders`}
+              render={() => (
+                <Suspense fallback={<Loading fullLoader />}>
+                  {isMobile ? (
+                    <ViewOrdersMobile toggleSidebar={toggleSidebar} />
+                  ) : (
+                    <ViewOrders />
+                  )}
+                </Suspense>
+              )}
+            />
+            <Redirect path={`${match.path}/`} to={`${match.path}/products`} />
+          </Switch>
+        </div>
       </div>
     </div>
   );

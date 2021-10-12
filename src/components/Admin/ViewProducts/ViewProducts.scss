@@ -36,10 +36,12 @@
     .price,
     .stock {
       flex: 0.3;
+      user-select: none;
     }
     .name,
     .category {
       flex: 0.6;
+      user-select: none;
     }
     .edit,
     .id {

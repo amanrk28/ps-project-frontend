@@ -3,45 +3,40 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 
-const productActionId = {
-  viewProduct: 'view_product',
-  addProduct: 'add_product',
+export const paths = {
+  viewProducts: '/admin/products',
+  addProduct: '/admin/products/add',
+  viewOrders: '/admin/orders',
 };
 
-const adminProductActions = [
+export enum actionIds {
+  ViewOrders = 'view_orders',
+  UpdateOrderStatus = 'update_order_status',
+  ViewProduct = 'view_product',
+  AddProduct = 'add_product',
+}
+
+const adminActions = [
   {
-    id: productActionId.viewProduct,
-    name: 'All Products',
+    id: actionIds.ViewProduct,
+    name: 'Products',
     icon: ListAltIcon,
   },
   {
-    id: productActionId.addProduct,
+    id: actionIds.AddProduct,
     name: 'Add Product',
     icon: AddIcon,
   },
-];
-
-const orderActionId = {
-  viewOrders: 'view_orders',
-  updateOrderStatus: 'update_order_status',
-};
-
-const adminOrderActions = [
   {
-    id: orderActionId.viewOrders,
-    name: 'All Orders',
+    id: actionIds.ViewOrders,
+    name: 'Orders',
     icon: AssignmentIcon,
   },
   {
-    id: orderActionId.updateOrderStatus,
+    id: actionIds.UpdateOrderStatus,
     name: 'Update Order Status',
     icon: ModeEditIcon,
   },
 ];
 
-export {
-  adminOrderActions,
-  adminProductActions,
-  productActionId,
-  orderActionId,
-};
+export { adminActions };

@@ -13,7 +13,8 @@ class Home extends Component {
     }
   };
   render() {
-    const { productList, cartItemIds, cartItems, auth } = this.props;
+    const { productList, cartItemIds, cartItems, auth, cartActions } =
+      this.props;
     return (
       <div className="home">
         {productList.length > 0 ? (
