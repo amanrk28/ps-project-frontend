@@ -40,7 +40,6 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 250px;
     position: relative;
     .header__option {
       display: flex;
@@ -83,7 +82,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      text-decoration: none;
       span {
         color: #000;
       }

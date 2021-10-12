@@ -65,7 +65,7 @@ const Header = ({ enableSearch = false, history }) => {
       )}
 
       <div className="header__nav">
-        {user.user_id && (
+        {user.user_id ? (
           <>
             <div className="header__option accounts" onClick={toggleAccountTab}>
               <p className="header__user">
@@ -96,9 +96,7 @@ const Header = ({ enableSearch = false, history }) => {
               </Link>
             </div>
           </>
-        )}
-
-        {!user.user_id && (
+        ) : (
           <div className="header__option header__signin">
             <Link to="/login">
               <AccountCircleIcon className="header__accountLogo" />

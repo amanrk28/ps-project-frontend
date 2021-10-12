@@ -41,6 +41,11 @@
         grid-column: 1 / span 2;
       }
     }
+    button {
+      @include phone {
+        grid-column: 1 / span 2;
+      }
+    }
     .addProduct-image-container {
       width: 150px;
       height: 150px;
