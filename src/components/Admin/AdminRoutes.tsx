@@ -2,9 +2,11 @@ import React, { lazy, Suspense, useState } from 'react';
 import { Switch, Route, RouteComponentProps, Redirect } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import Loading from 'components/common/Loading/Loading';
-import AdminSidebar from './AdminDashboard/AdminDashboard';
+// import AdminSidebar from './AdminDashboard/AdminDashboard';
 import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
 import ViewOrderItem from './ViewOrderItem/ViewOrderItem';
+
+const AdminSidebar = lazy(() => import('./AdminDashboard/AdminDashboard'));
 
 const ViewProductsMobile = lazy(
   () => import('./ViewProductsMobile/ViewProductsMobile')
@@ -27,10 +29,12 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
   return (
     <div className="admin-wrapper">
       <div className="admin-body">
-        <AdminSidebar
-          isSidebarOpen={isSidebarOpen}
-          toggleSidebar={toggleSidebar}
-        />
+        <Suspense fallback={<Loading />}>
+          <AdminSidebar
+            isSidebarOpen={isSidebarOpen}
+            toggleSidebar={toggleSidebar}
+          />
+        </Suspense>
         <div style={{ width: `calc(100vw - 70px)` }}>
           <Switch>
             <Route

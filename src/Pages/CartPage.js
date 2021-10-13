@@ -8,11 +8,11 @@ const CartMobile = lazy(() =>
   import('components/Customer/CartMobile/CartMobile')
 );
 
-const CartPage = props => (
+const CartPage = ({ history }) => (
   <>
     <Header enableSearch />
     <Suspense fallback={<Loading fullLoader />}>
-      {isMobile ? <CartMobile {...props} /> : <Cart {...props} />}
+      {isMobile ? <CartMobile history={history} /> : <Cart history={history} />}
     </Suspense>
   </>
 );

@@ -36,9 +36,13 @@ class SignupForm extends Component {
     };
   }
 
-  onChange = (e, dataname) => this.setState({ [dataname]: e.target.value });
+  onChange = e => {
+    const key = e.currentTarget.getAttribute('data-name');
+    const { value } = e.target;
+    this.setState({ [key]: value });
+  };
 
-  onClick = () => {
+  onClickSignup = () => {
     const { email, password, checkPassword, firstName, lastName, phone } =
       this.state;
     if (!isEmail(email)) return NotifyMe('error', 'Invalid Email!');
@@ -76,7 +80,7 @@ class SignupForm extends Component {
           <Input
             key={item.dataname}
             dataname={item.dataname}
-            onChange={e => this.onChange(e, item.dataname)}
+            onChange={this.onChange}
             value={this.state[item.dataname]}
             placeholder={item.name}
             type={item.type}
@@ -87,7 +91,7 @@ class SignupForm extends Component {
         ))}
         <Button
           text="Signup"
-          onClick={this.onClick}
+          onClick={this.onClickSignup}
           className="login-btn"
           isLoading={isLoading}
         />

@@ -1,24 +1,46 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
 .userAccount-wrapper {
   flex-direction: column;
   padding: 2rem 0;
+  @include phone {
+    padding: 1rem;
+  }
   .userAccount-header {
     font-size: 32px;
     line-height: 47px;
     font-weight: 600;
     padding: 0 0 2rem;
+    @include phone {
+      font-size: 24px;
+      line-height: 37px;
+    }
   }
   .userAccount-gridContainer {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-gap: 1rem;
+    @include phone {
+      grid-template-columns: auto;
+    }
     .userAccount-fieldContainer .input-wrapper {
       width: 250px;
     }
   }
   .userAccount-addressContainer {
     grid-column: 1 / span 2;
+    @include phone {
+      grid-column: 1 / span 1;
+    }
   }
   .userAccount-btn {
     padding: 2rem 0 0;
+    @include phone {
+      width: 100%;
+    }
   }
 }

@@ -119,7 +119,12 @@ class ViewProductsMobile extends Component {
                   {PRODUCT_TABLE_HEADERS.map(item => (
                     <div key={item.dataname} className={item.dataname}>
                       {item.dataname === 'image' && (
-                        <img src={product.image} alt={product.name} />
+                        <img
+                          src={product.image}
+                          alt={product.name}
+                          width="100"
+                          height="100"
+                        />
                       )}
                       {item.dataname === 'category' && (
                         <p>

@@ -1,5 +1,5 @@
 import Header from '../components/common/Header/Header';
-import Orders from '../components/Orders/Orders';
+import Orders from '../components/Customer/Orders/Orders';
 
 const OrdersPage = () => (
   <>

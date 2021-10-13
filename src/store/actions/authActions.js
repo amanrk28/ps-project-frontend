@@ -133,7 +133,7 @@ export const logout = () => dispatch => {
   dispatch(resetOrder());
   clearAllStorages();
   NotifyMe('success', 'Logged out');
-  dispatch(push('/'));
+  dispatch(push('/login'));
 };
 
 export const updateUserDetails =

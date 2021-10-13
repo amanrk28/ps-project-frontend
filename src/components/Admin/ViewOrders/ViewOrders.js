@@ -35,23 +35,23 @@ class ViewOrders extends Component {
     };
   }
   componentDidMount = () => {
-    const { actions, location } = this.props;
+    const { actions, query } = this.props;
     let orderStatus = '';
-    if (location?.query?.status) {
-      orderStatus = location.query.status;
+    if (query?.status) {
+      orderStatus = query.status;
       this.setState({ statusFilter: orderStatus });
     }
     actions.getOrdersList({ orderStatus });
   };
 
   onChangeStatusFilter = e => {
-    const { actions, history, location } = this.props;
+    const { actions, history, query } = this.props;
     let { value } = e.target;
-    let query = { ...location.query, status: value };
+    let queryObj = { ...query, status: value };
     if (value === 'all') {
-      delete query.status;
+      delete queryObj.status;
     }
-    history.push({ search: queryStringify(query) });
+    history.push({ search: queryStringify(queryObj) });
     this.setState({ isLoading: true });
     const onCb = () => {
       this.setState({ isLoading: false });
@@ -112,7 +112,7 @@ class ViewOrders extends Component {
 }
 
 const mapStateToProps = state => ({
-  location: state.router.location,
+  query: state.router.location.query,
   orderList: state.order.orderList,
 });
 

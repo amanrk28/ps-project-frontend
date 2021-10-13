@@ -13,7 +13,6 @@ class Index extends Component {
   componentDidMount = () => {
     const { productActions, actions } = this.props;
     productActions.getProductCategories();
-    productActions.getProducts();
     actions.verifyToken();
   };
 

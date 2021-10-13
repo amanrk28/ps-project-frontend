@@ -4,7 +4,12 @@ import './PlusMinusBtn.scss';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 
-const PlusMinusBtn = ({ count = 0, updateCartCount }) => {
+interface PlusMinusBtnProps {
+  count: number;
+  updateCartCount: (count: number) => void;
+}
+
+const PlusMinusBtn = ({ count = 0, updateCartCount }: PlusMinusBtnProps) => {
   const decCount = () => {
     updateCartCount(count - 1);
   };

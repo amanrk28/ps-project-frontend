@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/authActions';
-import SigninForm from './SigninForm';
-import SignupForm from './SignupForm';
-import LOGO_MAIN from '../../utils/utils';
 import './Register.scss';
-import { COMPANY_NAME } from 'utils/utils';
+import LOGO_MAIN, { COMPANY_NAME } from 'utils/utils';
+import Loading from 'components/common/Loading/Loading';
 
 const signin = {
   header: 'Sign in to continue!',
@@ -19,6 +17,9 @@ const signup = {
   footer: 'Already have an Account?',
 };
 
+const SigninForm = lazy(() => import('./SigninForm'));
+const SignupForm = lazy(() => import('./SignupForm'));
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ class Register extends Component {
     };
   }
 
-  switchRegistration = () => {
+  toggleRegistrationMethod = () => {
     const { isSignin } = this.state;
     this.setState({ isSignin: !isSignin });
   };
@@ -60,22 +61,24 @@ class Register extends Component {
               {isSignin ? signin.header : signup.header}
             </div>
             <div className="form-container">
-              {isSignin ? (
-                <SigninForm
-                  isLoading={isLoading}
-                  onSubmit={this.onSubmitSignin}
-                />
-              ) : (
-                <SignupForm
-                  isLoading={isLoading}
-                  onSubmit={this.onSubmitSignup}
-                />
-              )}
+              <Suspense fallback={<Loading />}>
+                {isSignin ? (
+                  <SigninForm
+                    isLoading={isLoading}
+                    onSubmit={this.onSubmitSignin}
+                  />
+                ) : (
+                  <SignupForm
+                    isLoading={isLoading}
+                    onSubmit={this.onSubmitSignup}
+                  />
+                )}
+              </Suspense>
             </div>
             <div className="switch-registration">
               <p>
                 {isSignin ? signin.footer : signup.footer}&nbsp;
-                <span onClick={this.switchRegistration}>
+                <span onClick={this.toggleRegistrationMethod}>
                   {isSignin ? 'Signup' : 'Signin'}
                 </span>
               </p>
@@ -96,7 +99,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(actions, dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(Register));
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

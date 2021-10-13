@@ -19,32 +19,6 @@ export const detectKeyPress = e => {
   return returnObj;
 };
 
-export const isObject = objectToCheck => {
-  return Object.prototype.toString.call(objectToCheck) === '[object Object]';
-};
-
-export const createElementWithEvent = ({
-  value,
-  dataname,
-  onChange,
-  event,
-  dataProps,
-}) => {
-  const elem = document.createElement('input');
-  if (dataProps && isObject(dataProps) && Object.keys(dataProps).length) {
-    for (let item in dataProps) {
-      if (dataProps.hasOwnProperty(item)) {
-        elem.setAttribute(item, dataProps[item]);
-      }
-    }
-  }
-  elem.setAttribute('data-name', dataname);
-  elem.setAttribute('value', value);
-  elem.addEventListener(event, onChange);
-  elem.dispatchEvent(new Event(event));
-  return elem;
-};
-
 const uploadFileApi = async formData => {
   const { REACT_APP_CDN_UPLOAD_URL, REACT_APP_CDN_UPLOAD_PRESET } = process.env;
   formData.append('upload_preset', REACT_APP_CDN_UPLOAD_PRESET);

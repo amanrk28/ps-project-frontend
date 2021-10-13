@@ -82,7 +82,12 @@ class ViewProducts extends Component {
       <div className={item.dataname} key={item.dataname}>
         {item.dataname === 'id' && idx + 1}
         {item.dataname === 'image' && (
-          <img src={dataItem.image} alt={dataItem.name} />
+          <img
+            src={dataItem.image}
+            alt={dataItem.name}
+            width="100"
+            height="100"
+          />
         )}
         {item.dataname === 'edit' && (
           <div onClick={() => this.onEditProduct(dataItem.id)}>

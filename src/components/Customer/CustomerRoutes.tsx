@@ -18,11 +18,11 @@ const CustomerRoutes = ({ match }: CustomerRoutesProps) => {
       <Route path={`${match.path}checkout`} component={CheckoutPage} />
       <Route
         path={`${match.path}orders/:id/view`}
-        render={props => (
+        render={({ history, match }) => (
           <>
             <Header />
             <div style={{ padding: '2rem' }}>
-              <ViewOrderItem {...props} />
+              <ViewOrderItem history={history} match={match} />
             </div>
           </>
         )}

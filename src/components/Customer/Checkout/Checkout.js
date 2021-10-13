@@ -88,10 +88,9 @@ class Checkout extends Component {
     if (isChanged) {
       reqData = { first_name, last_name, phone_number, address };
     }
-    const cb = () => {
-      this.setState({ showOrderPlacedModal: true });
-    };
-    actions.createOrderFromCart(reqData, cb);
+    actions.createOrderFromCart(reqData, () =>
+      this.setState({ showOrderPlacedModal: true })
+    );
   };
 
   onCloseModal = () => {

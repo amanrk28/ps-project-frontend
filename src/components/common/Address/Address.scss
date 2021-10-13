@@ -1,7 +1,16 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
 .address-wrapper {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-gap: 1rem;
+  @include phone {
+    grid-template-columns: auto;
+  }
   .address-fieldContainer .input-wrapper {
     width: 250px;
   }

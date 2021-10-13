@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Button, Menu, MenuItem, Wrapper } from 'react-aria-menubutton';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { createElementWithEvent } from 'utils/utils';
 import './DropdownInput.scss';
 
 class DropdownInput extends Component {
@@ -14,16 +13,13 @@ class DropdownInput extends Component {
   }
 
   onChange = (val, e) => {
-    const { dataProps = {} } = this.props;
-    createElementWithEvent({
-      value: val,
-      dataname: this.props.dataname,
-      event: 'change',
-      onChange: this.props.onChange,
-      dataProps,
-    });
     e.preventDefault();
     e.stopPropagation();
+    const elem = document.createElement('input');
+    elem.setAttribute('data-name', this.props.dataname);
+    elem.setAttribute('value', val);
+    elem.addEventListener('change', this.props.onChange);
+    elem.dispatchEvent(new Event('change'));
   };
 
   render() {

@@ -1,5 +1,13 @@
+@mixin phone {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
 .orders-wrapper {
   padding: 2rem;
+  @include phone {
+    padding: 1rem;
+  }
   .orders-header-wrapper {
     display: flex;
     align-items: center;

@@ -59,7 +59,7 @@ const UserAccount = () => {
 
   return (
     <div className="userAccount-wrapper center">
-      <div className="userAccount-header">Update Account Details</div>
+      <div className="userAccount-header center">Update Account Details</div>
       <div className="userAccount-gridContainer">
         {USER_FIELDS.map(field => {
           return field.dataname !== 'address' ? (

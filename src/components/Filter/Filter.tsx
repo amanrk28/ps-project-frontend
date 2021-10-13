@@ -4,7 +4,7 @@ import { ObjectType } from 'store/reducers/rootState';
 import './Filter.scss';
 
 interface FilterProps {
-  filterName: string;
+  filterName?: string;
   filterOptions: ObjectType[];
   value: string;
   onChange: () => void;
@@ -20,7 +20,7 @@ const Filter = ({
 }: FilterProps) => {
   return (
     <div className="filter-wrapper">
-      <p>{filterName}</p>
+      {filterName && <p>{filterName}</p>}
       <DropdownInput
         options={[{ id: 'all', name: 'All' }, ...filterOptions]}
         value={value}
