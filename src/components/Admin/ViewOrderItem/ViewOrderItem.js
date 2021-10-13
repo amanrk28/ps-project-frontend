@@ -21,7 +21,7 @@ class ViewOrderItem extends Component {
   };
 
   onClickBack = () => {
-    this.props.history.push('/admin/orders');
+    this.props.history.goBack();
   };
 
   getTotalOrderValue = () => {

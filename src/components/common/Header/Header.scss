@@ -28,9 +28,19 @@
     object-fit: contain;
     margin: 0 10px;
   }
-  .header__search {
-    .input-wrapper {
-      width: 300px;
+  .search-and-filter {
+    .header-filter {
+      svg {
+        color: #2c3556;
+      }
+      .filter-wrapper .dropdownInput-wrapper > span {
+        width: 250px;
+      }
+    }
+    .header-search {
+      .input-wrapper {
+        width: 300px;
+      }
     }
     @include phone {
       display: none;

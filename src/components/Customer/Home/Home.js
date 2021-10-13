@@ -21,7 +21,7 @@ class Home extends Component {
           <div className="home__row">
             {productList.map(product => (
               <Product
-                key={product.name}
+                key={product.id}
                 id={product.id}
                 product={product}
                 auth={auth}

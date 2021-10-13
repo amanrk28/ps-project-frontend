@@ -32,13 +32,16 @@ class ViewProducts extends Component {
   }
 
   componentDidMount = () => {
-    const { actions, location } = this.props;
+    const { actions, router } = this.props;
     let query = {};
-    if (location?.query?.search) {
-      query.search = location.query.search;
+    if (router.location?.query?.search) {
+      query.search = router.location.query.search;
     }
-    if (location?.query?.category && location.query.category !== 'all') {
-      query.category = location.query.category;
+    if (
+      router.location.query?.category &&
+      router.location.query.category !== 'all'
+    ) {
+      query.category = router.location.query.category;
     }
     this.setState({ ...query });
     actions.getProducts({ query });
@@ -50,10 +53,10 @@ class ViewProducts extends Component {
   };
 
   onChangeFilter = e => {
-    const { history, location, actions } = this.props;
+    const { history, actions, router } = this.props;
     let { value } = e.target;
     const key = e.currentTarget.getAttribute('data-name');
-    const query = { ...location.query, [key]: value };
+    const query = { ...router.location.query, [key]: value };
     this.setState({ ...this.state, ...query });
     for (const k in query) {
       if (query.hasOwnProperty(k) && !query[k]) delete query[k];
@@ -143,7 +146,7 @@ class ViewProducts extends Component {
 }
 
 const mapStateToProps = state => ({
-  location: state.router.location,
+  router: state.router,
   productList: state.product.products,
   productCategories: state.product.product_categories,
 });

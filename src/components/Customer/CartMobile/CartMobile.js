@@ -34,7 +34,7 @@ class CartMobile extends Component {
   };
 
   render() {
-    const { productList, totalAmount, cartItems } = this.props;
+    const { productList, totalAmount, cartItems, cartCount } = this.props;
     const renderCartItems = [];
     if (productList && cartItems) {
       productList.forEach(x => {
@@ -59,7 +59,11 @@ class CartMobile extends Component {
           <h2 className="totalAmount">
             Sub Total: <span>&#8377;{totalAmount}</span>
           </h2>
-          <Button text="Proceed to Buy" onClick={this.onClickProceed} />
+          <Button
+            text="Proceed to Buy"
+            onClick={this.onClickProceed}
+            type={cartCount > 0 ? 'primary' : 'disabled'}
+          />
         </div>
         <ul className="mobile-table-wrapper">
           {renderCartItems.map(cartItem => (
@@ -83,7 +87,9 @@ class CartMobile extends Component {
             </li>
           ))}
         </ul>
-        <Button text="Proceed to Buy" onClick={this.onClickProceed} />
+        {cartCount > 0 && (
+          <Button text="Proceed to Buy" onClick={this.onClickProceed} />
+        )}
       </div>
     );
   }
@@ -93,6 +99,7 @@ const mapStateToProps = state => ({
   cartItems: state.cart.cart_items,
   totalAmount: state.cart.total_amount,
   productList: state.product.products,
+  cartCount: state.cart.cart_count,
 });
 
 const mapDispatchToProps = dispatch => ({

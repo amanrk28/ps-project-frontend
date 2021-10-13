@@ -9,7 +9,7 @@ const setOrderList = data => ({
   data,
 });
 
-const setOrderItem = data => ({
+export const setOrderItem = data => ({
   type: aT.SET_ORDER_ITEM,
   data,
 });

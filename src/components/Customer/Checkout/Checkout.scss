@@ -1,0 +1,101 @@
+@mixin phone {
+  @media (max-width: 680px) {
+    @content;
+  }
+}
+.checkout-wrapper {
+  padding: 2rem;
+  @include phone {
+    padding: 1rem;
+  }
+  .checkout-header-wrapper {
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    .checkout-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .checkout-complete-details {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    @include phone {
+      flex-direction: column-reverse;
+      align-items: center;
+    }
+    .checkout-details-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin: 0 2rem;
+      > div {
+        h2 {
+          padding: 1rem 0;
+        }
+        .input-wrapper {
+          width: 100%;
+        }
+      }
+    }
+    .checkout-order-summary {
+      border: 1px solid var(--grey-primary);
+      border-radius: 8px;
+      padding: 12px;
+      width: 300px;
+      margin: 0 2rem;
+      h2 {
+        padding: 8px 0;
+      }
+      > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        p {
+          font-size: 14px;
+          line-height: 27px;
+        }
+        &.orderTotal {
+          margin: 1rem 0;
+          border-top: 1px solid var(--grey-primary);
+          border-bottom: 1px solid var(--grey-primary);
+          p {
+            font-size: 20px;
+            line-height: 40px;
+            font-weight: 600;
+          }
+        }
+      }
+      .orderSummary-placeOrder-btn button {
+        width: 100%;
+      }
+    }
+  }
+  .placeOrder-btn {
+    margin: 1rem 0;
+  }
+}
+.MuiBox-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .imageWrapper {
+    width: 100px;
+    height: 100px;
+    img {
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+  p {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--yellow-primary);
+  }
+  button {
+    margin-top: 1rem;
+  }
+}

@@ -15,12 +15,12 @@ button {
   @include phone {
     width: 100%;
   }
-  &:hover {
-    opacity: 0.82;
-  }
   &.primary {
     background: linear-gradient(60deg, #a4ce38ee 30%, #80ae38);
     border: 1px solid var(--yellow-primary);
+    &:hover {
+      opacity: 0.82;
+    }
   }
   &.disabled {
     background-color: #ccc;

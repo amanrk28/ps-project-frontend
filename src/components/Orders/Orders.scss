@@ -1,0 +1,48 @@
+.orders-wrapper {
+  padding: 2rem;
+  .orders-header-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+    position: relative;
+    .orders-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .customTableWrapper li {
+    cursor: pointer;
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .id,
+    .status {
+      flex: 0.3;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:not(.tableHeader) {
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 20px;
+        color: #fff;
+        font-weight: 600;
+        &.new {
+          background-color: #5cd65caa;
+        }
+        &.closed {
+          background-color: #ff3333aa;
+        }
+        &.dispatched {
+          background-color: #ff9933aa;
+        }
+      }
+    }
+  }
+}

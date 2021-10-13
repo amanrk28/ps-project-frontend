@@ -5,6 +5,9 @@ import CartPage from 'Pages/CartPage';
 import CheckoutPage from 'Pages/CheckoutPage';
 import HomePage from 'Pages/HomePage';
 import OrdersPage from 'Pages/OrdersPage';
+import ProductDetailsPage from 'Pages/ProductDetailsPage';
+import ViewOrderItem from 'components/Admin/ViewOrderItem/ViewOrderItem';
+import Header from 'components/common/Header/Header';
 
 interface CustomerRoutesProps extends RouteComponentProps {}
 
@@ -13,9 +16,24 @@ const CustomerRoutes = ({ match }: CustomerRoutesProps) => {
     <Switch>
       <Route path={`${match.path}cart`} component={CartPage} />
       <Route path={`${match.path}checkout`} component={CheckoutPage} />
+      <Route
+        path={`${match.path}orders/:id/view`}
+        render={props => (
+          <>
+            <Header />
+            <div style={{ padding: '2rem' }}>
+              <ViewOrderItem {...props} />
+            </div>
+          </>
+        )}
+      />
       <Route path={`${match.path}orders`} component={OrdersPage} />
       <Route path={`${match.path}account`} component={AccountPage} />
-      <Route exact path={`${match.path}product/:id`} component={HomePage} />
+      <Route
+        exact
+        path={`${match.path}products/:id`}
+        component={ProductDetailsPage}
+      />
       <Route exact path={`${match.path}`} component={HomePage} />
     </Switch>
   );

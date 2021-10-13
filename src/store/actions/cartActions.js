@@ -1,10 +1,12 @@
+import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 import * as aT from '../actionTypes/cartActionTypes';
 import {
   createCartItemApi,
+  createOrderFromCartApi,
   getCartItemsApi,
   updateCartItemApi,
 } from '../../common/api';
-import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
+import { setOrderItem } from './orderActions';
 import { setLoaderTrue, setLoaderFalse } from './authActions';
 
 const set_all_cart_items = data => ({
@@ -97,6 +99,25 @@ export const updateCartItem = ({ product_id, quantity }) => {
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);
+        console.log(err);
+      });
+  };
+};
+
+export const createOrderFromCart = (reqData = {}, cb) => {
+  return (dispatch, getState) => {
+    const cart_hash = getState().cart.hash;
+    reqData.cart_hash = cart_hash;
+    createOrderFromCartApi(reqData)
+      .then(res => {
+        const { status, data, msg } = res;
+        if (!status) throw msg;
+        dispatch(setOrderItem(data));
+        dispatch(resetCart());
+        cb();
+      })
+      .catch(err => {
+        NotifyMe('error', err);
         console.log(err);
       });
   };

@@ -42,6 +42,8 @@ export const getCartItemsApi = () => callAPI('get', `${store}/cart`);
 export const createCartItemApi = data => callAPI('post', `${store}/cart`, data);
 export const updateCartItemApi = (id, data) =>
   callAPI('put', `${store}/cart/${id}`, data);
+export const createOrderFromCartApi = data =>
+  callAPI('post', `${store}/order_from_cart`, data);
 
 // -------------- Auth API -------------------
 const auth = '/auth';

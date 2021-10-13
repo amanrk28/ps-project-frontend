@@ -6,8 +6,8 @@ import * as actions from 'store/actions/cartActions';
 import * as productActions from 'store/actions/productActions';
 import PlusMinusBtn from 'components/common/PlusMinusBtn/PlusMinusBtn';
 import Button from 'components/common/Button/Button';
-import './Cart.scss';
 import ListTable from 'components/common/ListTable/ListTable';
+import './Cart.scss';
 
 const CART_TABLE_HEADERS = [
   { name: '#', dataname: 'id' },
@@ -75,7 +75,7 @@ class Cart extends Component {
   };
 
   render() {
-    const { cartItems, productList, totalAmount } = this.props;
+    const { cartItems, productList, totalAmount, cartCount } = this.props;
     const cartItemsList = [];
     if (productList && cartItems) {
       productList.forEach(x => {
@@ -100,7 +100,11 @@ class Cart extends Component {
           <h2 className="totalAmount">
             Sub Total: <span>&#8377;{totalAmount}</span>
           </h2>
-          <Button text="Proceed to Buy" onClick={this.onClickProceed} />
+          <Button
+            text="Proceed to Buy"
+            onClick={this.onClickProceed}
+            type={cartCount > 0 ? 'primary' : 'disabled'}
+          />
         </div>
         <ListTable
           headers={CART_TABLE_HEADERS}
@@ -118,6 +122,7 @@ const mapStateToProps = state => ({
   cartItems: state.cart.cart_items,
   totalAmount: state.cart.total_amount,
   productList: state.product.products,
+  cartCount: state.cart.cart_count,
 });
 
 const mapDispatchToProps = dispatch => ({
