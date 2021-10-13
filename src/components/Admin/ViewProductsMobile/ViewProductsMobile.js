@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
+import { debounce } from 'lodash';
 import MenuIcon from '@mui/icons-material/Menu';
 import Input from 'components/common/Input/Input';
 import * as actions from 'store/actions/productActions';
@@ -30,19 +31,16 @@ class ViewProductsMobile extends Component {
   }
 
   componentDidMount = () => {
-    const { actions, router } = this.props;
-    let query = {};
-    if (router.location.query?.search) {
-      query.search = router.location.query.search;
+    const { actions, query } = this.props;
+    let queryObj = {};
+    if (query?.search) {
+      queryObj.search = query.search;
     }
-    if (
-      router.location.query?.category &&
-      router.location.query.category !== 'all'
-    ) {
-      query.category = router.location.query.category;
+    if (query?.category && query.category !== 'all') {
+      queryObj.category = query.category;
     }
-    this.setState({ ...query });
-    actions.getProducts({ query });
+    this.setState({ ...queryObj });
+    actions.getProducts({ query: queryObj });
   };
 
   onEditProduct = id => {
@@ -50,22 +48,30 @@ class ViewProductsMobile extends Component {
     history.push({ pathname: `${match.url}/${id}/edit`, hash: 'edit' });
   };
 
-  onChangeFilter = e => {
-    const { history, router, actions } = this.props;
-    let { value } = e.target;
-    const key = e.currentTarget.getAttribute('data-name');
-    const query = { ...router.location.query, [key]: value };
-    this.setState({ ...this.state, ...query });
-    for (const k in query) {
-      if (query.hasOwnProperty(k) && !query[k]) delete query[k];
-      if (k === 'category' && query[k] === 'all') delete query[k];
+  getFilteredResult = queryObj => {
+    const { history, actions } = this.props;
+    for (const k in queryObj) {
+      if (queryObj.hasOwnProperty(k) && !queryObj[k]) delete queryObj[k];
+      if (k === 'category' && queryObj[k] === 'all') delete queryObj[k];
     }
-    history.push({ search: queryStringify(query) });
+    history.push({ search: queryStringify(queryObj) });
     this.setState({ isLoading: true });
     const onCb = () => {
       this.setState({ isLoading: false });
     };
-    actions.getProducts({ query, cb: onCb });
+    actions.getProducts({ query: queryObj, cb: onCb });
+  };
+
+  debounceFn = debounce(queryObj => this.getFilteredResult(queryObj), 400);
+
+  onChangeFilter = e => {
+    const { query } = this.props;
+    let { value } = e.target;
+    const key = e.currentTarget.getAttribute('data-name');
+    const queryObj = { ...query, [key]: value };
+    this.setState({ ...this.state, ...queryObj });
+    if (key === 'search') this.debounceFn(queryObj);
+    else this.getFilteredResult(queryObj);
   };
 
   getCategoryFromId = product => {
@@ -156,7 +162,7 @@ class ViewProductsMobile extends Component {
 }
 
 const mapStateToProps = state => ({
-  router: state.router,
+  query: state.router.location.query,
   productList: state.product.products,
   productCategories: state.product.product_categories,
 });

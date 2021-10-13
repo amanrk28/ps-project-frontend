@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ObjectType } from 'store/reducers/rootState';
 import Loading from '../Loading/Loading';
 import './ListTable.scss';
@@ -15,8 +15,8 @@ interface ListTableProps {
   dataList: ObjectType[];
   customTableWrapper?: string;
   tableFor: string;
-  onClickListItem: (id: any) => void;
-  renderListItem: (props: RenderListItemProps) => void;
+  onClickListItem?: (id: any) => void;
+  renderListItem: (props: RenderListItemProps) => ReactNode;
 }
 
 const ListTable = ({
@@ -31,7 +31,7 @@ const ListTable = ({
 }: ListTableProps) => {
   return (
     <ul className={`table-wrapper ${customTableWrapper || ''}`}>
-      <li>
+      <li key="header">
         {headers.map(header => (
           <div
             key={header.dataname}

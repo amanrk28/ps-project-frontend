@@ -10,9 +10,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <Index store={store} />
-          </div>
+          <Index store={store} />
         </ConnectedRouter>
       </Provider>
     );

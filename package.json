@@ -7,6 +7,7 @@
     "@mui/material": "^5.0.0",
     "connected-react-router": "^6.9.1",
     "history": "^4.10.1",
+    "lodash": "^4.17.21",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-aria-menubutton": "^7.0.3",

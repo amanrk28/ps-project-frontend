@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
+import { debounce } from 'lodash';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -25,33 +26,38 @@ class Header extends Component {
   }
 
   componentDidMount = () => {
-    const { productActions, router } = this.props;
-    let query = {};
-    if (router.location.query?.search) {
-      query.search = router.location.query.search;
+    const { productActions, query } = this.props;
+    let queryObj = {};
+    if (query?.search) {
+      queryObj.search = query.search;
     }
-    if (
-      router.location.query?.category &&
-      router.location.query?.category !== 'all'
-    ) {
-      query.category = router.location.query.category;
+    if (query?.category && query?.category !== 'all') {
+      queryObj.category = query.category;
     }
-    this.setState({ ...query });
-    productActions.getProducts({ query });
+    this.setState({ ...queryObj });
+    productActions.getProducts({ query: queryObj });
   };
 
-  onChangeFilter = e => {
-    const { history, router, productActions } = this.props;
-    const { value } = e.target;
-    const key = e.currentTarget.getAttribute('data-name');
-    const query = { ...router.location.query, [key]: value };
-    this.setState({ ...this.state, ...query });
-    for (const k in query) {
-      if (query.hasOwnProperty(k) && !query[k]) delete query[k];
-      if (k === 'category' && query[k] === 'all') delete query[k];
+  getFilteredResult = queryObj => {
+    const { history, productActions } = this.props;
+    for (const k in queryObj) {
+      if (queryObj.hasOwnProperty(k) && !queryObj[k]) delete queryObj[k];
+      if (k === 'category' && queryObj[k] === 'all') delete queryObj[k];
     }
-    history.push({ search: queryStringify(query) });
-    productActions.getProducts({ query });
+    history.push({ search: queryStringify(queryObj) });
+    productActions.getProducts({ query: queryObj });
+  };
+
+  debounceFn = debounce(queryObj => this.getFilteredResult(queryObj), 400);
+
+  onChangeFilter = e => {
+    const { query } = this.props;
+    let { value } = e.target;
+    const key = e.currentTarget.getAttribute('data-name');
+    const queryObj = { ...query, [key]: value };
+    this.setState({ ...this.state, ...queryObj });
+    if (key === 'search') this.debounceFn(queryObj);
+    else this.getFilteredResult(queryObj);
   };
 
   onClickLogout = () => {
@@ -145,7 +151,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  router: state.router,
+  query: state.router.location.query,
   user: state.auth,
   cartCount: state.cart.cart_count,
   productCategories: state.product.product_categories,

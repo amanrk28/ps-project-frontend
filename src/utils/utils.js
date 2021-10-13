@@ -1,7 +1,7 @@
 export const COMPANY_NAME = 'Retailr';
 
 const LOGO_MAIN =
-  'https://res.cloudinary.com/retailr/image/upload/v1632934376/products/logoMain_wdwznx.png';
+  'https://res.cloudinary.com/retailr/image/upload/v1634159252/products/logoMain_wdwznx.webp';
 export default LOGO_MAIN;
 
 export const EMAIL_REGEX =
@@ -33,8 +33,8 @@ export async function uploadFile(file) {
   const formData = new FormData();
   formData.append('file', file);
   const res = await uploadFileApi(formData);
-  const uploadObj = { name: file.name };
-  if (res && res.url) uploadObj.url = res.url;
+  let uploadObj = { name: file.name };
+  if (res && res.secure_url) uploadObj.url = res.secure_url;
   return uploadObj;
 }
 

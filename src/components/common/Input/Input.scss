@@ -16,6 +16,8 @@
   }
   .input-field {
     flex: 1;
+    display: flex;
+    align-items: center;
     input {
       height: 100%;
       padding: 0 12px;
@@ -23,6 +25,14 @@
       &:focus {
         border: none;
         box-shadow: 0 0 16px -2px var(--yellow-secondary);
+      }
+    }
+    svg {
+      width: 36px;
+      cursor: pointer;
+      transition: transform 0.2s ease-in;
+      &:hover {
+        transform: scale(1.05);
       }
     }
   }

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Loading from './common/Loading/Loading';
@@ -22,9 +21,7 @@ class Index extends Component {
       <div style={{ position: 'relative' }}>
         <ToastContainer />
         {isLoading && <Loading fullLoader />}
-        <Switch>
-          <Route path="/" component={Routes} />
-        </Switch>
+        <Routes />
       </div>
     );
   }

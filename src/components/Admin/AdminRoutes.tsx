@@ -2,12 +2,12 @@ import React, { lazy, Suspense, useState } from 'react';
 import { Switch, Route, RouteComponentProps, Redirect } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import Loading from 'components/common/Loading/Loading';
-// import AdminSidebar from './AdminDashboard/AdminDashboard';
-import AddUpdateProduct from './AddUpdateProduct/AddUpdateProduct';
-import ViewOrderItem from './ViewOrderItem/ViewOrderItem';
 
+const AddUpdateProduct = lazy(
+  () => import('./AddUpdateProduct/AddUpdateProduct')
+);
+const ViewOrderItem = lazy(() => import('./ViewOrderItem/ViewOrderItem'));
 const AdminSidebar = lazy(() => import('./AdminDashboard/AdminDashboard'));
-
 const ViewProductsMobile = lazy(
   () => import('./ViewProductsMobile/ViewProductsMobile')
 );
@@ -36,45 +36,49 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
           />
         </Suspense>
         <div style={{ width: `calc(100vw - 70px)` }}>
-          <Switch>
-            <Route
-              path={`${match.path}/products/:id/edit`}
-              component={AddUpdateProduct}
-            />
-            <Route
-              path={`${match.path}/products/add`}
-              render={() => <AddUpdateProduct toggleSidebar={toggleSidebar} />}
-            />
-            <Route
-              path={`${match.path}/products`}
-              render={() => (
-                <Suspense fallback={<Loading fullLoader />}>
-                  {isMobile ? (
-                    <ViewProductsMobile toggleSidebar={toggleSidebar} />
-                  ) : (
-                    <ViewProducts />
-                  )}
-                </Suspense>
-              )}
-            />
-            <Route
-              path={`${match.path}/orders/:id/view`}
-              component={ViewOrderItem}
-            />
-            <Route
-              path={`${match.path}/orders`}
-              render={() => (
-                <Suspense fallback={<Loading fullLoader />}>
-                  {isMobile ? (
-                    <ViewOrdersMobile toggleSidebar={toggleSidebar} />
-                  ) : (
-                    <ViewOrders />
-                  )}
-                </Suspense>
-              )}
-            />
-            <Redirect path={`${match.path}/`} to={`${match.path}/products`} />
-          </Switch>
+          <Suspense fallback={<Loading fullLoader />}>
+            <Switch>
+              <Route
+                path={`${match.path}/products/:id/edit`}
+                component={AddUpdateProduct}
+              />
+              <Route
+                path={`${match.path}/products/add`}
+                render={() => (
+                  <AddUpdateProduct toggleSidebar={toggleSidebar} />
+                )}
+              />
+              <Route
+                path={`${match.path}/products`}
+                render={() => (
+                  <Suspense fallback={<Loading fullLoader />}>
+                    {isMobile ? (
+                      <ViewProductsMobile toggleSidebar={toggleSidebar} />
+                    ) : (
+                      <ViewProducts />
+                    )}
+                  </Suspense>
+                )}
+              />
+              <Route
+                path={`${match.path}/orders/:id/view`}
+                component={ViewOrderItem}
+              />
+              <Route
+                path={`${match.path}/orders`}
+                render={() => (
+                  <Suspense fallback={<Loading fullLoader />}>
+                    {isMobile ? (
+                      <ViewOrdersMobile toggleSidebar={toggleSidebar} />
+                    ) : (
+                      <ViewOrders />
+                    )}
+                  </Suspense>
+                )}
+              />
+              <Redirect path={`${match.path}/`} to={`${match.path}/products`} />
+            </Switch>
+          </Suspense>
         </div>
       </div>
     </div>
