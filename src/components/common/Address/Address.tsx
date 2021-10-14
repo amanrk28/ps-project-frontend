@@ -2,13 +2,7 @@ import React from 'react';
 import Input from 'components/common/Input/Input';
 import './Address.scss';
 import { ObjectType } from 'store/reducers/rootState';
-
-const ADDRESS_FIELDS = [
-  { name: 'House No.', dataname: 'house_no' },
-  { name: 'Street', dataname: 'street' },
-  { name: 'City', dataname: 'city' },
-  { name: 'Pincode', dataname: 'pincode' },
-];
+import { ADDRESS_FIELDS } from 'utils/utils';
 
 interface AddressProps {
   addressObj: ObjectType;
@@ -27,14 +21,14 @@ const Address = ({ addressObj, onChange }: AddressProps) => {
       <p className="address-header">Address</p>
       <div className="address-wrapper">
         {ADDRESS_FIELDS.map(field => (
-          <div className="address-fieldContainer" key={field.dataname}>
+          <div className="address-fieldContainer" key={field.id}>
             <Input
-              dataname={field.dataname}
+              dataname={field.id}
               label={field.name}
-              type={field.dataname === 'pincode' ? 'number' : 'text'}
-              value={getFieldValue(field.dataname)}
+              type={field.id === 'pincode' ? 'number' : 'text'}
+              value={getFieldValue(field.id)}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                onChange(e, field.dataname)
+                onChange(e, field.id)
               }
             />
           </div>

@@ -18,9 +18,14 @@ import './Header.scss';
 interface MobileHeaderProps {
   isLoggedIn: boolean;
   onClickLogout: () => void;
+  name: string;
 }
 
-const MobileHeader = ({ isLoggedIn, onClickLogout }: MobileHeaderProps) => {
+const MobileHeader = ({
+  isLoggedIn,
+  onClickLogout,
+  name,
+}: MobileHeaderProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -54,24 +59,25 @@ const MobileHeader = ({ isLoggedIn, onClickLogout }: MobileHeaderProps) => {
           sx={{
             ['&.MuiList-root a']: {
               color: '#fff',
-              fontWeight: '600',
+              fontWeight: '500',
               fontSize: 20,
             },
           }}
         >
-          <ListItem>Hello Anirudh</ListItem>
-          <Divider />
+          <ListItem
+            sx={{
+              color: 'white',
+              fontWeight: 400,
+              fontSize: 26,
+            }}
+          >
+            Hello,&nbsp;
+            <span style={{ fontWeight: 600 }}>{name}</span>
+          </ListItem>
+          <Divider sx={{ my: 3 }} />
           {HEADER_ITEMS.map(item => (
             <Link key={item.name} to={item.url} onClick={toggleDrawer}>
-              <ListItemButton
-                sx={{
-                  [`&.Mui-selected`]: {
-                    background: 'linear-gradient(-45deg, #a4ce38ee, #80ae38)',
-                  },
-                }}
-              >
-                {item.name}
-              </ListItemButton>
+              <ListItemButton sx={{ py: 2 }}>{item.name}</ListItemButton>
             </Link>
           ))}
         </List>

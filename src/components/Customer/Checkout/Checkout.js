@@ -9,16 +9,10 @@ import Radio from '@mui/material/Radio';
 import Input from 'components/common/Input/Input';
 import Button from 'components/common/Button/Button';
 import * as actions from 'store/actions/cartActions';
-import { convertDateStampToHumanDate } from 'utils/utils';
+import { convertDateStampToHumanDate, ADDRESS_FIELDS } from 'utils/utils';
 import greenTick from './green-success-tick.svg';
 import './Checkout.scss';
 
-const ADDRESS_FIELDS = [
-  { id: 'house_no', name: 'House No' },
-  { id: 'street', name: 'Street' },
-  { id: 'city', name: 'City' },
-  { id: 'pincode', name: 'Pincode' },
-];
 const USER_FIELDS = [
   { id: 'first_name', name: 'First Name' },
   { id: 'last_name', name: 'Last Name' },

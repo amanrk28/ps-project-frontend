@@ -88,12 +88,17 @@ export const queryStringify = obj => {
   return arr.join('&');
 };
 
-const ADDRESS_FIELDS = ['house_no', 'street', 'city', 'pincode'];
+export const ADDRESS_FIELDS = [
+  { id: 'house_no', name: 'House No' },
+  { id: 'street', name: 'Street' },
+  { id: 'city', name: 'City' },
+  { id: 'pincode', name: 'Pincode' },
+];
 
 export const getAddressString = addressObj => {
   let address = '';
   ADDRESS_FIELDS.forEach(item => {
-    if (addressObj[item]) address += addressObj[item];
+    if (addressObj[item.id]) address += addressObj[item.id];
     if (item === 'city') address += ' - ';
     else if (item !== 'pincode') address += ', ';
   });

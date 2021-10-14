@@ -70,6 +70,7 @@ class Header extends Component {
           <MobileHeader
             isLoggedIn={Boolean(user.user_id)}
             onClickLogout={this.onClickLogout}
+            name={user.first_name || ''}
           />
         ) : (
           <DesktopHeader
