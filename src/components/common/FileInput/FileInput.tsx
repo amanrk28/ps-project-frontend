@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import FileUploadIcon from '@mui/icons-material/FileUpload';
 import { uploadFile } from 'utils/utils';
 import './FileInput.scss';
@@ -14,6 +14,8 @@ interface UploadObjectProps {
 
 const FileInput = ({ onChange }: FileInputProps) => {
   const [fileName, setFileName] = useState('');
+
+  const fileNameMemo = useMemo(() => fileName, [fileName]);
 
   const onUploadImage = async (event: React.FormEvent<HTMLInputElement>) => {
     const { files } = event.currentTarget;
@@ -32,7 +34,7 @@ const FileInput = ({ onChange }: FileInputProps) => {
             <FileUploadIcon />
           </div>
         )}
-        <div className="text">{fileName || 'Upload'}</div>
+        <div className="text">{fileNameMemo || 'Upload'}</div>
       </label>
       <input
         id="fileUpload"

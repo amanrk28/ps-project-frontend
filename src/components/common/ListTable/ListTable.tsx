@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, memo } from 'react';
 import { ObjectType } from 'store/reducers/rootState';
 import Loading from '../Loading/Loading';
 import './ListTable.scss';
@@ -56,4 +56,4 @@ const ListTable = ({
   );
 };
 
-export default ListTable;
+export default memo(ListTable);

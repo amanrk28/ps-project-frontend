@@ -48,24 +48,22 @@ class SignupForm extends Component {
     if (!isEmail(email)) return NotifyMe('error', 'Invalid Email!');
     if (password !== checkPassword)
       return NotifyMe('error', 'Passwords do not match. Try again!');
-    else {
-      const sanityCheck = SIGNUP_FIELDS.filter(x => {
-        if (x.required && !this.state[x.dataname]) {
-          NotifyMe('error', `${x.name} is mandatory!`);
-          return true;
-        }
-        return false;
-      });
-      if (sanityCheck.length > 0) return;
-      const dataPayload = {
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-        phone_number: phone,
-      };
-      this.props.onSubmit(dataPayload);
-    }
+    const sanityCheck = SIGNUP_FIELDS.filter(x => {
+      if (x.required && !this.state[x.dataname]) {
+        NotifyMe('error', `${x.name} is mandatory!`);
+        return true;
+      }
+      return false;
+    });
+    if (sanityCheck.length > 0) return;
+    const dataPayload = {
+      email,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+      phone_number: phone,
+    };
+    this.props.onSubmit(dataPayload);
   };
 
   handleKeyDown = e => {

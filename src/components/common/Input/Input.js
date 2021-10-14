@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import SearchIcon from '@mui/icons-material/Search';
 import './Input.scss';
 
 class Input extends PureComponent {
@@ -17,7 +16,6 @@ class Input extends PureComponent {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       onKeyDown = () => {},
       disabled = false,
-      searchIcon = false,
     } = this.props;
     return (
       <>
@@ -34,7 +32,6 @@ class Input extends PureComponent {
               onKeyDown={onKeyDown}
               disabled={disabled}
             />
-            {searchIcon && <SearchIcon />}
           </div>
         </div>
       </>

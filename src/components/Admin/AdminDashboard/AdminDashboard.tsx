@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, memo } from 'react';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import { useDispatch } from 'react-redux';
@@ -25,10 +25,16 @@ const drawerStyle = {
     boxSizing: 'border-box',
     display: 'flex',
     justifyContent: 'space-between',
-    overflowX: 'hidden',
+    overflow: 'hidden',
     bgcolor: 'var(--yellow-primary)',
     boxShadow: '0 0 16px #666',
   },
+};
+
+const iconStyle = {
+  width: 80,
+  p: 2,
+  color: 'white',
 };
 
 interface AdminSidebarProps extends RouteComponentProps {
@@ -49,6 +55,20 @@ const AdminSidebar = ({
     const idx = Object.values(paths).indexOf(location.pathname);
     if (idx > -1) setSelectedIndex(idx);
   }, [location.pathname]);
+
+  const selectedIndexMemo = useMemo<number>(
+    () => selectedIndex,
+    [selectedIndex]
+  );
+
+  const onClickLogout = () => {
+    dispatch(logout());
+  };
+
+  const onClickLink = (idx: number) => {
+    setSelectedIndex(idx);
+    toggleSidebar();
+  };
 
   const routeObject = (id: string) => {
     switch (id) {
@@ -71,19 +91,17 @@ const AdminSidebar = ({
         variant={isMobile ? 'temporary' : 'permanent'}
         sx={drawerStyle}
         open={isSidebarOpen}
+        onClose={toggleSidebar}
       >
         <List>
           {adminActions.map((item, idx) => (
             <Link
               key={item.id}
               to={() => routeObject(item.id)}
-              onClick={() => {
-                setSelectedIndex(idx);
-                toggleSidebar();
-              }}
+              onClick={() => onClickLink(idx)}
             >
               <ListItemButton
-                selected={selectedIndex === idx}
+                selected={selectedIndexMemo === idx}
                 sx={{
                   [`&.Mui-selected`]: {
                     background: 'linear-gradient(-45deg, #a4ce38ee, #80ae38)',
@@ -98,14 +116,7 @@ const AdminSidebar = ({
             </Link>
           ))}
         </List>
-        <IconButton
-          sx={{
-            width: 80,
-            p: 2,
-            color: 'white',
-          }}
-          onClick={() => dispatch(logout())}
-        >
+        <IconButton sx={iconStyle} onClick={onClickLogout}>
           <LogoutIcon fontSize="large" />
         </IconButton>
       </Drawer>
@@ -113,4 +124,4 @@ const AdminSidebar = ({
   );
 };
 
-export default withRouter(AdminSidebar);
+export default memo(withRouter(AdminSidebar));

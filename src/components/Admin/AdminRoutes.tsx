@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useState, useCallback, useMemo } from 'react';
 import { Switch, Route, RouteComponentProps, Redirect } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import Loading from 'components/common/Loading/Loading';
@@ -22,16 +22,21 @@ interface AdminRoutesProps extends RouteComponentProps {}
 const AdminRoutes = ({ match }: AdminRoutesProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const toggleSidebar = () => {
+  const toggleSidebar = useCallback(() => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
+  }, [isSidebarOpen]);
+
+  const sidebarOpenMemo = useMemo<boolean>(
+    () => isSidebarOpen,
+    [isSidebarOpen]
+  );
 
   return (
     <div className="admin-wrapper">
       <div className="admin-body">
         <Suspense fallback={<Loading />}>
           <AdminSidebar
-            isSidebarOpen={isSidebarOpen}
+            isSidebarOpen={sidebarOpenMemo}
             toggleSidebar={toggleSidebar}
           />
         </Suspense>
@@ -44,8 +49,13 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
               />
               <Route
                 path={`${match.path}/products/add`}
-                render={() => (
-                  <AddUpdateProduct toggleSidebar={toggleSidebar} />
+                render={({ match, location, history }) => (
+                  <AddUpdateProduct
+                    match={match}
+                    location={location}
+                    history={history}
+                    toggleSidebar={toggleSidebar}
+                  />
                 )}
               />
               <Route
@@ -85,4 +95,4 @@ const AdminRoutes = ({ match }: AdminRoutesProps) => {
   );
 };
 
-export default AdminRoutes;
+export default React.memo(AdminRoutes);

@@ -16,17 +16,21 @@
   z-index: 100;
   box-shadow: 0 0 16px 4px var(--yellow-secondary);
   @include phone {
-    padding: 0;
+    padding: 0 12px;
   }
   svg {
     color: #fff;
     font-size: 32px;
   }
-  .header__logo {
+  .header-logo {
     width: 180px;
     height: 45px;
     object-fit: contain;
     margin: 0 10px;
+    @include phone {
+      width: 150px;
+      margin: 0;
+    }
   }
   .search-and-filter {
     .header-filter {
@@ -41,9 +45,6 @@
       .input-wrapper {
         width: 300px;
       }
-    }
-    @include phone {
-      display: none;
     }
   }
   .header__nav {
@@ -147,6 +148,30 @@
         visibility: visible;
         opacity: 1;
       }
+    }
+  }
+}
+.mobileHeader-wrapper {
+  height: 60px;
+  width: 100vw;
+  background-color: var(--yellow-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  z-index: 100;
+  svg {
+    color: #fff;
+    font-size: 32px;
+  }
+  .header-logo {
+    width: 180px;
+    height: 45px;
+    object-fit: contain;
+    margin: 0 10px;
+    @include phone {
+      width: 150px;
+      margin: 0;
     }
   }
 }

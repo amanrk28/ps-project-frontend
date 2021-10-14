@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import Loading from './common/Loading/Loading';
 import Routes from './routes';
-import * as actions from '../store/actions/authActions';
-import * as productActions from '../store/actions/productActions';
+import { verifyToken } from 'store/actions/authActions';
+import { getProductCategories } from 'store/actions/productActions';
 
 class Index extends Component {
   componentDidMount = () => {
-    const { productActions, actions } = this.props;
-    productActions.getProductCategories();
-    actions.verifyToken();
+    const { getProductCategories, verifyToken } = this.props;
+    getProductCategories();
+    verifyToken();
   };
 
   render() {
@@ -32,8 +31,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  productActions: bindActionCreators(productActions, dispatch),
-  actions: bindActionCreators(actions, dispatch),
+  verifyToken: () => dispatch(verifyToken()),
+  getProductCategories: () => dispatch(getProductCategories()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Index);

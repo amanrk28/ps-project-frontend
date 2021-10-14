@@ -44,4 +44,4 @@ const Address = ({ addressObj, onChange }: AddressProps) => {
   );
 };
 
-export default Address;
+export default React.memo(Address);

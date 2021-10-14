@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import * as actions from 'store/actions/orderActions';
 import ListTable from 'components/common/ListTable/ListTable';
 import './Orders.scss';
@@ -23,10 +22,6 @@ class Orders extends Component {
   componentDidMount = () => {
     const { actions } = this.props;
     actions.getOrdersList({ orderStatus: '' });
-  };
-
-  onClickBack = () => {
-    this.props.history.goBack();
   };
 
   onOpenOrderDetails = id => {
@@ -52,9 +47,6 @@ class Orders extends Component {
     return (
       <div className="orders-wrapper">
         <div className="orders-header-wrapper center">
-          <div className="goBack center" onClick={this.onClickBack}>
-            <ArrowBackIcon />
-          </div>
           <div className="orders-header">Your Orders</div>
         </div>
         <ListTable
