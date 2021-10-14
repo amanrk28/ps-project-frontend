@@ -4,7 +4,6 @@ import LOGO_MAIN, { COMPANY_NAME } from 'utils/utils';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import Input from 'components/common/Input/Input';
 import Filter from 'components/Filter/Filter';
 import './Header.scss';
@@ -27,7 +26,7 @@ const DesktopHeader = ({
   };
 
   return (
-    <div className="header">
+    <nav className="desktopHeader-wrapper">
       <Link to="/">
         <img className="header-logo" src={LOGO_MAIN} alt={COMPANY_NAME} />
       </Link>
@@ -60,14 +59,16 @@ const DesktopHeader = ({
                 Hello, <br />
                 <span>{name}</span>
               </p>
-              {isDropdownOpen ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+              <ArrowDropDownIcon
+                className={`arrowIcon ${isDropdownOpen ? 'arrowDownIcon' : ''}`}
+              />
             </div>
             {isDropdownOpen && (
               <div className="tabWrapper">
                 {HEADER_ITEMS.map(item => {
                   if (item.dataname !== 'cart')
                     return (
-                      <div className="account">
+                      <div className="account" key={item.dataname}>
                         <Link to={item.url} onClick={toggleDropdown}>
                           {item.name}
                         </Link>
@@ -97,7 +98,7 @@ const DesktopHeader = ({
           </div>
         )}
       </div>
-    </div>
+    </nav>
   );
 };
 

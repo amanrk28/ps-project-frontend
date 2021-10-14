@@ -12,7 +12,7 @@ const configureStore = () => {
   let _middleware = applyMiddleware(routerMiddleware(history), thunk);
 
   let with_redux_devtools = '';
-  if (REACT_APP_IS_REDUX_ENABLED) {
+  if (REACT_APP_IS_REDUX_ENABLED === 'true') {
     with_redux_devtools = composeWithDevTools(_middleware);
   } else {
     with_redux_devtools = _middleware;

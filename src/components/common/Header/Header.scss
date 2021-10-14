@@ -4,7 +4,7 @@
   }
 }
 
-.header {
+.desktopHeader-wrapper {
   height: 60px;
   display: flex;
   justify-content: space-between;
@@ -12,9 +12,11 @@
   background-color: var(--yellow-primary);
   position: sticky;
   top: 0;
+  left: 0;
+  right: 0;
   padding: 0 2rem;
   z-index: 100;
-  box-shadow: 0 0 16px 4px var(--yellow-secondary);
+  box-shadow: 0 0 16px 4px #aaa;
   @include phone {
     padding: 0 12px;
   }
@@ -70,6 +72,12 @@
             font-size: 15px;
           }
         }
+        .arrowIcon {
+          transition: transform 0.3s ease-in;
+          &.arrowDownIcon {
+            transform: rotate(180deg);
+          }
+        }
       }
     }
     .cart_logo__wrapper {
@@ -114,8 +122,7 @@
         font-weight: 400;
         padding: 4px;
         border-radius: 2px;
-        &.orders a,
-        &.account a {
+        a {
           align-items: flex-start;
           color: #2c3556;
           user-select: none;
