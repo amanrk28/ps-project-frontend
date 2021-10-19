@@ -10,9 +10,11 @@ import './CartMobile.scss';
 
 class CartMobile extends Component {
   componentDidMount = () => {
-    const { actions, productActions } = this.props;
-    actions.getCartItems();
-    productActions.getProducts();
+    const { actions, productActions, cartCount } = this.props;
+    if (cartCount === 0) {
+      actions.getCartItems();
+      productActions.getProducts();
+    }
   };
 
   onClickBack = () => {

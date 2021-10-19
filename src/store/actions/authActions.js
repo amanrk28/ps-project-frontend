@@ -65,8 +65,8 @@ export const signupUser = (req_data, cb) => (dispatch, getState) => {
   signupApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
-      if (!status) throw msg;
       if (cb) cb();
+      if (!status) throw msg;
       NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
       if (location.hash && location.hash === '#addtocart') {
@@ -90,8 +90,8 @@ export const loginUser = (req_data, cb) => (dispatch, getState) => {
   loginApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
-      if (!status) throw msg;
       if (cb) cb();
+      if (!status) throw msg;
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
       if (location.hash && location.hash === '#addtocart') {

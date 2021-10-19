@@ -46,13 +46,14 @@ class Checkout extends Component {
   }
 
   componentDidMount = () => {
-    const { user } = this.props;
+    const { user, cartCount, actions } = this.props;
     let stateObj = {};
     stateObj.address = user.address;
     USER_FIELDS.map(key => {
       stateObj[key.id] = user[key.id];
     });
     this.setState({ ...stateObj });
+    if (cartCount === 0) actions.getCartItems();
   };
 
   onClickBack = () => {
@@ -100,16 +101,17 @@ class Checkout extends Component {
 
     return (
       <>
-        <Modal open={showOrderPlacedModal} onClose={this.onCloseModal}>
-          <Box sx={style}>
-            <div className="imageWrapper center">
-              <img src={greenTick} alt="Success" />
-            </div>
-            <p>Your order has been placed successfully!</p>
-            <Button text="Close" onClick={this.onCloseModal} />
-          </Box>
-        </Modal>
-        {!showOrderPlacedModal && (
+        {showOrderPlacedModal ? (
+          <Modal open={showOrderPlacedModal} onClose={this.onCloseModal}>
+            <Box sx={style}>
+              <div className="imageWrapper center">
+                <img src={greenTick} alt="Success" />
+              </div>
+              <p>Your order has been placed successfully!</p>
+              <Button text="Close" onClick={this.onCloseModal} />
+            </Box>
+          </Modal>
+        ) : (
           <div className="checkout-wrapper">
             <div className="checkout-header-wrapper center">
               <div className="goBack center" onClick={this.onClickBack}>

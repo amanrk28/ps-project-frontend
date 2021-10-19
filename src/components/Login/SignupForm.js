@@ -67,7 +67,7 @@ class SignupForm extends Component {
   };
 
   handleKeyDown = e => {
-    if (detectKeyPress(e).enter) this.onClick();
+    if (detectKeyPress(e).enter) this.onClickSignup();
   };
 
   render() {

@@ -8,6 +8,7 @@ import {
 } from '../../common/api';
 import { setOrderItem } from './orderActions';
 import { setLoaderTrue, setLoaderFalse } from './authActions';
+import { ADDRESS_FIELDS } from 'utils/utils';
 
 const set_all_cart_items = data => ({
   type: aT.SET_ALL_CART_ITEMS,
@@ -104,10 +105,28 @@ export const updateCartItem = ({ product_id, quantity }) => {
   };
 };
 
+const checkIsUserDataComplete = user => {
+  let isComplete = true;
+  ADDRESS_FIELDS.map(x => {
+    if (!user.address[x.id]) isComplete = false;
+  });
+  [('first_name', 'last_name', 'phone_number')].map(x => {
+    if (!user[x]) isComplete = false;
+  });
+  return isComplete;
+};
+
 export const createOrderFromCart = (reqData = {}, cb) => {
   return (dispatch, getState) => {
-    const cart_hash = getState().cart.hash;
-    reqData.cart_hash = cart_hash;
+    let user = {};
+    if (Object.keys(reqData).length > 0) user = reqData;
+    else user = getState().auth;
+    if (!checkIsUserDataComplete(user)) {
+      NotifyMe('error', 'Fill your details to proceed with the order');
+      return;
+    }
+    const { hash } = getState().cart;
+    reqData.cart_hash = hash;
     createOrderFromCartApi(reqData)
       .then(res => {
         const { status, data, msg } = res;
