@@ -49,6 +49,7 @@ const DAYS = [
 ];
 
 export const convertDateStampToHumanDate = dateString => {
+  if (!dateString) return dateString;
   const dateObj = new Date(dateString);
   if (dateObj) {
     let date = dateObj.getDate();

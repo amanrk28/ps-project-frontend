@@ -78,8 +78,6 @@ const AdminSidebar = ({
         return { pathname: paths.viewProducts };
       case actionIds.ViewOrders:
         return { pathname: paths.viewOrders };
-      case actionIds.UpdateOrderStatus:
-        return { pathname: paths.viewOrders };
       default:
         return { pathname: `${match.url}` };
     }
@@ -91,6 +89,7 @@ const AdminSidebar = ({
         variant={isMobile ? 'temporary' : 'permanent'}
         sx={drawerStyle}
         open={isSidebarOpen}
+        anchor={isMobile ? 'right' : 'left'}
         onClose={toggleSidebar}
       >
         <List>

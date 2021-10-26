@@ -24,6 +24,21 @@ const orderReducer = (state = initialState, action) => {
         return newstate;
       }
     }
+
+    case aT.SET_UPDATED_ORDER_IN_LIST: {
+      const newstate = { ...state };
+      for (let key of Object.keys(action.data)) {
+        if (key.indexOf('date') > -1) {
+          action.data[key] = convertDateStampToHumanDate(action.data[key]);
+        }
+      }
+      const newOrderList = [...newstate.orderList];
+      const newOrderIndex = newOrderList.length - action.data.id;
+      newOrderList.splice(newOrderIndex, 1, action.data);
+      newstate.orderList = newOrderList;
+      return newstate;
+    }
+
     case aT.SET_ORDER_ITEM:
       return update(state, { orderItem: { ...action.data } });
 

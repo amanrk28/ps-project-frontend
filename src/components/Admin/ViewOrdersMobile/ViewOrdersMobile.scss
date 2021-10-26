@@ -23,24 +23,25 @@
   .mobile-table-wrapper {
     li {
       padding: 24px 10px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-gap: 1rem;
       border-bottom: 1px solid #ccc;
-      cursor: pointer;
       &:first-child {
         border-top: 1px solid #ccc;
       }
-      > div {
-        padding: 4px 0;
+      .touchableContent {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-gap: 1rem;
+        cursor: pointer;
         .fieldName {
           font-size: 12px;
           margin-bottom: 2px;
           color: var(--grey-primary);
         }
+        .expected_delivery_date {
+          grid-column: 1 / span 2;
+        }
       }
       .status {
-        grid-column: 1 / span 2;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -51,6 +52,7 @@
         padding: 0 12px;
         height: 24px;
         width: 100%;
+        margin-top: 16px;
         &.new {
           background-color: #5cd65caa;
         }
@@ -59,6 +61,18 @@
         }
         &.dispatched {
           background-color: #ff9933aa;
+        }
+        .dropdownInput-wrapper {
+          span {
+            background: transparent;
+            border: none;
+            color: #fff;
+            height: auto !important;
+            margin: 0;
+          }
+          .openClass {
+            box-shadow: none !important;
+          }
         }
       }
     }

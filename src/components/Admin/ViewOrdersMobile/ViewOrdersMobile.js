@@ -3,12 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
-import * as actions from 'store/actions/orderActions';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
+import Loading from 'components/common/Loading/Loading';
+import DropdownInput from 'components/common/DropdownInput/DropdownInput';
+import * as actions from 'store/actions/orderActions';
 import { queryStringify } from 'utils/utils';
 import './ViewOrdersMobile.scss';
-import Loading from 'components/common/Loading/Loading';
 
 const USER_FIELDS = ['full_name', 'phone_number'];
 
@@ -18,14 +19,7 @@ const ORDER_TABLE_HEADERS = [
   { name: 'Placed By', dataname: 'full_name' },
   { name: 'Contact No', dataname: 'phone_number' },
   { name: 'Expected Delivery Date', dataname: 'expected_delivery_date' },
-  { name: 'Status', dataname: 'status' },
 ];
-
-const getStatus = status => {
-  if (status === 'new') return 'Active';
-  if (status === 'dispatched') return 'Dispatched';
-  else return 'Completed';
-};
 
 class ViewOrdersMobile extends Component {
   constructor(props) {
@@ -70,6 +64,11 @@ class ViewOrdersMobile extends Component {
     history.push(`${match.url}/${id}/view`);
   };
 
+  onChangeOrderStatus = (e, id) => {
+    const { actions } = this.props;
+    actions.updateOrderStatus(id, { status: e.target.value });
+  };
+
   render() {
     const { orderList, toggleSidebar } = this.props;
     const { statusFilter, isLoading } = this.state;
@@ -97,24 +96,34 @@ class ViewOrdersMobile extends Component {
           <ul className="mobile-table-wrapper">
             {orderList.length > 0 ? (
               orderList.map(order => (
-                <li
-                  key={order.id}
-                  onClick={() => this.onOpenOrderDetails(order.id)}
-                >
-                  {ORDER_TABLE_HEADERS.map(item => (
-                    <div
-                      className={`${item.dataname} ${order.status}`}
-                      key={item.dataname}
-                    >
-                      {item.dataname !== 'status' && (
-                        <div className="fieldName">{item.name}</div>
-                      )}
-                      {item.dataname === 'status' && getStatus(order.status)}
-                      {item.dataname !== 'status' && order[item.dataname]}
-                      {USER_FIELDS.includes(item.dataname) &&
-                        order.placed_by[item.dataname]}
-                    </div>
-                  ))}
+                <li key={order.id}>
+                  <div
+                    className="touchableContent"
+                    onClick={() => this.onOpenOrderDetails(order.id)}
+                  >
+                    {ORDER_TABLE_HEADERS.map(item => (
+                      <div className={`${item.dataname}`} key={item.dataname}>
+                        {item.dataname !== 'status' && (
+                          <div className="fieldName">{item.name}</div>
+                        )}
+                        {item.dataname !== 'status' && order[item.dataname]}
+                        {USER_FIELDS.includes(item.dataname) &&
+                          order.placed_by[item.dataname]}
+                      </div>
+                    ))}
+                  </div>
+                  <div className={`status ${order.status}`}>
+                    <DropdownInput
+                      options={
+                        ['dispatched', 'closed'].includes(order.status)
+                          ? ORDER_STATUSES.filter(x => x.id !== 'new')
+                          : ORDER_STATUSES
+                      }
+                      onChange={e => this.onChangeOrderStatus(e, order.id)}
+                      value={order.status}
+                      dataname="status"
+                    />
+                  </div>
                 </li>
               ))
             ) : (

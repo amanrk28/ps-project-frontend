@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import Filter from 'components/Filter/Filter';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
 import ListTable from 'components/common/ListTable/ListTable';
+import DropdownInput from 'components/common/DropdownInput/DropdownInput';
 import * as actions from 'store/actions/orderActions';
 import { queryStringify } from 'utils/utils';
 import './ViewOrders.scss';
@@ -18,13 +20,8 @@ const ORDER_TABLE_HEADERS = [
   { name: 'Order Date', dataname: 'order_date' },
   { name: 'Expected Delivery Date', dataname: 'expected_delivery_date' },
   { name: 'Status', dataname: 'status' },
+  { name: 'View', dataname: 'edit' },
 ];
-
-const getStatus = status => {
-  if (status === 'new') return 'Active';
-  if (status === 'dispatched') return 'Dispatched';
-  else return 'Completed';
-};
 
 class ViewOrders extends Component {
   constructor(props) {
@@ -65,15 +62,36 @@ class ViewOrders extends Component {
     history.push(`${match.url}/${id}/view`);
   };
 
+  onChangeOrderStatus = (e, id) => {
+    const { actions } = this.props;
+    actions.updateOrderStatus(id, { status: e.target.value });
+  };
+
   renderListItem = ({ item, dataItem }) => {
     return (
       <div
         className={`${item.dataname} ${dataItem.status}`}
         key={item.dataname}
       >
-        {item.dataname === 'status' && getStatus(dataItem.status)}
+        {item.dataname === 'status' && (
+          <DropdownInput
+            options={
+              ['dispatched', 'closed'].includes(dataItem.status)
+                ? ORDER_STATUSES.filter(x => x.id !== 'new')
+                : ORDER_STATUSES
+            }
+            onChange={e => this.onChangeOrderStatus(e, dataItem.id)}
+            value={dataItem.status}
+            dataname="status"
+          />
+        )}
         {USER_FIELDS.includes(item.dataname) &&
           dataItem.placed_by[item.dataname]}
+        {item.dataname === 'edit' && (
+          <div onClick={() => this.onOpenOrderDetails(dataItem.id)}>
+            <ModeEditIcon />
+          </div>
+        )}
         {item.dataname !== 'status' && dataItem[item.dataname]}
       </div>
     );
@@ -104,7 +122,6 @@ class ViewOrders extends Component {
           tableFor="Orders"
           customTableWrapper="customTableWrapper"
           renderListItem={this.renderListItem}
-          onClickListItem={this.onOpenOrderDetails}
         />
       </div>
     );

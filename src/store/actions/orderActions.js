@@ -1,11 +1,21 @@
 import * as aT from '../actionTypes/orderActionTypes';
-import { getOrderItemApi, getOrderListApi } from 'common/api';
+import {
+  getOrderItemApi,
+  getOrderListApi,
+  updateOrderStatusApi,
+} from 'common/api';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 import { getSearchStringFromObject } from 'utils/utils';
 import { ORDER_STATUSES } from 'components/GlobalConstants';
+import { setLoaderTrue, setLoaderFalse } from './authActions';
 
 const setOrderList = data => ({
   type: aT.SET_ORDERS,
+  data,
+});
+
+const setUpdatedOrderInList = data => ({
+  type: aT.SET_UPDATED_ORDER_IN_LIST,
   data,
 });
 
@@ -59,4 +69,21 @@ export const getOrderItem = ({ id, cb }) => {
         console.log(err);
       });
   };
+};
+
+export const updateOrderStatus = (id, orderStatus) => dispatch => {
+  dispatch(setLoaderTrue());
+  updateOrderStatusApi(id, orderStatus)
+    .then(res => {
+      const { status, data, msg } = res;
+      if (!status) throw msg;
+      dispatch(setUpdatedOrderInList(data));
+    })
+    .catch(err => {
+      NotifyMe('error', err);
+      console.log(err);
+    })
+    .finally(() => {
+      dispatch(setLoaderFalse());
+    });
 };
