@@ -51,10 +51,13 @@ const UserAccount = () => {
   };
 
   const onSubmitUpdatedData = () => {
-    const onCb = () => {
-      history.goBack();
-    };
-    dispatch(updateUserDetails({ id: user.user_id, userData, cb: onCb }));
+    dispatch(
+      updateUserDetails({
+        id: user.user_id,
+        userData,
+        cb: () => history.goBack(),
+      })
+    );
   };
 
   return (

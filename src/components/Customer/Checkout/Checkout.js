@@ -42,6 +42,7 @@ class Checkout extends Component {
       phone_number: '',
       isChanged: false,
       showOrderPlacedModal: false,
+      placedOrderId: null,
     };
   }
 
@@ -83,14 +84,15 @@ class Checkout extends Component {
     if (isChanged) {
       reqData = { first_name, last_name, phone_number, address };
     }
-    actions.createOrderFromCart(reqData, () =>
-      this.setState({ showOrderPlacedModal: true })
+    actions.createOrderFromCart(reqData, id =>
+      this.setState({ showOrderPlacedModal: true, placedOrderId: id })
     );
   };
 
   onCloseModal = () => {
+    const { placedOrderId } = this.state;
     this.setState({ showOrderPlacedModal: false });
-    this.props.history.push('/');
+    this.props.history.push(`/orders/${placedOrderId}/view`);
   };
 
   render() {

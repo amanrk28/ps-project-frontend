@@ -35,19 +35,20 @@ export const getProducts = ({ query, cb } = { query: {}, cb: () => {} }) => {
     searchObj = { ...searchObj, ...query };
   }
   const searchString = getSearchStringFromObject({ ...searchObj });
-  return dispatch => {
+  return dispatch =>
     getProductsApi(searchString)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
-        if (cb) cb();
         dispatch(setProductsList(data));
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);
         console.log(err);
+      })
+      .finally(() => {
+        if (cb) cb();
       });
-  };
 };
 
 export const getProductCategories = () => {
@@ -65,56 +66,66 @@ export const getProductCategories = () => {
   };
 };
 
-const getFieldsForProduct = data => ({
-  id: data.id,
-  name: data.name,
-  price: data.price,
-  stock: data.stock,
-  image: data.image,
-  description: data.description,
-  is_available: data.is_available,
-  category: data.category,
-  added_by: data.added_by,
-});
+function isProductDetailsComplete(data) {
+  if (
+    !data.name ||
+    !data.price ||
+    !data.stock ||
+    !data.image ||
+    !data.category ||
+    !data.description
+  )
+    return false;
+  return true;
+}
 
-export const createProduct = ({ requestData, cb }) => {
+export const createProduct = ({ requestData, onSuccess, onFailure }) => {
   return dispatch => {
-    if (
-      !requestData.name ||
-      !requestData.price ||
-      !requestData.stock ||
-      !requestData.image ||
-      !requestData.description
-    )
-      return NotifyMe('error', 'Cannot create product with Incomplete details');
+    if (!isProductDetailsComplete(requestData)) {
+      NotifyMe('error', 'Cannot create product with Incomplete details');
+      onFailure();
+      return;
+    }
     createProductApi(requestData)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
-        const productData = getFieldsForProduct(data);
+        onSuccess();
+        const productData = { ...data };
         dispatch(setNewProduct(productData));
         NotifyMe('success', 'Product added sucessfully');
-        if (cb) cb();
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);
+        onFailure();
         console.log(err);
       });
   };
 };
 
-export const updateProduct = ({ product_id, requestData, cb }) => {
+export const updateProduct = ({
+  product_id,
+  requestData,
+  onSuccess,
+  onFailure,
+}) => {
   return dispatch => {
+    if (!isProductDetailsComplete(requestData)) {
+      NotifyMe('error', 'Cannot update product with Incomplete details');
+      onFailure();
+      return;
+    }
     updateProductApi(product_id, requestData)
       .then(res => {
         const { status, data, msg } = res;
         if (!status) throw msg;
-        const productData = getFieldsForProduct(data);
+        onSuccess();
+        const productData = { ...data };
         dispatch(setUpdatedProduct(productData));
-        if (cb) cb();
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);
+        onFailure();
         console.log(err);
       });
   };

@@ -116,7 +116,7 @@ const checkIsUserDataComplete = user => {
   return isComplete;
 };
 
-export const createOrderFromCart = (reqData = {}, cb) => {
+export const createOrderFromCart = (reqData = {}, onSuccess) => {
   return (dispatch, getState) => {
     let user = {};
     if (Object.keys(reqData).length > 0) user = reqData;
@@ -133,7 +133,7 @@ export const createOrderFromCart = (reqData = {}, cb) => {
         if (!status) throw msg;
         dispatch(setOrderItem(data));
         dispatch(resetCart());
-        cb();
+        onSuccess(data.id);
       })
       .catch(err => {
         NotifyMe('error', err);

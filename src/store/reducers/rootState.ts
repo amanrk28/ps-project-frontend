@@ -54,6 +54,7 @@ export interface ProductReducer {
 
 export interface OrderReducer {
   orderList: ObjectType[];
+  orderItem: ObjectType;
 }
 
 export interface RootState {

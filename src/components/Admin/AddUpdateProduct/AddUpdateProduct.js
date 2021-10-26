@@ -8,9 +8,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import DropdownInput from 'components/common/DropdownInput/DropdownInput';
 import Button from 'components/common/Button/Button';
 import Input from 'components/common/Input/Input';
+import FileInput from 'components/common/FileInput/FileInput';
 import * as actions from 'store/actions/productActions';
 import './AddUpdateProduct.scss';
-import FileInput from 'components/common/FileInput/FileInput';
 
 const PRODUCT_FIELDS = [
   { name: 'Product Name', dataname: 'name', type: 'text' },
@@ -71,9 +71,18 @@ class AddUpdateProduct extends Component {
     if (url) this.setState({ image: url });
   };
 
-  onAddProduct = () => {
+  onClickSubmit = () => {
     const { actions, history } = this.props;
-    const { name, price, stock, image, category, description } = this.state;
+    const {
+      name,
+      price,
+      stock,
+      image,
+      category,
+      description,
+      isNewProduct,
+      id,
+    } = this.state;
     const requestData = {
       name,
       price,
@@ -83,36 +92,22 @@ class AddUpdateProduct extends Component {
       description,
     };
     this.setState({ isLoading: true });
-    const onCb = () => {
+    const onSuccess = () => {
       this.setState({ isLoading: false });
       history.push('/admin/products');
     };
-    actions.createProduct({ requestData, cb: onCb });
-  };
-
-  onUpdateProduct = () => {
-    const { actions, history } = this.props;
-    const { name, price, stock, image, category, description, id } = this.state;
-    const requestData = {
-      name,
-      price,
-      stock,
-      image,
-      category,
-      description,
-    };
-    this.setState({ isLoading: true });
-    const onCb = () => {
+    const onFailure = () => {
       this.setState({ isLoading: false });
-      history.goBack();
     };
-    actions.updateProduct({ product_id: id, requestData, cb: onCb });
-  };
-
-  onClickSubmit = () => {
-    const { isNewProduct } = this.state;
-    if (isNewProduct) this.onAddProduct();
-    else this.onUpdateProduct();
+    if (isNewProduct)
+      actions.createProduct({ requestData, onSuccess, onFailure });
+    else
+      actions.updateProduct({
+        product_id: id,
+        requestData,
+        onSuccess,
+        onFailure,
+      });
   };
 
   render() {

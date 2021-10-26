@@ -27,5 +27,5 @@
     "removeComments": true
   },
   "include": ["src", "@types/index.d.ts"],
-  "exclude": ["node_modules", ".git", ".vscode", "dist"]
+  "exclude": ["node_modules", ".git", ".vscode", "dist", "build"]
 }

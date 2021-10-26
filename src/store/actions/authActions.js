@@ -65,7 +65,6 @@ export const signupUser = (req_data, cb) => (dispatch, getState) => {
   signupApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
-      if (cb) cb();
       if (!status) throw msg;
       NotifyMe('success', 'Signup Successful');
       dispatch(setAuthCredentials(data));
@@ -78,19 +77,23 @@ export const signupUser = (req_data, cb) => (dispatch, getState) => {
     .catch(err => {
       NotifyMe('error', `${err}!`);
       console.log(err);
+    })
+    .finally(() => {
+      if (cb) cb();
     });
 };
 
 export const loginUser = (req_data, cb) => (dispatch, getState) => {
   const { email, password } = req_data;
   const emailRegex = new RegExp(EMAIL_REGEX);
-  if (!email || !password || (email && !emailRegex.test(email.trim())))
+  if (!email || !password || (email && !emailRegex.test(email.trim()))) {
+    if (cb) cb();
     return NotifyMe('error', 'Invalid/ Incomplete Credentials provided');
+  }
   const { location } = getState().router;
   loginApi(req_data)
     .then(res => {
       const { status, data, msg } = res;
-      if (cb) cb();
       if (!status) throw msg;
       NotifyMe('success', 'Login Successful');
       dispatch(setAuthCredentials(data));
@@ -105,6 +108,9 @@ export const loginUser = (req_data, cb) => (dispatch, getState) => {
     .catch(err => {
       NotifyMe('error', `${err}!`);
       console.log(err);
+    })
+    .finally(() => {
+      if (cb) cb();
     });
 };
 

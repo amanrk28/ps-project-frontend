@@ -7,19 +7,19 @@ export default LOGO_MAIN;
 export const EMAIL_REGEX =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const emailRegex = new RegExp(EMAIL_REGEX);
 export const isEmail = email => {
-  const emailRegex = new RegExp(EMAIL_REGEX);
   return emailRegex.test(email);
 };
 
 export const detectKeyPress = e => {
   const returnObj = {};
-  if (e.key === 'Enter') returnObj.enter = true;
-  else if (e.keyCode === '13' || e.keyCode === 13) returnObj.enter = true;
+  if (e.key === 'Enter' || e.keyCode === 13 || e.keyCode === '13')
+    returnObj.enter = true;
   return returnObj;
 };
 
-const uploadFileApi = async formData => {
+async function uploadFileApi(formData) {
   const { REACT_APP_CDN_UPLOAD_URL, REACT_APP_CDN_UPLOAD_PRESET } = process.env;
   formData.append('upload_preset', REACT_APP_CDN_UPLOAD_PRESET);
   const options = {
@@ -27,7 +27,7 @@ const uploadFileApi = async formData => {
     body: formData,
   };
   return fetch(REACT_APP_CDN_UPLOAD_URL, options).then(res => res.json());
-};
+}
 
 export async function uploadFile(file) {
   const formData = new FormData();
