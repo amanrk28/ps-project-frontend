@@ -24,7 +24,7 @@ interface CustomerRoutesProps extends RouteComponentProps {}
 const CustomerRoutes = ({ match }: CustomerRoutesProps) => {
   return (
     <>
-      <Header />
+      <Header enableSearch={match.path === '/'} />
       <Suspense fallback={<Loading fullLoader />}>
         <Switch>
           <Route
