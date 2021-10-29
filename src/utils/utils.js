@@ -1,7 +1,7 @@
 export const COMPANY_NAME = 'Retailr';
 
 const LOGO_MAIN =
-  'https://res.cloudinary.com/retailr/image/upload/v1634159252/products/logoMain_wdwznx.webp';
+  'https://res.cloudinary.com/retailr/image/upload/c_scale,h_45,w_180/v1634159252/products/logoMain_wdwznx.webp';
 export default LOGO_MAIN;
 
 export const EMAIL_REGEX =
