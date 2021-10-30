@@ -103,6 +103,11 @@
     font-size: 24px;
     font-weight: 600;
     color: var(--yellow-primary);
+    &:last-of-type {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--grey-primary);
+    }
   }
   button {
     margin-top: 1rem;

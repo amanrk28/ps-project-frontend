@@ -77,7 +77,11 @@ class ViewOrders extends Component {
           <DropdownInput
             options={
               ['dispatched', 'closed'].includes(dataItem.status)
-                ? ORDER_STATUSES.filter(x => x.id !== 'new')
+                ? ORDER_STATUSES.filter(
+                    x => x.id !== 'new' && x.id !== 'cancelled'
+                  )
+                : dataItem.status === 'cancelled'
+                ? ORDER_STATUSES.filter(x => x.id === 'cancelled')
                 : ORDER_STATUSES
             }
             onChange={e => this.onChangeOrderStatus(e, dataItem.id)}

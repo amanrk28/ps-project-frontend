@@ -1,5 +1,7 @@
+import { push } from 'connected-react-router';
 import * as aT from '../actionTypes/orderActionTypes';
 import {
+  cancelOrderApi,
   getOrderItemApi,
   getOrderListApi,
   updateOrderStatusApi,
@@ -67,6 +69,7 @@ export const getOrderItem = ({ id, cb }) => {
       .catch(err => {
         NotifyMe('error', err);
         console.log(err);
+        dispatch(push('/orders'));
       });
   };
 };
@@ -78,6 +81,24 @@ export const updateOrderStatus = (id, orderStatus) => dispatch => {
       const { status, data, msg } = res;
       if (!status) throw msg;
       dispatch(setUpdatedOrderInList(data));
+    })
+    .catch(err => {
+      NotifyMe('error', err);
+      console.log(err);
+    })
+    .finally(() => {
+      dispatch(setLoaderFalse());
+    });
+};
+
+export const cancelOrder = id => dispatch => {
+  dispatch(setLoaderTrue());
+  cancelOrderApi(id)
+    .then(res => {
+      const { status, msg } = res;
+      if (!status) throw msg;
+      NotifyMe('Order cancelled Successfully');
+      dispatch(push('/orders'));
     })
     .catch(err => {
       NotifyMe('error', err);

@@ -22,6 +22,14 @@ button {
       opacity: 0.82;
     }
   }
+  &.danger {
+    background: linear-gradient(60deg, #c8423e, #ea645f);
+    border: none;
+    &:hover {
+      opacity: 0.82;
+      font-weight: 500;
+    }
+  }
   &.disabled {
     background-color: #ccc;
     border: none;

@@ -15,8 +15,13 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    .customerDetails {
+    .customerDetails-leftSide {
       padding: 12px 0;
+    }
+    .customerDetails-rightSide {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
     }
     .orderTotal {
       padding: 12px 0;
@@ -48,5 +53,14 @@
         object-fit: cover;
       }
     }
+  }
+}
+.orderItem-btn-options-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-gap: 1rem;
+  margin-top: 1rem;
+  button {
+    width: 100%;
   }
 }

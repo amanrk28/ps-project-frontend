@@ -50,6 +50,9 @@
         &.dispatched {
           background-color: #ff9933aa;
         }
+        &.cancelled {
+          background-color: #ff3333;
+        }
       }
     }
   }

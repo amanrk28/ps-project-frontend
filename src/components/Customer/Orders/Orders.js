@@ -10,12 +10,14 @@ const ORDER_TABLE_HEADERS = [
   { name: 'Order ID', dataname: 'id' },
   { name: 'Order Date', dataname: 'order_date' },
   { name: 'Expected Delivery Date', dataname: 'expected_delivery_date' },
+  { name: 'Delivery Date', dataname: 'delivery_date' },
   { name: 'Status', dataname: 'status' },
 ];
 
 const getStatus = status => {
   if (status === 'new') return 'Active';
   if (status === 'dispatched') return 'Dispatched';
+  if (status === 'cancelled') return 'Cancelled';
   else return 'Completed';
 };
 class Orders extends Component {
@@ -32,12 +34,14 @@ class Orders extends Component {
   renderListItem = ({ item, dataItem }) => {
     return (
       <div
-        className={`${item.dataname} ${dataItem.status}`}
+        className={`${item.dataname} ${
+          item.dataname === 'status' ? dataItem.status : ''
+        }`}
         key={item.dataname}
       >
         {item.dataname === 'status'
           ? getStatus(dataItem.status)
-          : dataItem[item.dataname]}
+          : dataItem[item.dataname] || 'N/A'}
       </div>
     );
   };

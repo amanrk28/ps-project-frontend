@@ -22,7 +22,8 @@ const Button = ({
 }: ButtonProps) => {
   let style = `center ${className}`;
   if (type === 'primary') style += ' primary';
-  if (type === 'disabled') style += ' disabled';
+  else if (type === 'danger') style += ' danger';
+  else if (type === 'disabled') style += ' disabled';
 
   const content = children || text;
 

@@ -12,7 +12,7 @@ const ProductDetail = lazy(
   () => import('components/Customer/ProductDetail/ProductDetail')
 );
 const ViewOrderItem = lazy(
-  () => import('components/Admin/ViewOrderItem/ViewOrderItem')
+  () => import('components/Customer/OrderItem/OrderItem')
 );
 const Cart = lazy(() => import('components/Customer/Cart/Cart'));
 const CartMobile = lazy(

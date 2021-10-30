@@ -100,8 +100,8 @@ export const getAddressString = addressObj => {
   let address = '';
   ADDRESS_FIELDS.forEach(item => {
     if (addressObj[item.id]) address += addressObj[item.id];
-    if (item === 'city') address += ' - ';
-    else if (item !== 'pincode') address += ', ';
+    if (item.id === 'city') address += ' - ';
+    else if (item.id !== 'pincode') address += ', ';
   });
   return address;
 };

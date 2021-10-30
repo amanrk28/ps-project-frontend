@@ -63,3 +63,5 @@ export const getOrderListApi = searchString =>
 export const getOrderItemApi = id => callAPI('get', `${order}/orders/${id}`);
 export const updateOrderStatusApi = (id, data) =>
   callAPI('put', `${order}/orders/${id}`, data);
+export const cancelOrderApi = id =>
+  callAPI('get', `${order}/orders/${id}/cancel`);
