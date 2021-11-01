@@ -115,8 +115,12 @@ class ViewOrdersMobile extends Component {
                   <div className={`status ${order.status}`}>
                     <DropdownInput
                       options={
-                        ['dispatched', 'closed'].includes(order.status)
-                          ? ORDER_STATUSES.filter(x => x.id !== 'new')
+                        dataItem.status === 'dispatched'
+                          ? [ORDER_STATUSES[1], ORDER_STATUSES[2]]
+                          : dataItem.status === 'closed'
+                          ? [ORDER_STATUSES[2]]
+                          : dataItem.status === 'cancelled'
+                          ? [ORDER_STATUSES[3]]
                           : ORDER_STATUSES
                       }
                       onChange={e => this.onChangeOrderStatus(e, order.id)}

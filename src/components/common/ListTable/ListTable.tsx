@@ -1,4 +1,4 @@
-import React, { ReactNode, memo } from 'react';
+import { ReactNode, memo, Fragment } from 'react';
 import { ObjectType } from 'store/reducers/rootState';
 import Loading from '../Loading/Loading';
 import './ListTable.scss';
@@ -46,7 +46,11 @@ const ListTable = ({
       ) : dataList.length > 0 ? (
         dataList.map((dataItem, idx) => (
           <li key={dataItem.id} onClick={() => onClickListItem(dataItem.id)}>
-            {headers.map(item => renderListItem({ idx, dataItem, item }))}
+            {headers.map(item => (
+              <Fragment key={item.dataname}>
+                {renderListItem({ idx, dataItem, item })}
+              </Fragment>
+            ))}
           </li>
         ))
       ) : (

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actions from 'store/actions/orderActions';
 import ListTable from 'components/common/ListTable/ListTable';
+import { ORDER_STATUSES } from 'components/GlobalConstants';
 import './Orders.scss';
 
 const ORDER_TABLE_HEADERS = [
@@ -14,12 +15,6 @@ const ORDER_TABLE_HEADERS = [
   { name: 'Status', dataname: 'status' },
 ];
 
-const getStatus = status => {
-  if (status === 'new') return 'Active';
-  if (status === 'dispatched') return 'Dispatched';
-  if (status === 'cancelled') return 'Cancelled';
-  else return 'Completed';
-};
 class Orders extends Component {
   componentDidMount = () => {
     const { actions } = this.props;
@@ -37,10 +32,9 @@ class Orders extends Component {
         className={`${item.dataname} ${
           item.dataname === 'status' ? dataItem.status : ''
         }`}
-        key={item.dataname}
       >
         {item.dataname === 'status'
-          ? getStatus(dataItem.status)
+          ? ORDER_STATUSES.find(x => x.id === dataItem.status).name
           : dataItem[item.dataname] || 'N/A'}
       </div>
     );

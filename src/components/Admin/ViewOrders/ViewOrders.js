@@ -69,19 +69,16 @@ class ViewOrders extends Component {
 
   renderListItem = ({ item, dataItem }) => {
     return (
-      <div
-        className={`${item.dataname} ${dataItem.status}`}
-        key={item.dataname}
-      >
+      <div className={`${item.dataname} ${dataItem.status}`}>
         {item.dataname === 'status' && (
           <DropdownInput
             options={
-              ['dispatched', 'closed'].includes(dataItem.status)
-                ? ORDER_STATUSES.filter(
-                    x => x.id !== 'new' && x.id !== 'cancelled'
-                  )
+              dataItem.status === 'dispatched'
+                ? [ORDER_STATUSES[1], ORDER_STATUSES[2]]
+                : dataItem.status === 'closed'
+                ? [ORDER_STATUSES[2]]
                 : dataItem.status === 'cancelled'
-                ? ORDER_STATUSES.filter(x => x.id === 'cancelled')
+                ? [ORDER_STATUSES[3]]
                 : ORDER_STATUSES
             }
             onChange={e => this.onChangeOrderStatus(e, dataItem.id)}

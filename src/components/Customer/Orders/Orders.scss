@@ -5,6 +5,8 @@
 }
 .orders-wrapper {
   padding: 2rem;
+  max-width: 1280px;
+  margin: auto;
   @include phone {
     padding: 1rem;
   }
@@ -48,7 +50,7 @@
           background-color: #ff3333aa;
         }
         &.dispatched {
-          background-color: #ff9933aa;
+          background-color: #5677fc;
         }
         &.cancelled {
           background-color: #ff3333;

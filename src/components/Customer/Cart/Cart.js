@@ -47,7 +47,7 @@ class Cart extends Component {
 
   renderListItem = ({ idx, item, dataItem }) => {
     return (
-      <div className={item.dataname} key={item.dataname}>
+      <div className={item.dataname}>
         {item.dataname === 'id' && idx + 1}
         {item.dataname === 'image' && (
           <img src={dataItem.image} alt={dataItem.name} />

@@ -97,7 +97,7 @@ export const cancelOrder = id => dispatch => {
     .then(res => {
       const { status, msg } = res;
       if (!status) throw msg;
-      NotifyMe('Order cancelled Successfully');
+      NotifyMe('success', 'Order cancelled Successfully');
       dispatch(push('/orders'));
     })
     .catch(err => {

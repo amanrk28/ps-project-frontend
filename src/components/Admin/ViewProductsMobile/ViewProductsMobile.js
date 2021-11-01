@@ -11,15 +11,6 @@ import Filter from 'components/Filter/Filter';
 import './ViewProductsMobile.scss';
 import Loading from 'components/common/Loading/Loading';
 
-const PRODUCT_TABLE_HEADERS = [
-  { name: 'Image', dataname: 'image' },
-  { name: 'Name', dataname: 'name' },
-  { name: 'Description', dataname: 'description' },
-  { name: 'Price / unit', dataname: 'price' },
-  { name: 'Stock', dataname: 'stock' },
-  { name: 'Category', dataname: 'category' },
-];
-
 class ViewProductsMobile extends Component {
   constructor(props) {
     super(props);
@@ -122,33 +113,37 @@ class ViewProductsMobile extends Component {
                   key={product.id}
                   onClick={() => this.onEditProduct(product.id)}
                 >
-                  {PRODUCT_TABLE_HEADERS.map(item => (
-                    <div key={item.dataname} className={item.dataname}>
-                      {item.dataname === 'image' && (
-                        <img
-                          src={product.image}
-                          alt={product.name}
-                          width="100"
-                          height="100"
-                        />
-                      )}
-                      {item.dataname === 'category' && (
-                        <p>
-                          <span>{item.name}: </span>
-                          {this.getCategoryFromId(product)}
-                        </p>
-                      )}
-                      {!['image', 'category'].includes(item.dataname) && (
-                        <p>
-                          {item.dataname === 'stock' && (
-                            <span>{item.name}: </span>
-                          )}
-                          {item.dataname === 'price' && <span>&#8377;</span>}
-                          {product[item.dataname]}
-                        </p>
-                      )}
+                  <div className="image">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      width="80"
+                      height="80"
+                    />
+                  </div>
+                  <div className="productDetails-container">
+                    <div className="name">
+                      <p>{product.name}</p>
                     </div>
-                  ))}
+                    <div className="description">
+                      <p>{product.description}</p>
+                    </div>
+                    <div className="price">
+                      <p>&#8377; {product.price}</p>
+                    </div>
+                    <div className="stock">
+                      <p>
+                        <span>Stock: </span>
+                        {product.stock}
+                      </p>
+                    </div>
+                    <div className="category">
+                      <p>
+                        <span>Category: </span>
+                        {this.getCategoryFromId(product)}
+                      </p>
+                    </div>
+                  </div>
                 </li>
               ))
             ) : (

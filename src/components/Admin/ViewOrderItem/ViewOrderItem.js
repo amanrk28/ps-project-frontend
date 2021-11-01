@@ -17,6 +17,7 @@ class ViewOrderItem extends Component {
   componentDidMount = () => {
     const { actions, match } = this.props;
     const { id } = match.params;
+    window.scrollTo(0);
     actions.getOrderItem({ id: parseInt(id, 10) });
   };
 
@@ -36,7 +37,7 @@ class ViewOrderItem extends Component {
 
   renderListItem = ({ item, dataItem }) => {
     return (
-      <div key={item.dataname} className={`${item.dataname}`}>
+      <div className={`${item.dataname}`}>
         {item.dataname === 'image' && (
           <img
             src={dataItem.product[item.dataname]}

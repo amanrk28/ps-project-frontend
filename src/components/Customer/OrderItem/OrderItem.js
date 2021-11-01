@@ -67,7 +67,7 @@ class OrderItem extends Component {
 
   renderListItem = ({ item, dataItem }) => {
     return (
-      <div key={item.dataname} className={`${item.dataname}`}>
+      <div className={`${item.dataname}`}>
         {item.dataname === 'image' && (
           <img
             src={dataItem.product[item.dataname]}
