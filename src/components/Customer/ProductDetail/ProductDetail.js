@@ -59,7 +59,7 @@ class ProductDetail extends Component {
   updateCartCount = quantity => {
     const { cartActions } = this.props;
     const { product } = this.state;
-    if (quantity < product.stock)
+    if (quantity <= product.stock)
       cartActions.updateCartItem({ product_id: product.id, quantity });
   };
 

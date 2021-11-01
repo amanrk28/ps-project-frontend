@@ -31,7 +31,7 @@ class Home extends Component {
 
   updateCartCount = (id, quantity, stock) => {
     const { cartActions } = this.props;
-    if (quantity < stock)
+    if (quantity <= stock)
       cartActions.updateCartItem({ product_id: id, quantity });
   };
 
