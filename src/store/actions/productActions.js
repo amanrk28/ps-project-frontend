@@ -1,12 +1,14 @@
 import * as aT from '../actionTypes/productActionTypes';
 import {
-  getProductsApi,
+  getProductListApi,
   getProductCategoriesApi,
   createProductApi,
   updateProductApi,
+  getProductApi,
 } from '../../common/api';
 import { NotifyMe } from 'components/common/NotifyMe/NotifyMe';
 import { getSearchStringFromObject } from 'utils/utils';
+import { setLoaderFalse, setLoaderTrue } from './authActions';
 
 const setProductsList = data => ({
   type: aT.SET_PRODUCTS,
@@ -35,10 +37,12 @@ export const getProducts = ({ query, cb } = { query: {}, cb: () => {} }) => {
     searchObj = { ...searchObj, ...query };
   }
   const searchString = getSearchStringFromObject({ ...searchObj });
-  return dispatch =>
-    getProductsApi(searchString)
+  return dispatch => {
+    dispatch(setLoaderTrue());
+    getProductListApi(searchString)
       .then(res => {
         const { status, data, msg } = res;
+        dispatch(setLoaderFalse());
         if (!status) throw msg;
         dispatch(setProductsList(data));
       })
@@ -49,6 +53,7 @@ export const getProducts = ({ query, cb } = { query: {}, cb: () => {} }) => {
       .finally(() => {
         if (cb) cb();
       });
+  };
 };
 
 export const getProductCategories = () => {
@@ -122,6 +127,22 @@ export const updateProduct = ({
         onSuccess();
         const productData = { ...data };
         dispatch(setUpdatedProduct(productData));
+      })
+      .catch(err => {
+        NotifyMe('error', `${err}!`);
+        onFailure();
+        console.log(err);
+      });
+  };
+};
+
+export const getProductItem = ({ id, onSuccess, onFailure }) => {
+  return () => {
+    getProductApi(id)
+      .then(res => {
+        const { status, data, msg } = res;
+        if (!status) throw msg;
+        if (onSuccess) onSuccess(data);
       })
       .catch(err => {
         NotifyMe('error', `${err}!`);

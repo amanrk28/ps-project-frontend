@@ -115,11 +115,11 @@ class ViewOrdersMobile extends Component {
                   <div className={`status ${order.status}`}>
                     <DropdownInput
                       options={
-                        dataItem.status === 'dispatched'
+                        order.status === 'dispatched'
                           ? [ORDER_STATUSES[1], ORDER_STATUSES[2]]
-                          : dataItem.status === 'closed'
+                          : order.status === 'closed'
                           ? [ORDER_STATUSES[2]]
-                          : dataItem.status === 'cancelled'
+                          : order.status === 'cancelled'
                           ? [ORDER_STATUSES[3]]
                           : ORDER_STATUSES
                       }

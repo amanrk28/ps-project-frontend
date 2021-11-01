@@ -19,6 +19,7 @@ const buttonWrapperStyle = {
   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
   gridGap: '1rem',
   marginTop: '1rem',
+  width: '100%',
 };
 
 export default function ConfirmationModal({

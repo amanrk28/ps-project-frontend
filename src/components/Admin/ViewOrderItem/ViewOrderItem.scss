@@ -37,14 +37,14 @@
       flex: 0.3;
       display: flex;
       align-items: center;
-      width: 50px;
+      width: 80px;
       &:not(.tableHeader) {
-        height: 50px;
+        height: 80px;
       }
       img {
         box-shadow: 0 0 16px #ccc;
         border-radius: 8px;
-        width: 50px;
+        height: 80px;
         object-fit: cover;
       }
     }

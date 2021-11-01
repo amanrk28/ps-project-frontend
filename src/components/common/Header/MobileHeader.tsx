@@ -8,6 +8,7 @@ import {
   ListItem,
   Divider,
 } from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -19,12 +20,14 @@ interface MobileHeaderProps {
   isLoggedIn: boolean;
   onClickLogout: () => void;
   name: string;
+  cartCount: number;
 }
 
 const MobileHeader = ({
   isLoggedIn,
   onClickLogout,
   name,
+  cartCount,
 }: MobileHeaderProps) => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -39,7 +42,15 @@ const MobileHeader = ({
           <img className="header-logo" src={LOGO_MAIN} alt={COMPANY_NAME} />
         </Link>
         {isLoggedIn ? (
-          <MenuIcon onClick={toggleDrawer} />
+          <div className="mobileHeader-rightSide">
+            <Link to="/cart">
+              <div className="cart_logo__wrapper">
+                <ShoppingCartIcon className="header__cartLogo" />
+                <div className="cart__count center">{cartCount}</div>
+              </div>
+            </Link>
+            <MenuIcon onClick={toggleDrawer} />
+          </div>
         ) : (
           <div className="header__signin">
             <Link to="/login">
@@ -75,11 +86,15 @@ const MobileHeader = ({
             <span style={{ fontWeight: 600 }}>{name}</span>
           </ListItem>
           <Divider sx={{ my: 3 }} />
-          {HEADER_ITEMS.map(item => (
-            <Link key={item.name} to={item.url} onClick={toggleDrawer}>
-              <ListItemButton sx={{ py: 2 }}>{item.name}</ListItemButton>
-            </Link>
-          ))}
+          {HEADER_ITEMS.map(item => {
+            if (item.dataname !== 'cart') {
+              return (
+                <Link key={item.name} to={item.url} onClick={toggleDrawer}>
+                  <ListItemButton sx={{ py: 2 }}>{item.name}</ListItemButton>
+                </Link>
+              );
+            }
+          })}
         </List>
         <IconButton sx={iconStyle} onClick={onClickLogout}>
           <LogoutIcon fontSize="large" />

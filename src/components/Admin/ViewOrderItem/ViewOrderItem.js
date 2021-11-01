@@ -17,7 +17,7 @@ class ViewOrderItem extends Component {
   componentDidMount = () => {
     const { actions, match } = this.props;
     const { id } = match.params;
-    window.scrollTo(0);
+    window.scrollTo({ top: 0 });
     actions.getOrderItem({ id: parseInt(id, 10) });
   };
 

@@ -29,9 +29,10 @@ class Home extends Component {
     } else cartActions.addCartItem(id);
   };
 
-  updateCartCount = (id, quantity) => {
+  updateCartCount = (id, quantity, stock) => {
     const { cartActions } = this.props;
-    cartActions.updateCartItem({ product_id: id, quantity });
+    if (quantity < stock)
+      cartActions.updateCartItem({ product_id: id, quantity });
   };
 
   render() {

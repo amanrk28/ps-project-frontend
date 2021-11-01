@@ -9,6 +9,23 @@ import Filter from 'components/Filter/Filter';
 import './Header.scss';
 import { HEADER_ITEMS } from './constants';
 
+interface ProductCategory {
+  id: string;
+  name: string;
+}
+
+interface DesktopHeaderProps {
+  enableSearch: boolean;
+  productCategories: ProductCategory[];
+  onChangeFilter: () => void;
+  category: string;
+  search: string;
+  isLoggedIn: boolean;
+  name: string;
+  onClickLogout: () => void;
+  cartCount: number;
+}
+
 const DesktopHeader = ({
   enableSearch,
   productCategories,
@@ -19,7 +36,7 @@ const DesktopHeader = ({
   name,
   onClickLogout,
   cartCount,
-}) => {
+}: DesktopHeaderProps) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

@@ -1,3 +1,106 @@
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+@mixin phone {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
 .productDetail-wrapper {
   padding: 2rem;
+  max-width: 1280px;
+  margin: auto;
+  .productDetail-header-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin: 2rem 0 4rem;
+    position: relative;
+    .productDetail-header {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .productDetail-body {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    @include tablet {
+      flex-direction: column;
+      align-items: center;
+    }
+    .image-wrapper {
+      display: flex;
+      align-items: center;
+      width: 300px;
+      @include phone {
+        width: 100%;
+      }
+      img {
+        box-shadow: 0 0 16px #ccc;
+        border-radius: 8px;
+        width: 100%;
+      }
+    }
+    .details-wrapper {
+      margin-left: 4rem;
+      @include tablet {
+        margin: 3rem 0 0;
+      }
+      > div {
+        margin: 1rem 0;
+      }
+      .name {
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 42px;
+        margin-bottom: 0;
+      }
+      .category {
+        margin: 0;
+        color: var(--grey-primary);
+      }
+      .price {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--yellow-secondary);
+      }
+      .description {
+        max-width: 400px;
+        color: var(--grey-primary);
+      }
+      .stock {
+        display: flex;
+        align-items: center;
+        padding: 4px 16px;
+        box-shadow: 0 0 10px #ccc;
+        width: fit-content;
+        border-radius: 50px;
+        p {
+          font-size: 14px;
+          font-weight: 600;
+        }
+        .in-stock {
+          color: green;
+        }
+        .out-of-stock {
+          color: var(--grey-primary);
+        }
+        .few-left {
+          color: red;
+        }
+      }
+      .btn-container {
+        @include phone {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+    }
+  }
 }

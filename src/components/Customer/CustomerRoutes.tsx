@@ -15,10 +15,10 @@ const CartMobile = lazy(() => import('./CartMobile/CartMobile'));
 
 interface CustomerRoutesProps extends RouteComponentProps {}
 
-const CustomerRoutes = ({ match }: CustomerRoutesProps) => {
+const CustomerRoutes = ({ match, location }: CustomerRoutesProps) => {
   return (
     <>
-      <Header enableSearch={match.path === '/'} />
+      <Header enableSearch={location.pathname === '/'} />
       <Suspense fallback={<Loading fullLoader />}>
         <Switch>
           <Route

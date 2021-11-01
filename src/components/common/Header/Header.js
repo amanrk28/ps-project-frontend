@@ -63,7 +63,12 @@ class Header extends Component {
 
   render() {
     const { search, category } = this.state;
-    const { user, enableSearch, cartCount, productCategories } = this.props;
+    const {
+      user,
+      enableSearch = false,
+      cartCount,
+      productCategories,
+    } = this.props;
     return (
       <Suspense fallback={<Loading />}>
         {isMobile ? (
@@ -71,6 +76,7 @@ class Header extends Component {
             isLoggedIn={Boolean(user.user_id)}
             onClickLogout={this.onClickLogout}
             name={user.first_name || ''}
+            cartCount={cartCount}
           />
         ) : (
           <DesktopHeader
