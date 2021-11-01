@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import * as actions from 'store/actions/cartActions';
 import * as productActions from 'store/actions/productActions';
 import PlusMinusBtn from 'components/common/PlusMinusBtn/PlusMinusBtn';
-import Button from 'components/common/Button/Button';
+import Button, { ButtonTypes } from 'components/common/Button/Button';
 import ListTable from 'components/common/ListTable/ListTable';
 import './Cart.scss';
 
@@ -105,7 +105,7 @@ class Cart extends Component {
           <Button
             text="Proceed to Buy"
             onClick={this.onClickProceed}
-            type={cartCount > 0 ? 'primary' : 'disabled'}
+            type={cartCount > 0 ? ButtonTypes.Primary : ButtonTypes.Disabled}
           />
         </div>
         <ListTable

@@ -1,5 +1,5 @@
 import { Modal, Box } from '@mui/material';
-import Button from 'components/common/Button/Button';
+import Button, { ButtonTypes } from 'components/common/Button/Button';
 
 const style = {
   position: 'absolute',
@@ -35,7 +35,7 @@ export default function ConfirmationModal({
         <div style={buttonWrapperStyle}>
           <Button
             text="Yes"
-            type="danger"
+            type={ButtonTypes.Danger}
             onClick={onCancelOrder}
             dataProps={{ style: { width: '100%' } }}
           />

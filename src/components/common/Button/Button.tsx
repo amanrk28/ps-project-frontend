@@ -1,6 +1,12 @@
 import React from 'react';
 import './Button.scss';
 
+export enum ButtonTypes {
+  Primary = 'primary',
+  Danger = 'danger',
+  Disabled = 'disabled',
+}
+
 interface ButtonProps {
   children?: JSX.Element | null;
   text?: string | null;
@@ -21,9 +27,9 @@ const Button = ({
   isLoading = false,
 }: ButtonProps) => {
   let style = `center ${className}`;
-  if (type === 'primary') style += ' primary';
-  else if (type === 'danger') style += ' danger';
-  else if (type === 'disabled') style += ' disabled';
+  if (type === ButtonTypes.Primary) style += ' primary';
+  else if (type === ButtonTypes.Danger) style += ' danger';
+  else if (type === ButtonTypes.Disabled) style += ' disabled';
 
   const content = children || text;
 

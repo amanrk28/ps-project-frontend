@@ -45,7 +45,10 @@ const ListTable = ({
         <Loading />
       ) : dataList.length > 0 ? (
         dataList.map((dataItem, idx) => (
-          <li key={dataItem.id} onClick={() => onClickListItem(dataItem.id)}>
+          <li
+            key={dataItem.id || (dataItem.product && dataItem.product.id)}
+            onClick={() => onClickListItem(dataItem.id)}
+          >
             {headers.map(item => (
               <Fragment key={item.dataname}>
                 {renderListItem({ idx, dataItem, item })}

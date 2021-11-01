@@ -6,18 +6,12 @@ import Header from 'components/common/Header/Header';
 
 const Checkout = lazy(() => import('./Checkout/Checkout'));
 const UserAccount = lazy(() => import('./UserAccount/UserAccount'));
-const Home = lazy(() => import('components/Customer/Home/Home'));
-const Orders = lazy(() => import('components/Customer/Orders/Orders'));
-const ProductDetail = lazy(
-  () => import('components/Customer/ProductDetail/ProductDetail')
-);
-const ViewOrderItem = lazy(
-  () => import('components/Customer/OrderItem/OrderItem')
-);
-const Cart = lazy(() => import('components/Customer/Cart/Cart'));
-const CartMobile = lazy(
-  () => import('components/Customer/CartMobile/CartMobile')
-);
+const Home = lazy(() => import('./Home/Home'));
+const Orders = lazy(() => import('./Orders/Orders'));
+const ProductDetail = lazy(() => import('./ProductDetail/ProductDetail'));
+const ViewOrderItem = lazy(() => import('./OrderItem/OrderItem'));
+const Cart = lazy(() => import('./Cart/Cart'));
+const CartMobile = lazy(() => import('./CartMobile/CartMobile'));
 
 interface CustomerRoutesProps extends RouteComponentProps {}
 

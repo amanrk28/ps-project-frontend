@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ListTable from 'components/common/ListTable/ListTable';
-import Button from 'components/common/Button/Button';
+import Button, { ButtonTypes } from 'components/common/Button/Button';
 import Loading from 'components/common/Loading/Loading';
 import * as actions from 'store/actions/orderActions';
 import { getAddressString } from 'utils/utils';
@@ -22,23 +22,36 @@ class OrderItem extends Component {
   }
 
   componentDidMount = () => {
-    const { actions, match } = this.props;
+    const { actions, match, orderItem } = this.props;
     const { id } = match.params;
     actions.getOrderItem({ id: parseInt(id, 10) });
-  };
-
-  componentDidUpdate = prevProps => {
     if (
-      !prevProps.orderItem.cancellation_time_limit &&
-      this.props.orderItem.cancellation_time_limit
+      orderItem.cancellation_time_limit &&
+      !['closed', 'cancelled'].includes(orderItem.status)
     ) {
       const date = new Date(this.props.orderItem.cancellation_time_limit);
       this.setState({ cancellationTime: date.getTime() });
     }
   };
 
+  componentDidUpdate = () => {
+    const { orderItem } = this.props;
+    if (
+      this.state.cancellationTime === null &&
+      orderItem.cancellation_time_limit &&
+      !['closed', 'cancelled'].includes(orderItem.status)
+    ) {
+      const date = new Date(this.props.orderItem.cancellation_time_limit);
+      this.setState({ cancellationTime: date.getTime() });
+    }
+  };
+
+  componentWillUnmount = () => {
+    this.props.actions.resetOrder();
+  };
+
   onClickBack = () => {
-    this.props.history.goBack();
+    this.props.history.push('/orders');
   };
 
   getTotalOrderValue = () => {
@@ -131,13 +144,15 @@ class OrderItem extends Component {
               ))}
             </div>
             <div className="customerDetails-rightSide">
-              {cancellationTime > new Date().getTime() && (
-                <Button
-                  text="Cancel Order"
-                  type="danger"
-                  onClick={this.onOpenModal}
-                />
-              )}
+              <Button
+                text="Cancel Order"
+                type={
+                  cancellationTime > new Date().getTime()
+                    ? ButtonTypes.Danger
+                    : ButtonTypes.Disabled
+                }
+                onClick={this.onOpenModal}
+              />
               <h2 className="orderTotal">
                 Total Amount:
                 <span>&nbsp;&#8377;{this.getTotalOrderValue()}</span>

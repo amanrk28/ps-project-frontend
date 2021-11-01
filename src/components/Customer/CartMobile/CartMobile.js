@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import * as actions from 'store/actions/cartActions';
 import * as productActions from 'store/actions/productActions';
-import Button from 'components/common/Button/Button';
+import Button, { ButtonTypes } from 'components/common/Button/Button';
 import PlusMinusBtn from 'components/common/PlusMinusBtn/PlusMinusBtn';
 import './CartMobile.scss';
 
@@ -64,7 +64,7 @@ class CartMobile extends Component {
           <Button
             text="Proceed to Buy"
             onClick={this.onClickProceed}
-            type={cartCount > 0 ? 'primary' : 'disabled'}
+            type={cartCount > 0 ? ButtonTypes.Primary : ButtonTypes.Disabled}
           />
         </div>
         <ul className="mobile-table-wrapper">
