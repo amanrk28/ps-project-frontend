@@ -93,7 +93,10 @@ class ViewOrders extends Component {
             <ModeEditIcon />
           </div>
         )}
-        {item.dataname !== 'status' && dataItem[item.dataname]}
+        {['id', 'order_date', 'expected_delivery_date'].includes(
+          item.dataname
+        ) &&
+          (dataItem[item.dataname] || 'N/A')}
       </div>
     );
   };

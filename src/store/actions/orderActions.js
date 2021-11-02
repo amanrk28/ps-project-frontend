@@ -52,6 +52,7 @@ export const getOrdersList = ({ orderStatus, cb }) => {
       })
       .catch(err => {
         NotifyMe('error', err);
+        if (cb) cb();
         console.log(err);
       });
   };
