@@ -100,7 +100,11 @@ export const loginUser = (req_data, cb) => (dispatch, getState) => {
       if (location.hash && location.hash === '#addtocart') {
         const id = location.state;
         dispatch(addCartItem(id));
-      } else if (!data.user.is_admin && !data.user.is_store_owner) {
+      } else if (
+        !data.user.is_admin &&
+        !data.user.is_store_owner &&
+        !data.user.is_cart_empty
+      ) {
         dispatch(getCartItems());
       }
       dispatch(push(userRedirectAfterAuth(data.user)));

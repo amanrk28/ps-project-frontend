@@ -28,7 +28,8 @@ class ProductDetail extends Component {
   componentDidMount = () => {
     const { dispatchGetProductItem, match, auth, cartActions, cartItems } =
       this.props;
-    if (cartItems.length === 0 && auth.user_id) cartActions.getCartItems();
+    if (cartItems.length === 0 && auth.user_id && !auth.isCartEmpty)
+      cartActions.getCartItems();
     const id = parseInt(match.params.id, 10);
     if (id)
       dispatchGetProductItem({
@@ -40,7 +41,11 @@ class ProductDetail extends Component {
 
   componentDidUpdate = prevProps => {
     const { auth, cartActions } = this.props;
-    if (prevProps.auth.user_id !== auth.user_id && auth.user_id) {
+    if (
+      prevProps.auth.user_id !== auth.user_id &&
+      auth.user_id &&
+      !auth.isCartEmpty
+    ) {
       cartActions.getCartItems();
     }
   };

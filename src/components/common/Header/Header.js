@@ -22,7 +22,7 @@ class Header extends Component {
   }
 
   componentDidMount = () => {
-    const { getProducts, query } = this.props;
+    const { dispatchGetProducts, query, productList } = this.props;
     let queryObj = {};
     if (query?.search) {
       queryObj.search = query.search;
@@ -31,17 +31,17 @@ class Header extends Component {
       queryObj.category = query.category;
     }
     this.setState({ ...queryObj });
-    getProducts({ query: queryObj });
+    if (productList.length === 0) dispatchGetProducts({ query: queryObj });
   };
 
   getFilteredResult = queryObj => {
-    const { history, getProducts } = this.props;
+    const { history, dispatchGetProducts } = this.props;
     for (const k in queryObj) {
       if (queryObj.hasOwnProperty(k) && !queryObj[k]) delete queryObj[k];
       if (k === 'category' && queryObj[k] === 'all') delete queryObj[k];
     }
     history.push({ search: queryStringify(queryObj) });
-    getProducts({ query: queryObj });
+    dispatchGetProducts({ query: queryObj });
   };
 
   debounceFn = debounce(queryObj => this.getFilteredResult(queryObj), 400);
@@ -102,11 +102,12 @@ const mapStateToProps = state => ({
   user: state.auth,
   cartCount: state.cart.cart_count,
   productCategories: state.product.product_categories,
+  productList: state.product.products,
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logout()),
-  getProducts: props => dispatch(getProducts(props)),
+  dispatchGetProducts: props => dispatch(getProducts(props)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

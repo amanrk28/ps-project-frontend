@@ -9,14 +9,18 @@ import './Home.scss';
 class Home extends Component {
   componentDidMount = () => {
     const { auth, cartActions, cartItems } = this.props;
-    if (cartItems.length === 0 && auth.user_id) {
+    if (cartItems.length === 0 && auth.user_id && !auth.isCartEmpty) {
       cartActions.getCartItems();
     }
   };
 
   componentDidUpdate = prevProps => {
     const { auth, cartActions } = this.props;
-    if (prevProps.auth.user_id !== auth.user_id && auth.user_id) {
+    if (
+      prevProps.auth.user_id !== auth.user_id &&
+      auth.user_id &&
+      !auth.isCartEmpty
+    ) {
       cartActions.getCartItems();
     }
   };

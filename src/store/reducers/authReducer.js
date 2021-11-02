@@ -20,6 +20,7 @@ const initialState = {
     pincode: '',
   },
   isLoading: false,
+  isCartEmpty: true,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -35,6 +36,7 @@ const authReducer = (state = initialState, action) => {
         username: action.data.username,
         is_store_owner: action.data.is_store_owner || false,
         is_admin: action.data.is_admin || false,
+        isCartEmpty: action.data.is_cart_empty || true,
         address: { ...action.data.address } || {},
       });
     case aT.SET_TOKEN:

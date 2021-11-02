@@ -20,8 +20,8 @@ const CART_TABLE_HEADERS = [
 
 class Cart extends Component {
   componentDidMount = () => {
-    const { actions, productActions, cartCount } = this.props;
-    if (cartCount === 0) {
+    const { actions, productActions, cartCount, isCartEmpty } = this.props;
+    if (cartCount === 0 && !isCartEmpty) {
       actions.getCartItems();
       productActions.getProducts();
     }
@@ -125,6 +125,7 @@ const mapStateToProps = state => ({
   totalAmount: state.cart.total_amount,
   productList: state.product.products,
   cartCount: state.cart.cart_count,
+  isCartEmpty: state.auth.isCartEmpty,
 });
 
 const mapDispatchToProps = dispatch => ({
