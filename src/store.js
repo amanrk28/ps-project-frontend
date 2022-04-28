@@ -1,7 +1,7 @@
 import { routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory } from 'history';
 import { applyMiddleware, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from '@redux-devtools/extension';
 import thunk from 'redux-thunk';
 import rootReducer from './store/reducers/rootReducer';
 const { REACT_APP_IS_REDUX_ENABLED } = process.env;
