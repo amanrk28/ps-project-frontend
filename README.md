@@ -6,13 +6,14 @@ Retailr is made to help local shopkeepers expand their customer base to more tha
 
 Any local store owner can upload their products and its details on this platform and people can come here to purchase these products like an e-commerce app. After customer makes a puchase, we take care of payments, store pickup and doorstep delivery with minimal service charges based only on the profit gained by said store owner.
 
-### Hosted on [Netlify](https://retailr.netlify.app/)
+### Hosted on [Vercel](https://retailr.vercel.app/)
 
 ## Tech Stack
 
 - ReactJS
 - Django (Rest Framework)
 - PostgreSQL
+- Docker
 
 ## Repo Setup
 
@@ -23,7 +24,3 @@ To start developing this project,
 3.  Run `cd ps-project-frontend` and then `npm i` in terminal.
 4.  After all dependencies are installed, run `npm start` and the app will open in your browser at [localhost](http://localhost:3000/)
 5.  To start coding using VS Code, run `code .` in terminal when at the file location.
-
-## Contributors
-
-<img src="https://contrib.rocks/image?repo=amanrk28/ps-project-frontend" />
